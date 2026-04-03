@@ -278,13 +278,22 @@ img {
   top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   left: 0;
   right: 0;
+  z-index: 99;
   background: var(--navy-900);
   border-bottom: 1px solid var(--border-medium);
   padding: 1.25rem clamp(1.25rem, 4vw, 2.5rem) 1.75rem;
-  display: flex;
   flex-direction: column;
   gap: 0.25rem;
   box-shadow: var(--shadow-elevated);
+}
+
+/* display:flex vence o atributo [hidden] no HTML — sem isso o menu fica sempre visível */
+.nav-mobile:not([hidden]) {
+  display: flex;
+}
+
+.nav-mobile[hidden] {
+  display: none !important;
 }
 
 .nav-mobile a {
