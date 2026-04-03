@@ -48,10 +48,10 @@ Criar uma aplicação simples e eficiente para:
 
 ## 🌐 Acesse o projeto
 
-(Coloque aqui o link quando publicar)
+**Site publicado (GitHub Pages):**  
+[https://jgbittencourt.github.io/nova-era-veiculos/](https://jgbittencourt.github.io/nova-era-veiculos/)
 
-Exemplo:
-https://seusite.netlify.app
+> No repositório: **Settings → Pages** → Source: branch `main`, pasta `/ (root)`.
 
 ---
 
