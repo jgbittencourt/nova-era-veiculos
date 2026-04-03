@@ -1,5 +1,4 @@
-# nova-era-veiculos
-Sistema de vendas de carros com foco em conversão, integração com WhatsApp, cálculo de economia pela FIPE e interface moderna para concessionárias.
+
 # 🚗 Nova Era Veículos
 
 Sistema de venda de veículos seminovos com foco total em conversão via WhatsApp.
