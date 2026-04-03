@@ -372,18 +372,35 @@
     });
   }
 
+  function setMobileMenuOpen(open) {
+    if (!menuToggle || !navMobile) return;
+    menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    menuToggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+    navMobile.classList.toggle("nav-mobile--open", open);
+    if (open) {
+      navMobile.removeAttribute("hidden");
+      navMobile.setAttribute("aria-hidden", "false");
+    } else {
+      navMobile.setAttribute("hidden", "");
+      navMobile.setAttribute("aria-hidden", "true");
+    }
+  }
+
   function setupMenu() {
     if (!menuToggle || !navMobile) return;
+    setMobileMenuOpen(false);
     menuToggle.addEventListener("click", function () {
-      var open = menuToggle.getAttribute("aria-expanded") === "true";
-      menuToggle.setAttribute("aria-expanded", !open);
-      navMobile.hidden = open;
+      setMobileMenuOpen(!navMobile.classList.contains("nav-mobile--open"));
     });
     navMobile.querySelectorAll("a").forEach(function (a) {
       a.addEventListener("click", function () {
-        menuToggle.setAttribute("aria-expanded", "false");
-        navMobile.hidden = true;
+        setMobileMenuOpen(false);
       });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && navMobile.classList.contains("nav-mobile--open")) {
+        setMobileMenuOpen(false);
+      }
     });
   }
 

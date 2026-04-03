@@ -279,21 +279,43 @@ img {
   left: 0;
   right: 0;
   z-index: 99;
-  background: var(--navy-900);
-  border-bottom: 1px solid var(--border-medium);
-  padding: 1.25rem clamp(1.25rem, 4vw, 2.5rem) 1.75rem;
   flex-direction: column;
   gap: 0.25rem;
+  padding: 1.25rem clamp(1.25rem, 4vw, 2.5rem) 1.75rem;
+  background: var(--navy-900);
+  border-bottom: 1px solid var(--border-medium);
   box-shadow: var(--shadow-elevated);
 }
 
-/* display:flex vence o atributo [hidden] no HTML — sem isso o menu fica sempre visível */
-.nav-mobile:not([hidden]) {
-  display: flex;
+/* Fechado por padrão: sem a classe --open o painel não aparece */
+.nav-mobile:not(.nav-mobile--open) {
+  display: none !important;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.nav-mobile[hidden] {
-  display: none !important;
+.nav-mobile.nav-mobile--open {
+  display: flex !important;
+  visibility: visible;
+  pointer-events: auto;
+  animation: nav-mobile-in 0.22s ease-out;
+}
+
+@keyframes nav-mobile-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.4rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-mobile.nav-mobile--open {
+    animation: none;
+  }
 }
 
 .nav-mobile a {
@@ -318,8 +340,12 @@ img {
     display: none;
   }
 
-  .nav-mobile {
+  .nav-mobile,
+  .nav-mobile.nav-mobile--open {
     display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    animation: none;
   }
 }
 
