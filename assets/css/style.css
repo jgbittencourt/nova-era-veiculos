@@ -56,17 +56,10 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-h) + 12px);
-}
-
-@media (max-width: 1023px) {
-  html {
-    scroll-padding-bottom: 140px;
-  }
-
-  body {
-    padding-bottom: 132px;
-  }
+  scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 12px);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -78,6 +71,8 @@ body {
   color: var(--text);
   background: var(--navy-975);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 code {
@@ -116,7 +111,8 @@ img {
   left: 0;
   right: 0;
   z-index: 100;
-  height: var(--header-h);
+  padding-top: env(safe-area-inset-top, 0px);
+  height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   background: rgba(6, 8, 17, 0.78);
   backdrop-filter: blur(16px) saturate(1.2);
   border-bottom: 1px solid var(--border-subtle);
@@ -279,7 +275,7 @@ img {
 
 .nav-mobile {
   position: fixed;
-  top: var(--header-h);
+  top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   left: 0;
   right: 0;
   background: var(--navy-900);
@@ -420,8 +416,8 @@ img {
   min-height: 100dvh;
   display: flex;
   align-items: center;
-  padding: calc(var(--header-h) + clamp(2.75rem, 7vw, 4.5rem)) clamp(1.25rem, 4vw, 2.5rem)
-    clamp(3.5rem, 9vw, 5.5rem);
+  padding: calc(var(--header-h) + env(safe-area-inset-top, 0px) + clamp(2.75rem, 7vw, 4.5rem))
+    clamp(1.25rem, 4vw, 2.5rem) clamp(3.5rem, 9vw, 5.5rem);
   overflow: hidden;
 }
 
@@ -2350,57 +2346,11 @@ img {
 }
 
 /* --------------------------------------------------------------------------
-   FAB WhatsApp (mobile)
+   FAB WhatsApp — oculto: barra fixa + header já levam ao WhatsApp (evita 3 CTAs)
    -------------------------------------------------------------------------- */
 
 .fab-whatsapp {
-  display: none;
-}
-
-@media (max-width: 1023px) {
-  .fab-whatsapp {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    right: max(1rem, env(safe-area-inset-right));
-    bottom: calc(5.5rem + env(safe-area-inset-bottom));
-    z-index: 95;
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    color: #fff;
-    background: linear-gradient(180deg, #2fe26b 0%, #25d366 40%, #17a34a 100%);
-    box-shadow:
-      0 8px 28px rgba(37, 211, 102, 0.5),
-      0 2px 8px rgba(0, 0, 0, 0.2);
-    text-decoration: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-  }
-
-  .fab-whatsapp:hover {
-    color: #fff;
-    filter: brightness(1.08);
-    transform: scale(1.06);
-    box-shadow:
-      0 12px 36px rgba(37, 211, 102, 0.55),
-      0 2px 10px rgba(0, 0, 0, 0.22);
-  }
-
-  .fab-whatsapp:active {
-    transform: scale(0.96);
-  }
-
-  .fab-whatsapp:focus-visible {
-    outline: 3px solid var(--gold-bright);
-    outline-offset: 4px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fab-whatsapp:hover {
-    transform: none;
-  }
+  display: none !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -2484,4 +2434,184 @@ img {
   font-weight: 500;
   color: var(--text-muted);
   line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile — leitura, toque e layout
+   -------------------------------------------------------------------------- */
+
+a,
+button,
+.btn,
+.menu-toggle,
+.filter-btn,
+.sticky-cta a {
+  -webkit-tap-highlight-color: rgba(201, 169, 98, 0.18);
+}
+
+.btn,
+button,
+.filter-btn {
+  touch-action: manipulation;
+}
+
+@media (max-width: 480px) {
+  :root {
+    --header-h: 72px;
+  }
+
+  body {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .hero {
+    min-height: 0;
+    align-items: flex-start;
+    padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 1.35rem);
+    padding-bottom: 2.75rem;
+    padding-left: max(1rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1rem, env(safe-area-inset-right, 0px));
+  }
+
+  .hero__title {
+    font-size: clamp(1.7rem, 8.5vw, 2.45rem);
+    line-height: 1.12;
+    margin-bottom: 1.1rem;
+  }
+
+  .hero__lead {
+    margin-bottom: 1.5rem;
+    line-height: 1.62;
+  }
+
+  .hero__steps {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1.35rem;
+  }
+
+  .hero__eyebrow {
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+  }
+
+  .section {
+    padding-top: clamp(3rem, 8vw, 4.25rem);
+    padding-bottom: clamp(3rem, 8vw, 4.25rem);
+    padding-left: max(1rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1rem, env(safe-area-inset-right, 0px));
+  }
+
+  .section__title {
+    font-size: clamp(1.65rem, 6vw, 2.35rem);
+  }
+
+  .offers {
+    padding-left: max(1rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1rem, env(safe-area-inset-right, 0px));
+  }
+
+  .authority {
+    padding-left: max(1rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1rem, env(safe-area-inset-right, 0px));
+  }
+
+  .section--showroom .filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    scrollbar-width: none;
+  }
+
+  .section--showroom .filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .section--showroom .filter-btn {
+    flex-shrink: 0;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.75rem;
+  }
+
+  .car-card {
+    border-radius: 18px;
+  }
+
+  .car-card__image-wrap {
+    min-height: clamp(200px, 58vw, 300px);
+  }
+
+  .car-card__cta {
+    min-height: 52px;
+    padding-top: 1.05rem;
+    padding-bottom: 1.05rem;
+    font-size: 0.9375rem;
+  }
+
+  .car-card__price {
+    font-size: clamp(1.45rem, 6vw, 1.85rem);
+  }
+
+  .testimonial-card__text {
+    font-size: 0.9375rem;
+  }
+
+  .contact {
+    padding-bottom: max(5.5rem, calc(4rem + env(safe-area-inset-bottom, 0px)));
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .car-card:hover {
+    transform: none;
+    box-shadow:
+      0 1px 2px rgba(14, 22, 40, 0.04),
+      0 12px 40px rgba(14, 22, 40, 0.08);
+    border-color: rgba(14, 22, 40, 0.07);
+  }
+
+  .car-card:hover .car-card__image {
+    transform: none;
+  }
+
+  .testimonial-card:hover {
+    transform: none;
+  }
+
+  .benefits__item:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  html {
+    scroll-padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+
+  body {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  .sticky-cta {
+    padding-left: max(0.65rem, env(safe-area-inset-left, 0px));
+    padding-right: max(0.65rem, env(safe-area-inset-right, 0px));
+  }
+
+  .sticky-cta__stock,
+  .sticky-cta__wa {
+    min-height: 50px;
+    font-size: 0.8125rem;
+  }
 }
