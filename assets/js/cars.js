@@ -40,7 +40,6 @@ window.NOVA_ERA_CARS = [
     ano: 2017,
     km: 58000,
     preco: 21900,
-    fipe: 32000,
     categoria: "moto",
     combustivel: "Gasolina",
     cambio: "Manual",
