@@ -75,12 +75,21 @@
     return div.innerHTML;
   }
 
-  /** Prova social — abaixo do título */
+  /** Prova social — abaixo do título (nota por veículo em cars.js) */
   function carSocialProof(car) {
+    var notaNum =
+      typeof car.nota === "number" && !isNaN(car.nota) ? car.nota : 4.8;
+    var notaStr = notaNum.toLocaleString("pt-BR", {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    });
+    var aria = "Nota " + notaStr + " com base em clientes da loja";
     return (
-      '<p class="car-card__social-proof" aria-label="Nota 4,8 com base em clientes da loja">' +
+      '<p class="car-card__social-proof" aria-label="' +
+      escapeHtml(aria) +
+      '">' +
       '<span class="car-card__social-proof-star" aria-hidden="true">⭐</span> ' +
-      "4.8 baseado em clientes da loja" +
+      escapeHtml(notaStr + " baseado em clientes da loja") +
       "</p>"
     );
   }

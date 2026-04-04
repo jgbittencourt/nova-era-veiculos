@@ -1,7 +1,7 @@
 /**
  * Estoque Nova Era — fotos reais em assets/img/carros/ (.png)
  * Ajuste preço, km e ano conforme a documentação de cada veículo.
- * Campos opcionais: fipe (número), opcionais (array de strings). Sem km → exibe "Sob consulta".
+ * Campos opcionais: fipe (número), nota (avaliação 1–5), opcionais (array). Sem km → "Sob consulta".
  */
 window.NOVA_ERA_CARS = [
   {
@@ -24,6 +24,7 @@ window.NOVA_ERA_CARS = [
     ],
     emOferta: true,
     destaque: true,
+    nota: 4.9,
     opcionais: [
       "Ar-condicionado",
       "Bluetooth + navegação",
@@ -52,6 +53,7 @@ window.NOVA_ERA_CARS = [
     ],
     emOferta: true,
     destaque: true,
+    nota: 4.8,
     opcionais: [
       "Moto muito nova",
       "Documentação em dia",
@@ -78,6 +80,7 @@ window.NOVA_ERA_CARS = [
     ],
     emOferta: true,
     destaque: true,
+    nota: 5.0,
     opcionais: [
       "1.0 completo com GNV — excelente consumo",
       "Única dona",
