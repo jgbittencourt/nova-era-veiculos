@@ -169,8 +169,6 @@
     }
     return (
       '<div class="car-card__price-block">' +
-      carUrgency(car) +
-      carOfferLimited(car) +
       '<span class="car-card__price-label">' +
       (hasWas ? "Por apenas" : "Preço") +
       "</span>" +
@@ -274,6 +272,8 @@
       "</h3>" +
       carSocialProof(car) +
       carScarcity(car) +
+      carUrgency(car) +
+      carOfferLimited(car) +
       '<div class="car-card__meta" role="list">' +
       '<span class="car-card__meta-item" role="listitem">' +
       '<span class="car-card__meta-label">Ano</span>' +

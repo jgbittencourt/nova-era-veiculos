@@ -1449,7 +1449,7 @@ img {
 }
 
 .car-card__scarcity {
-  margin: 0 0 1rem;
+  margin: 0 0 0.5rem;
   padding: 0.45rem 0.75rem;
   font-size: 0.75rem;
   font-weight: 800;
@@ -1459,6 +1459,11 @@ img {
   color: #7f1d1d;
   background: linear-gradient(135deg, rgba(254, 226, 226, 0.95) 0%, rgba(254, 202, 202, 0.75) 100%);
   border: 1px solid rgba(220, 38, 38, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.35rem;
+  box-sizing: border-box;
 }
 
 @keyframes scarcity-pulse {
@@ -1594,14 +1599,19 @@ img {
 }
 
 .car-card__urgency {
-  margin: 0 0 0.5rem;
-  padding: 0.4rem 0.75rem;
+  margin: 0 0 0.45rem;
+  padding: 0.45rem 0.75rem;
   font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   text-align: center;
   border-radius: 10px;
   line-height: 1.25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.35rem;
+  box-sizing: border-box;
 }
 
 @keyframes urgency-glow-offer {
@@ -1666,7 +1676,7 @@ img {
 }
 
 .car-card__offer-limited {
-  margin: 0 0 0.65rem;
+  margin: 0 0 1rem;
   font-size: 0.6875rem;
   font-weight: 800;
   letter-spacing: 0.06em;
