@@ -37,6 +37,7 @@ window.NOVA_ERA_CARS = [
     marca: "BMW",
     modelo: "G 310 R",
     ano: 2017,
+    km: 58000,
     preco: 21900,
     fipe: 32000,
     categoria: "moto",
