@@ -37,6 +37,7 @@ window.NOVA_ERA_CARS = [
     marca: "Ford",
     modelo: "Fiesta",
     ano: 2014,
+    km: 177000,
     preco: 25900,
     categoria: "hatch",
     combustivel: "Flex + GNV",
