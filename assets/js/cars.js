@@ -39,6 +39,7 @@ window.NOVA_ERA_CARS = [
     ano: 2014,
     km: 177000,
     preco: 25900,
+    fipe: 32000,
     categoria: "hatch",
     combustivel: "Flex + GNV",
     cambio: "Manual",
