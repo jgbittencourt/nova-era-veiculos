@@ -53,7 +53,7 @@ window.NOVA_ERA_CARS = [
     ],
     emOferta: true,
     destaque: true,
-    nota: 4.8,
+    nota: 5.0,
     opcionais: [
       "Moto muito nova",
       "Documentação em dia",
@@ -80,7 +80,7 @@ window.NOVA_ERA_CARS = [
     ],
     emOferta: true,
     destaque: true,
-    nota: 5.0,
+    nota: 4.8,
     opcionais: [
       "1.0 completo com GNV — excelente consumo",
       "Única dona",
