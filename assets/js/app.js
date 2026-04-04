@@ -151,6 +151,9 @@
         "</span>";
     }
     var fipeNum = typeof car.fipe === "number" && !isNaN(car.fipe) ? car.fipe : null;
+    if (car.categoria === "moto") {
+      fipeNum = null;
+    }
     var precoNum = typeof car.preco === "number" ? car.preco : 0;
     var economiaHtml = "";
     if (fipeNum !== null && fipeNum > precoNum) {
