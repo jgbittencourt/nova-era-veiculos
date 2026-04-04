@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jgbittencourt.github.io/nova-era-veiculos/sitemap.xml
+Sitemap: https://www.novaeraveiculosbm.com.br/sitemap.xml
