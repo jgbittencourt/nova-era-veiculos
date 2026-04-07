@@ -2,6 +2,7 @@
  * Estoque Nova Era — fotos reais em assets/img/carros/ (.png)
  * Ajuste preço, km e ano conforme a documentação de cada veículo.
  * Campos opcionais: fipe (número), nota (avaliação 1–5), opcionais (array). Sem km → "Sob consulta".
+ * Atualização de estoque: Volkswagen Gol 2008 e Ford Ecosport 2005.
  */
 window.NOVA_ERA_CARS = [
   {
