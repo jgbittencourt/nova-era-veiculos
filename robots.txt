@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.novaeraveiculosbm.com.br/sitemap.xml
