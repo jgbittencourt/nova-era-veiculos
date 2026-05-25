@@ -2,69 +2,9 @@
  * Estoque Nova Era — fotos reais em assets/img/carros/ (.png)
  * Ajuste preço, km e ano conforme a documentação de cada veículo.
  * Campos opcionais: fipe (número), nota (avaliação 1–5), opcionais (array). Sem km → "Sob consulta".
- * Atualização de estoque: Honda CG Fan 160 2023.
+ * Removidos (vendidos): Honda Fit 2009, Volkswagen Gol 2008.
  */
 window.NOVA_ERA_CARS = [
-  {
-    id: 1,
-    marca: "Honda",
-    modelo: "Fit",
-    ano: 2009,
-    km: 140000,
-    preco: 37000,
-    fipe: 41000,
-    categoria: "hatch",
-    combustivel: "Flex",
-    cambio: "Manual",
-    imagem: "assets/img/carros/honda-fit-2009-1.png",
-    imagens: [
-      "assets/img/carros/honda-fit-2009-1.png",
-      "assets/img/carros/honda-fit-2009-2.png",
-      "assets/img/carros/honda-fit-2009-3.png",
-      "assets/img/carros/honda-fit-2009-4.png",
-    ],
-    emOferta: true,
-    destaque: true,
-    nota: 4.9,
-    opcionais: [
-      "Ar-condicionado",
-      "Bluetooth + navegação",
-      "Vidros elétricos",
-      "Banco de couro",
-      "Documentação em dia, sem multas",
-    ],
-  },
-  {
-    id: 6,
-    marca: "Volkswagen",
-    modelo: "Gol",
-    ano: 2008,
-    preco: 20900,
-    categoria: "hatch",
-    combustivel: "Flex",
-    cambio: "Manual",
-    imagem: "assets/img/carros/vw-gol-2008-1.png",
-    imagens: [
-      "assets/img/carros/vw-gol-2008-1.png",
-      "assets/img/carros/vw-gol-2008-2.png",
-      "assets/img/carros/vw-gol-2008-3.png",
-      "assets/img/carros/vw-gol-2008-4.png",
-    ],
-    emOferta: true,
-    destaque: true,
-    nota: 4.9,
-    opcionais: [
-      "Direção hidráulica",
-      "Vidros elétricos",
-      "Travas elétricas",
-      "Alarme",
-      "Documentação OK",
-      "Motor filé",
-      "Econômico",
-      "Baixa manutenção",
-      "Ótimo custo-benefício",
-    ],
-  },
   {
     id: 8,
     marca: "Chevrolet",
