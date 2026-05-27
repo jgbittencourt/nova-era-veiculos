@@ -43,6 +43,36 @@
   var navMobile = document.getElementById("nav-mobile");
 
   var cars = window.NOVA_ERA_CARS || [];
+  var featuredOrder = [
+    "Fiat Idea Essence 1.6",
+    "BMW R 1200 GS",
+    "Yamaha Fazer 250",
+  ];
+  var featuredRank = featuredOrder.reduce(function (acc, fullName, idx) {
+    acc[fullName] = idx;
+    return acc;
+  }, {});
+  cars = cars
+    .map(function (car, idx) {
+      return { car: car, idx: idx };
+    })
+    .sort(function (a, b) {
+      var aName = a.car.marca + " " + a.car.modelo;
+      var bName = b.car.marca + " " + b.car.modelo;
+      var aRank =
+        Object.prototype.hasOwnProperty.call(featuredRank, aName)
+          ? featuredRank[aName]
+          : Number.MAX_SAFE_INTEGER;
+      var bRank =
+        Object.prototype.hasOwnProperty.call(featuredRank, bName)
+          ? featuredRank[bName]
+          : Number.MAX_SAFE_INTEGER;
+      if (aRank !== bRank) return aRank - bRank;
+      return a.idx - b.idx;
+    })
+    .map(function (item) {
+      return item.car;
+    });
   var currentFilter = "todos";
 
   function formatMoney(n) {
