@@ -5,6 +5,12 @@
   var WHATSAPP_NUMERO = "5524992195829";
   /** Texto exibido ao lado de "WhatsApp:" na página */
   var WHATSAPP_EXIBICAO = "(24) 99219-5829";
+  /** Endereço da loja — usado nos links de GPS */
+  var LOJA_ENDERECO_GPS =
+    "R. Maj. Luiz Alves, 673, Boa Sorte, Barra Mansa, RJ, 27331-000, Brasil";
+  var GOOGLE_MAPS_DIR_URL =
+    "https://www.google.com/maps/dir/?api=1&destination=" +
+    encodeURIComponent(LOJA_ENDERECO_GPS);
   var MENSAGEM_PADRAO =
     "Olá! Vi o site da Nova Era Veículos e quero falar com um consultor sobre carros, financiamento ou troca.";
   var MENSAGEM_OFERTAS =
@@ -28,6 +34,11 @@
   var waBtnSticky = document.getElementById("wa-btn-sticky");
   var waFab = document.getElementById("wa-fab");
   var waLink = document.getElementById("wa-link");
+  var mapsBtn = document.getElementById("maps-btn");
+  var mapsBtnHero = document.getElementById("maps-btn-hero");
+  var mapsBtnSticky = document.getElementById("maps-btn-sticky");
+  var mapsLinkAddress = document.getElementById("maps-link-address");
+  var mapsLinkFooter = document.getElementById("maps-link-footer");
   var menuToggle = document.querySelector(".menu-toggle");
   var navMobile = document.getElementById("nav-mobile");
 
@@ -416,6 +427,13 @@
     });
   }
 
+  function setupMaps() {
+    var url = GOOGLE_MAPS_DIR_URL;
+    [mapsBtn, mapsBtnHero, mapsBtnSticky, mapsLinkAddress, mapsLinkFooter].forEach(function (el) {
+      if (el) el.href = url;
+    });
+  }
+
   function setupWhatsApp() {
     var url = waUrl();
     if (waBtn) waBtn.href = url;
@@ -436,6 +454,7 @@
 
   setupFilters();
   setupMenu();
+  setupMaps();
   setupWhatsApp();
   renderOfertas();
   render();

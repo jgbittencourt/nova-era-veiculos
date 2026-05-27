@@ -2125,9 +2125,37 @@ img {
   font-weight: 700;
 }
 
+.contact__actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin: 0 0 1rem;
+}
+
+.btn--maps {
+  width: 100%;
+  color: var(--navy-975);
+  background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 50%, var(--gold-deep) 100%);
+  box-shadow:
+    0 4px 20px rgba(201, 169, 98, 0.35),
+    0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
+}
+
+.btn--maps:hover {
+  color: var(--navy-975);
+  box-shadow:
+    0 8px 28px rgba(201, 169, 98, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.4) inset;
+}
+
 .contact__card .btn--whatsapp {
   position: relative;
   z-index: 1;
+  margin-top: 0;
 }
 
 .contact__btn-micro {
@@ -2336,6 +2364,7 @@ img {
   }
 
   .sticky-cta__stock,
+  .sticky-cta__maps,
   .sticky-cta__wa {
     flex: 1;
     display: flex;
@@ -2344,14 +2373,14 @@ img {
     min-height: 48px;
     font-family: var(--font-ui);
     font-weight: 800;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     text-decoration: none;
     border-radius: 12px;
     transition: filter 0.15s ease, transform 0.15s ease;
   }
 
   .sticky-cta__stock {
-    margin-right: 0.35rem;
+    margin-right: 0.25rem;
     color: var(--text);
     background: rgba(255, 255, 255, 0.08);
     border: 2px solid var(--border-medium);
@@ -2362,8 +2391,20 @@ img {
     color: var(--gold-bright);
   }
 
+  .sticky-cta__maps {
+    margin: 0 0.25rem;
+    color: var(--navy-975);
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold-deep));
+    box-shadow: 0 2px 12px rgba(201, 169, 98, 0.3);
+  }
+
+  .sticky-cta__maps:hover {
+    color: var(--navy-975);
+    filter: brightness(1.05);
+  }
+
   .sticky-cta__wa {
-    margin-left: 0.35rem;
+    margin-left: 0.25rem;
     color: #fff;
     background: linear-gradient(180deg, #2fe26b 0%, #25d366 40%, #17a34a 100%);
     box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
@@ -2375,6 +2416,7 @@ img {
   }
 
   .sticky-cta__stock:active,
+  .sticky-cta__maps:active,
   .sticky-cta__wa:active {
     transform: scale(0.98);
   }
@@ -2448,6 +2490,25 @@ img {
   font-weight: 600;
   color: var(--text-muted);
   margin-top: 0.2rem;
+}
+
+.footer__social {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+}
+
+.footer__social:hover {
+  color: var(--gold);
+}
+
+.footer__social-icon {
+  flex-shrink: 0;
+  opacity: 0.95;
 }
 
 .footer__nav {
@@ -2655,8 +2716,9 @@ button,
   }
 
   .sticky-cta__stock,
+  .sticky-cta__maps,
   .sticky-cta__wa {
     min-height: 50px;
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
   }
 }
