@@ -46,7 +46,11 @@
   var featuredOrder = [
     "Fiat Idea Essence 1.6",
     "BMW R 1200 GS",
-    "Yamaha Fazer 250",
+    "Chevrolet Celta 1.0 2010",
+    "Chevrolet Celta 1.0 2012",
+    "Honda CG Fan 160",
+    "Chevrolet Zafira Comfort",
+    "Ford Fiesta",
   ];
   var featuredRank = featuredOrder.reduce(function (acc, fullName, idx) {
     acc[fullName] = idx;
@@ -59,12 +63,18 @@
     .sort(function (a, b) {
       var aName = a.car.marca + " " + a.car.modelo;
       var bName = b.car.marca + " " + b.car.modelo;
+      var aNameWithYear = aName + " " + a.car.ano;
+      var bNameWithYear = bName + " " + b.car.ano;
       var aRank =
-        Object.prototype.hasOwnProperty.call(featuredRank, aName)
+        Object.prototype.hasOwnProperty.call(featuredRank, aNameWithYear)
+          ? featuredRank[aNameWithYear]
+          : Object.prototype.hasOwnProperty.call(featuredRank, aName)
           ? featuredRank[aName]
           : Number.MAX_SAFE_INTEGER;
       var bRank =
-        Object.prototype.hasOwnProperty.call(featuredRank, bName)
+        Object.prototype.hasOwnProperty.call(featuredRank, bNameWithYear)
+          ? featuredRank[bNameWithYear]
+          : Object.prototype.hasOwnProperty.call(featuredRank, bName)
           ? featuredRank[bName]
           : Number.MAX_SAFE_INTEGER;
       if (aRank !== bRank) return aRank - bRank;
