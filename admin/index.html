@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Nova IA — Painel Admin | Nova Era Veículos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div id="login-view" class="admin-login">
+    <div class="admin-login__card">
+      <h1 class="admin-login__title">Nova IA Admin</h1>
+      <p class="admin-login__sub">Painel administrativo da assistente virtual</p>
+      <div class="admin-field">
+        <label for="login-password">Senha de acesso</label>
+        <input type="password" id="login-password" placeholder="Digite a senha" autocomplete="current-password" />
+      </div>
+      <button class="admin-btn admin-btn--primary" id="login-btn" type="button" style="width:100%">Entrar</button>
+      <p id="login-error" style="color:#e74c3c;font-size:0.875rem;margin-top:0.75rem;display:none"></p>
+    </div>
+  </div>
+
+  <div id="admin-view" hidden>
+    <header class="admin-header">
+      <h1 class="admin-header__title">Nova IA — Admin</h1>
+      <div class="admin-header__actions">
+        <a class="admin-btn admin-btn--secondary" href="/" target="_blank">Ver site</a>
+        <button class="admin-btn admin-btn--secondary" id="logout-btn" type="button">Sair</button>
+      </div>
+    </header>
+
+    <div class="admin-layout">
+      <nav class="admin-nav" aria-label="Seções do painel">
+        <button class="admin-nav__btn admin-nav__btn--active" data-section="loja" type="button">Loja</button>
+        <button class="admin-nav__btn" data-section="faqs" type="button">FAQs</button>
+        <button class="admin-nav__btn" data-section="veiculos" type="button">Veículos</button>
+        <button class="admin-nav__btn" data-section="leads" type="button">Leads</button>
+        <button class="admin-nav__btn" data-section="chat" type="button">Chat</button>
+      </nav>
+
+      <main class="admin-main">
+        <!-- Loja -->
+        <section class="admin-section admin-section--active" id="section-loja">
+          <h2 class="admin-section__title">Dados da Loja</h2>
+          <div class="admin-card">
+            <div class="admin-grid-2">
+              <div class="admin-field">
+                <label for="loja-nome">Nome</label>
+                <input type="text" id="loja-nome" />
+              </div>
+              <div class="admin-field">
+                <label for="loja-telefone">Telefone</label>
+                <input type="text" id="loja-telefone" />
+              </div>
+            </div>
+            <div class="admin-field">
+              <label for="loja-endereco">Endereço</label>
+              <input type="text" id="loja-endereco" />
+            </div>
+            <div class="admin-field">
+              <label for="loja-horario">Horário</label>
+              <input type="text" id="loja-horario" />
+            </div>
+            <div class="admin-grid-2">
+              <div class="admin-field">
+                <label for="loja-whatsapp-numero">WhatsApp (DDI+DDD+número)</label>
+                <input type="text" id="loja-whatsapp-numero" placeholder="5524992195829" />
+              </div>
+              <div class="admin-field">
+                <label for="loja-whatsapp-exibicao">WhatsApp (exibição)</label>
+                <input type="text" id="loja-whatsapp-exibicao" placeholder="(24) 99219-5829" />
+              </div>
+            </div>
+            <div class="admin-field">
+              <label for="loja-instagram">Instagram</label>
+              <input type="text" id="loja-instagram" />
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <h3 style="margin:0 0 1rem;color:var(--gold)">Financiamento</h3>
+            <div class="admin-field">
+              <label for="fin-descricao">Descrição</label>
+              <textarea id="fin-descricao"></textarea>
+            </div>
+            <div class="admin-field">
+              <label for="fin-entrada">Entrada mínima</label>
+              <input type="text" id="fin-entrada" />
+            </div>
+            <div class="admin-field">
+              <label for="fin-parcelas">Parcelas</label>
+              <input type="text" id="fin-parcelas" />
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <h3 style="margin:0 0 1rem;color:var(--gold)">Pagamento e Trocas</h3>
+            <div class="admin-field">
+              <label for="pag-formas">Formas de pagamento (uma por linha)</label>
+              <textarea id="pag-formas" rows="4"></textarea>
+            </div>
+            <div class="admin-field">
+              <label for="trocas-desc">Política de trocas</label>
+              <textarea id="trocas-desc"></textarea>
+            </div>
+          </div>
+
+          <button class="admin-btn admin-btn--primary" id="save-loja" type="button">Salvar dados da loja</button>
+        </section>
+
+        <!-- FAQs -->
+        <section class="admin-section" id="section-faqs">
+          <h2 class="admin-section__title">Perguntas Frequentes</h2>
+          <div id="faqs-list"></div>
+          <button class="admin-btn admin-btn--secondary" id="add-faq" type="button">+ Adicionar FAQ</button>
+          <button class="admin-btn admin-btn--primary" id="save-faqs" type="button" style="margin-left:0.5rem">Salvar FAQs</button>
+        </section>
+
+        <!-- Veículos -->
+        <section class="admin-section" id="section-veiculos">
+          <h2 class="admin-section__title">Veículos</h2>
+          <p style="color:var(--text-muted);font-size:0.875rem;margin:-0.75rem 0 1rem">
+            Alterações são salvas em <code>data/cars.json</code> e sincronizadas com <code>assets/js/cars.js</code>.
+          </p>
+          <div id="cars-list"></div>
+          <button class="admin-btn admin-btn--secondary" id="add-car" type="button">+ Adicionar veículo</button>
+          <button class="admin-btn admin-btn--primary" id="save-cars" type="button" style="margin-left:0.5rem">Salvar veículos</button>
+        </section>
+
+        <!-- Leads -->
+        <section class="admin-section" id="section-leads">
+          <h2 class="admin-section__title">Leads Gerados</h2>
+          <button class="admin-btn admin-btn--secondary" id="refresh-leads" type="button" style="margin-bottom:1rem">Atualizar</button>
+          <div class="admin-card" id="leads-container">
+            <p class="admin-empty">Carregando leads...</p>
+          </div>
+        </section>
+
+        <!-- Chat -->
+        <section class="admin-section" id="section-chat">
+          <h2 class="admin-section__title">Configurações do Chat</h2>
+          <div class="admin-card">
+            <div class="admin-field">
+              <label for="chat-inicial">Mensagem inicial</label>
+              <textarea id="chat-inicial" rows="3"></textarea>
+            </div>
+            <div class="admin-field">
+              <label for="chat-fallback">Mensagem quando não souber responder</label>
+              <textarea id="chat-fallback" rows="2"></textarea>
+            </div>
+            <div class="admin-field">
+              <label for="chat-nome">Nome da assistente</label>
+              <input type="text" id="chat-nome" />
+            </div>
+          </div>
+          <button class="admin-btn admin-btn--primary" id="save-chat" type="button">Salvar configurações do chat</button>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="admin-toast" id="toast" role="status"></div>
+  <script src="admin.js"></script>
+</body>
+</html>

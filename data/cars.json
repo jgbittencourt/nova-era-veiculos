@@ -1,24 +1,15 @@
-/**
- * Estoque Nova Era — fotos reais em assets/img/carros/ (.png)
- * Ajuste preço, km e ano conforme a documentação de cada veículo.
- * Campos opcionais: fipe (número), nota (avaliação 1–5), opcionais (array). Sem km → "Sob consulta".
- * Removidos (vendidos): Honda Fit 2009, Volkswagen Gol 2008, Fiat Idea Essence 1.6,
- *   Chevrolet Celta 1.0 (todos), Honda CG Fan 160, Chevrolet Zafira Comfort, Ford Fiesta,
- *   Chevrolet Corsa Sedan 1.8, Fiat Uno Vivace 1.4, Fiat Uno Way 1.4.
- * Novo: Bajaj Dominar 200, Chevrolet Celta LT 1.0, Volkswagen Gol Special 1.0 Mi.
- */
-window.NOVA_ERA_CARS = [
+[
   {
-    id: 24,
-    marca: "Volkswagen",
-    modelo: "Gol Special 1.0 Mi",
-    ano: 1999,
-    preco: 10500,
-    categoria: "hatch",
-    combustivel: "Gasolina 1.0 Mi",
-    cambio: "Manual",
-    imagem: "assets/img/carros/vw-gol-special-1999-0.png",
-    imagens: [
+    "id": 24,
+    "marca": "Volkswagen",
+    "modelo": "Gol Special 1.0 Mi",
+    "ano": 1999,
+    "preco": 10500,
+    "categoria": "hatch",
+    "combustivel": "Gasolina 1.0 Mi",
+    "cambio": "Manual",
+    "imagem": "assets/img/carros/vw-gol-special-1999-0.png",
+    "imagens": [
       "assets/img/carros/vw-gol-special-1999-0.png",
       "assets/img/carros/vw-gol-special-1999-1.png",
       "assets/img/carros/vw-gol-special-1999-2.png",
@@ -29,12 +20,12 @@ window.NOVA_ERA_CARS = [
       "assets/img/carros/vw-gol-special-1999-7.png",
       "assets/img/carros/vw-gol-special-1999-8.png",
       "assets/img/carros/vw-gol-special-1999-9.png",
-      "assets/img/carros/vw-gol-special-1999-10.png",
+      "assets/img/carros/vw-gol-special-1999-10.png"
     ],
-    emOferta: true,
-    destaque: true,
-    nota: 4.7,
-    opcionais: [
+    "emOferta": true,
+    "destaque": true,
+    "nota": 4.7,
+    "opcionais": [
       "Motor 1.0 Mi — super econômico",
       "2 portas",
       "Documentação OK",
@@ -43,20 +34,20 @@ window.NOVA_ERA_CARS = [
       "Ótimo para trabalho e dia a dia",
       "Mecânica simples e confiável",
       "Pronto para rodar",
-      "Entrada + promissória mediante análise",
-    ],
+      "Entrada + promissória mediante análise"
+    ]
   },
   {
-    id: 23,
-    marca: "Chevrolet",
-    modelo: "Celta LT 1.0",
-    ano: "2011/2012",
-    preco: 28900,
-    categoria: "hatch",
-    combustivel: "Flex 1.0",
-    cambio: "Manual",
-    imagem: "assets/img/carros/chevrolet-celta-2012-0.png",
-    imagens: [
+    "id": 23,
+    "marca": "Chevrolet",
+    "modelo": "Celta LT 1.0",
+    "ano": "2011/2012",
+    "preco": 28900,
+    "categoria": "hatch",
+    "combustivel": "Flex 1.0",
+    "cambio": "Manual",
+    "imagem": "assets/img/carros/chevrolet-celta-2012-0.png",
+    "imagens": [
       "assets/img/carros/chevrolet-celta-2012-0.png",
       "assets/img/carros/chevrolet-celta-2012-1.png",
       "assets/img/carros/chevrolet-celta-2012-2.png",
@@ -66,12 +57,12 @@ window.NOVA_ERA_CARS = [
       "assets/img/carros/chevrolet-celta-2012-6.png",
       "assets/img/carros/chevrolet-celta-2012-7.png",
       "assets/img/carros/chevrolet-celta-2012-8.png",
-      "assets/img/carros/chevrolet-celta-2012-9.png",
+      "assets/img/carros/chevrolet-celta-2012-9.png"
     ],
-    emOferta: true,
-    destaque: true,
-    nota: 4.8,
-    opcionais: [
+    "emOferta": true,
+    "destaque": true,
+    "nota": 4.8,
+    "opcionais": [
       "Muito novo e bem conservado",
       "Motor 1.0 Flex — super econômico",
       "Completo",
@@ -81,31 +72,31 @@ window.NOVA_ERA_CARS = [
       "Carro alinhado, ótimo de andar",
       "Só pegar e rodar",
       "Aceito proposta",
-      "Ano modelo 2011/2012",
-    ],
+      "Ano modelo 2011/2012"
+    ]
   },
   {
-    id: 22,
-    marca: "Bajaj",
-    modelo: "Dominar 200",
-    ano: 2023,
-    preco: 14900,
-    categoria: "moto",
-    combustivel: "Gasolina 200cc",
-    cambio: "Manual",
-    imagem: "assets/img/carros/bajaj-dominar-200-0.png",
-    imagens: [
+    "id": 22,
+    "marca": "Bajaj",
+    "modelo": "Dominar 200",
+    "ano": 2023,
+    "preco": 14900,
+    "categoria": "moto",
+    "combustivel": "Gasolina 200cc",
+    "cambio": "Manual",
+    "imagem": "assets/img/carros/bajaj-dominar-200-0.png",
+    "imagens": [
       "assets/img/carros/bajaj-dominar-200-0.png",
       "assets/img/carros/bajaj-dominar-200-1.png",
       "assets/img/carros/bajaj-dominar-200-2.png",
       "assets/img/carros/bajaj-dominar-200-3.png",
       "assets/img/carros/bajaj-dominar-200-4.png",
-      "assets/img/carros/bajaj-dominar-200-5.png",
+      "assets/img/carros/bajaj-dominar-200-5.png"
     ],
-    emOferta: true,
-    destaque: true,
-    nota: 4.9,
-    opcionais: [
+    "emOferta": true,
+    "destaque": true,
+    "nota": 4.9,
+    "opcionais": [
       "Moto muito nova e bem conservada",
       "Motor 200cc — forte e econômica",
       "Visual esportivo e moderno",
@@ -119,32 +110,32 @@ window.NOVA_ERA_CARS = [
       "Aceito proposta",
       "Ótimo custo-benefício",
       "Moto diferenciada, confortável e econômica",
-      "Não reservo sem sinal",
-    ],
+      "Não reservo sem sinal"
+    ]
   },
   {
-    id: 21,
-    marca: "Citroen",
-    modelo: "C3 GLX 1.4",
-    ano: 2009,
-    preco: 20900,
-    categoria: "hatch",
-    combustivel: "Flex 1.4",
-    cambio: "Manual",
-    imagem: "assets/img/carros/citroen-c3-2009-0.png",
-    imagens: [
+    "id": 21,
+    "marca": "Citroen",
+    "modelo": "C3 GLX 1.4",
+    "ano": 2009,
+    "preco": 20900,
+    "categoria": "hatch",
+    "combustivel": "Flex 1.4",
+    "cambio": "Manual",
+    "imagem": "assets/img/carros/citroen-c3-2009-0.png",
+    "imagens": [
       "assets/img/carros/citroen-c3-2009-0.png",
       "assets/img/carros/citroen-c3-2009-1.png",
       "assets/img/carros/citroen-c3-2009-2.png",
       "assets/img/carros/citroen-c3-2009-3.png",
       "assets/img/carros/citroen-c3-2009-5.png",
       "assets/img/carros/citroen-c3-2009-6.png",
-      "assets/img/carros/citroen-c3-2009-7.png",
+      "assets/img/carros/citroen-c3-2009-7.png"
     ],
-    emOferta: true,
-    destaque: true,
-    nota: 4.8,
-    opcionais: [
+    "emOferta": true,
+    "destaque": true,
+    "nota": 4.8,
+    "opcionais": [
       "Documento OK 2026",
       "Recibo em branco",
       "Motor e caixa em perfeitas condições",
@@ -156,20 +147,20 @@ window.NOVA_ERA_CARS = [
       "Econômico e confortável",
       "Pronto pra rodar",
       "Ótimo custo-benefício",
-      "Não reservo sem sinal",
-    ],
+      "Não reservo sem sinal"
+    ]
   },
   {
-    id: 20,
-    marca: "Volkswagen",
-    modelo: "Voyage",
-    ano: "Sob consulta",
-    preco: 24900,
-    categoria: "sedan",
-    combustivel: "Sob consulta",
-    cambio: "Sob consulta",
-    imagem: "assets/img/carros/vw-voyage-1.png",
-    imagens: [
+    "id": 20,
+    "marca": "Volkswagen",
+    "modelo": "Voyage",
+    "ano": "Sob consulta",
+    "preco": 24900,
+    "categoria": "sedan",
+    "combustivel": "Sob consulta",
+    "cambio": "Sob consulta",
+    "imagem": "assets/img/carros/vw-voyage-1.png",
+    "imagens": [
       "assets/img/carros/vw-voyage-1.png",
       "assets/img/carros/vw-voyage-2.png",
       "assets/img/carros/vw-voyage-3.png",
@@ -177,12 +168,12 @@ window.NOVA_ERA_CARS = [
       "assets/img/carros/vw-voyage-5.png",
       "assets/img/carros/vw-voyage-6.png",
       "assets/img/carros/vw-voyage-7.png",
-      "assets/img/carros/vw-voyage-8.png",
+      "assets/img/carros/vw-voyage-8.png"
     ],
-    emOferta: true,
-    destaque: true,
-    nota: 4.8,
-    opcionais: [
+    "emOferta": true,
+    "destaque": true,
+    "nota": 4.8,
+    "opcionais": [
       "Completo",
       "Muito conservado",
       "Revisadinho",
@@ -193,20 +184,20 @@ window.NOVA_ERA_CARS = [
       "Documentação OK",
       "Pronto pra rodar",
       "Ótimo custo-benefício",
-      "Não reservo sem sinal",
-    ],
+      "Não reservo sem sinal"
+    ]
   },
   {
-    id: 19,
-    marca: "Fiat",
-    modelo: "Palio 1.0",
-    ano: 2015,
-    preco: 37900,
-    categoria: "hatch",
-    combustivel: "Flex 1.0 + GNV",
-    cambio: "Manual",
-    imagem: "assets/img/carros/fiat-palio-2015-0.png",
-    imagens: [
+    "id": 19,
+    "marca": "Fiat",
+    "modelo": "Palio 1.0",
+    "ano": 2015,
+    "preco": 37900,
+    "categoria": "hatch",
+    "combustivel": "Flex 1.0 + GNV",
+    "cambio": "Manual",
+    "imagem": "assets/img/carros/fiat-palio-2015-0.png",
+    "imagens": [
       "assets/img/carros/fiat-palio-2015-0.png",
       "assets/img/carros/fiat-palio-2015-1.png",
       "assets/img/carros/fiat-palio-2015-2.png",
@@ -216,12 +207,12 @@ window.NOVA_ERA_CARS = [
       "assets/img/carros/fiat-palio-2015-6.png",
       "assets/img/carros/fiat-palio-2015-7.png",
       "assets/img/carros/fiat-palio-2015-8.png",
-      "assets/img/carros/fiat-palio-2015-9.png",
+      "assets/img/carros/fiat-palio-2015-9.png"
     ],
-    emOferta: true,
-    destaque: true,
-    nota: 4.9,
-    opcionais: [
+    "emOferta": true,
+    "destaque": true,
+    "nota": 4.9,
+    "opcionais": [
       "Econômico",
       "Completo",
       "GNV instalado",
@@ -233,33 +224,33 @@ window.NOVA_ERA_CARS = [
       "Documentação OK",
       "Pronto pra rodar",
       "Ótimo custo-benefício",
-      "Não reservamos sem sinal",
-    ],
+      "Não reservamos sem sinal"
+    ]
   },
   {
-    id: 16,
-    marca: "BMW",
-    modelo: "R 1200 GS",
-    ano: 2015,
-    km: 57000,
-    preco: 55900,
-    categoria: "moto",
-    combustivel: "Gasolina 1200cc",
-    cambio: "Manual",
-    imagem: "assets/img/carros/bmw-gs-1200-2015-0.png",
-    imagens: [
+    "id": 16,
+    "marca": "BMW",
+    "modelo": "R 1200 GS",
+    "ano": 2015,
+    "km": 57000,
+    "preco": 55900,
+    "categoria": "moto",
+    "combustivel": "Gasolina 1200cc",
+    "cambio": "Manual",
+    "imagem": "assets/img/carros/bmw-gs-1200-2015-0.png",
+    "imagens": [
       "assets/img/carros/bmw-gs-1200-2015-0.png",
       "assets/img/carros/bmw-gs-1200-2015-1.png",
       "assets/img/carros/bmw-gs-1200-2015-2.png",
       "assets/img/carros/bmw-gs-1200-2015-3.png",
       "assets/img/carros/bmw-gs-1200-2015-4.png",
       "assets/img/carros/bmw-gs-1200-2015-5.png",
-      "assets/img/carros/bmw-gs-1200-2015-6.png",
+      "assets/img/carros/bmw-gs-1200-2015-6.png"
     ],
-    emOferta: true,
-    destaque: true,
-    nota: 4.9,
-    opcionais: [
+    "emOferta": true,
+    "destaque": true,
+    "nota": 4.9,
+    "opcionais": [
       "Moto extremamente nova e muito conservada",
       "Mecânica impecável",
       "Documento 2026",
@@ -268,7 +259,7 @@ window.NOVA_ERA_CARS = [
       "Confortável, forte e pronta para viajar",
       "Ideal para uso no dia a dia",
       "Pego seu veículo na troca (R$ 59.900)",
-      "Venda à vista: R$ 55.900",
-    ],
-  },
-];
+      "Venda à vista: R$ 55.900"
+    ]
+  }
+]

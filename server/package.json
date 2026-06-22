@@ -1,0 +1,20 @@
+{
+  "name": "nova-era-api",
+  "version": "1.0.0",
+  "description": "API da Nova IA — Nova Era Veículos",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "sync-cars": "node scripts/sync-cars.js",
+    "sync-engine": "node scripts/sync-engine.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}

@@ -1231,6 +1231,12 @@ img {
   }
 }
 
+.car-card--highlight {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+  transition: outline var(--transition);
+}
+
 .car-card {
   display: flex;
   flex-direction: column;

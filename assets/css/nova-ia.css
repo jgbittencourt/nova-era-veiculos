@@ -1,0 +1,401 @@
+/* ==========================================================================
+   Nova IA — assistente virtual Nova Era Veículos
+   ========================================================================== */
+
+.nova-ia-fab {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 120;
+  width: 3.75rem;
+  height: 3.75rem;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
+  color: var(--navy-975);
+  box-shadow: 0 8px 32px rgba(201, 169, 98, 0.45), 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.nova-ia-fab:hover {
+  transform: scale(1.06);
+  box-shadow: 0 12px 40px rgba(201, 169, 98, 0.55), 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.nova-ia-fab:active {
+  transform: scale(0.98);
+}
+
+.nova-ia-fab__icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.nova-ia-fab__badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: #25d366;
+  border: 2px solid var(--navy-975);
+  animation: nova-ia-pulse 2s infinite;
+}
+
+@keyframes nova-ia-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.nova-ia-panel {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 5.5rem;
+  z-index: 119;
+  width: min(400px, calc(100vw - 2rem));
+  height: min(560px, calc(100vh - 8rem));
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius);
+  background: var(--navy-900);
+  border: 1px solid var(--border-medium);
+  box-shadow: var(--shadow-elevated);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.96);
+  transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+}
+
+.nova-ia-panel--open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.nova-ia-panel__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.125rem;
+  background: linear-gradient(135deg, var(--navy-800) 0%, var(--navy-900) 100%);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.nova-ia-panel__avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+.nova-ia-panel__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.nova-ia-panel__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.nova-ia-panel__status {
+  margin: 0.125rem 0 0;
+  font-size: 0.75rem;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.nova-ia-panel__status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #25d366;
+}
+
+.nova-ia-panel__close {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition), color var(--transition);
+}
+
+.nova-ia-panel__close:hover {
+  background: var(--gold-muted);
+  color: var(--text);
+}
+
+.nova-ia-panel__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  scroll-behavior: smooth;
+}
+
+.nova-ia-msg {
+  max-width: 88%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.nova-ia-msg--bot {
+  align-self: flex-start;
+  background: var(--surface-raised);
+  color: var(--text);
+  border-bottom-left-radius: 4px;
+}
+
+.nova-ia-msg--user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--gold-deep) 0%, var(--gold) 100%);
+  color: var(--navy-975);
+  border-bottom-right-radius: 4px;
+  font-weight: 600;
+}
+
+.nova-ia-msg--typing {
+  align-self: flex-start;
+  background: var(--surface-raised);
+  color: var(--text-muted);
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.875rem 1.125rem;
+}
+
+.nova-ia-msg--typing span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: nova-ia-dot 1.2s infinite;
+}
+
+.nova-ia-msg--typing span:nth-child(2) { animation-delay: 0.2s; }
+.nova-ia-msg--typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes nova-ia-dot {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+.nova-ia-vehicles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin-top: 0.5rem;
+  max-width: 100%;
+}
+
+.nova-ia-vehicle-card {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.625rem;
+  border-radius: var(--radius-sm);
+  background: var(--navy-800);
+  border: 1px solid var(--border-subtle);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.nova-ia-vehicle-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.nova-ia-vehicle-card__img {
+  width: 72px;
+  height: 54px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--surface-dark);
+}
+
+.nova-ia-vehicle-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.nova-ia-vehicle-card__name {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  line-height: 1.3;
+}
+
+.nova-ia-vehicle-card__meta {
+  margin: 0.125rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.nova-ia-vehicle-card__price {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.nova-ia-vehicle-card__badge {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(37, 211, 102, 0.15);
+  color: #2fe26b;
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.nova-ia-vehicle-card__link {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.6875rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.nova-ia-panel__footer {
+  padding: 0.75rem 1rem 1rem;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--navy-950);
+  flex-shrink: 0;
+}
+
+.nova-ia-panel__wa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.625rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: #25d366;
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.nova-ia-panel__wa:hover {
+  background: #2fe26b;
+}
+
+.nova-ia-panel__wa:active {
+  transform: scale(0.98);
+}
+
+.nova-ia-panel__form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nova-ia-panel__input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  background: var(--surface-dark);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.nova-ia-panel__input::placeholder {
+  color: var(--text-muted);
+}
+
+.nova-ia-panel__input:focus {
+  border-color: var(--gold);
+}
+
+.nova-ia-panel__send {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
+  color: var(--navy-975);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform var(--transition);
+}
+
+.nova-ia-panel__send:hover {
+  transform: scale(1.05);
+}
+
+.nova-ia-panel__send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 1023px) {
+  .nova-ia-fab {
+    bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+    right: 1rem;
+  }
+
+  .nova-ia-panel {
+    right: 0.75rem;
+    left: 0.75rem;
+    width: auto;
+    bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
+    height: min(520px, calc(100vh - 7rem - env(safe-area-inset-bottom, 0px)));
+  }
+}
+
+@media (max-width: 480px) {
+  .nova-ia-fab {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
+  .nova-ia-fab__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

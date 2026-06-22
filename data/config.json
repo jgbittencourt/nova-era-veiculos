@@ -1,0 +1,84 @@
+{
+  "loja": {
+    "nome": "Nova Era Veículos",
+    "endereco": "R. Maj. Luiz Alves, 673 — Boa Sorte, Barra Mansa, RJ — CEP 27331-000",
+    "enderecoGps": "R. Maj. Luiz Alves, 673, Boa Sorte, Barra Mansa, RJ, 27331-000, Brasil",
+    "horario": "Segunda a sexta, 9h às 18h · Sábado, 9h às 13h",
+    "telefone": "(24) 99219-5829",
+    "instagram": "@nova_era_veicul0s_bm",
+    "whatsappNumero": "5524992195829",
+    "whatsappExibicao": "(24) 99219-5829"
+  },
+  "financiamento": {
+    "descricao": "Sim, financiamos! Trabalhamos com financiamento na medida do seu bolso, com simulação de parcelas e condições com bancos parceiros.",
+    "entradaMinima": "A entrada mínima varia conforme o veículo e a análise de crédito, geralmente a partir de 30% do valor.",
+    "parcelas": "Parcelas em até 48x, sujeitas à aprovação de crédito.",
+    "documentos": "RG, CPF, comprovante de residência e renda."
+  },
+  "pagamento": {
+    "formas": [
+      "À vista (PIX, transferência ou dinheiro)",
+      "Financiamento bancário",
+      "Cartão de crédito (consulte condições)",
+      "Troca com troco (aceitamos seu veículo como parte do pagamento)"
+    ]
+  },
+  "trocas": {
+    "descricao": "Sim! Aceitamos seu carro ou moto como entrada na troca. Avaliamos o veículo e aplicamos o valor como parte do pagamento."
+  },
+  "faqs": [
+    {
+      "pergunta": "Quais carros vocês têm disponíveis?",
+      "resposta": "Consulto o estoque em tempo real e listo todos os carros disponíveis com preço e foto."
+    },
+    {
+      "pergunta": "Quais motos estão disponíveis?",
+      "resposta": "Listo todas as motos do estoque atual com preços reais."
+    },
+    {
+      "pergunta": "Qual o carro mais barato da loja?",
+      "resposta": "Informo o veículo de menor preço do estoque com dados reais."
+    },
+    {
+      "pergunta": "Vocês financiam?",
+      "resposta": "Sim! Financiamos com entrada e parcelas conforme análise de crédito. Simulação pelo WhatsApp."
+    },
+    {
+      "pergunta": "Qual entrada mínima?",
+      "resposta": "Geralmente a partir de 30% do valor do veículo, variando conforme análise de crédito."
+    },
+    {
+      "pergunta": "Aceitam PIX?",
+      "resposta": "Sim! Aceitamos PIX para pagamento à vista."
+    },
+    {
+      "pergunta": "Aceitam cartão de crédito?",
+      "resposta": "Sim, aceitamos cartão de crédito — consulte condições com um vendedor."
+    },
+    {
+      "pergunta": "Posso usar meu carro como entrada?",
+      "resposta": "Sim! Aceitamos seu veículo na troca como parte do pagamento."
+    },
+    {
+      "pergunta": "Onde fica a Nova Era Veículos?",
+      "resposta": "R. Maj. Luiz Alves, 673 — Boa Sorte, Barra Mansa, RJ — CEP 27331-000."
+    },
+    {
+      "pergunta": "Qual o horário de funcionamento?",
+      "resposta": "Segunda a sexta, 9h às 18h · Sábado, 9h às 13h."
+    },
+    {
+      "pergunta": "Vocês atendem aos sábados?",
+      "resposta": "Sim! Sábado das 9h às 13h."
+    },
+    {
+      "pergunta": "Quero falar com um vendedor",
+      "resposta": "Clique em Falar com um vendedor ou informe seu nome que encaminho pelo WhatsApp."
+    }
+  ],
+  "chat": {
+    "mensagemInicial": "Olá! 👋 Sou a Nova IA da Nova Era Veículos. Posso ajudar você a encontrar um carro ou moto, simular financiamento ou falar com um vendedor.",
+    "mensagemFallback": "Posso encaminhar você diretamente para nossa equipe no WhatsApp.",
+    "nomeAssistente": "Nova IA"
+  }
+}

@@ -44,13 +44,13 @@
 
   var cars = window.NOVA_ERA_CARS || [];
   var featuredOrder = [
-    "Fiat Idea Essence 1.6",
+    "Volkswagen Gol Special 1.0 Mi",
+    "Chevrolet Celta LT 1.0",
+    "Bajaj Dominar 200",
+    "Citroen C3 GLX 1.4",
+    "Fiat Palio 1.0",
     "BMW R 1200 GS",
-    "Chevrolet Celta 1.0 2010",
-    "Chevrolet Celta 1.0 2012",
-    "Honda CG Fan 160",
-    "Chevrolet Zafira Comfort",
-    "Ford Fiesta",
+    "Volkswagen Voyage",
   ];
   var featuredRank = featuredOrder.reduce(function (acc, fullName, idx) {
     acc[fullName] = idx;
@@ -316,7 +316,9 @@
     var title = car.marca + " " + car.modelo;
     var wa = waUrl(carMessage(car));
     return (
-      '<article class="car-card" data-category="' +
+      '<article class="car-card" id="veiculo-' +
+      escapeHtml(String(car.id)) +
+      '" data-category="' +
       escapeHtml(car.categoria) +
       '">' +
       carMediaBlock(car, title) +
