@@ -44,6 +44,9 @@
 
   var cars = window.NOVA_ERA_CARS || [];
   var featuredOrder = [
+    "Chevrolet Cobalt LT 1.8",
+    "Volkswagen Crossfox 1.6 Flex",
+    "Fiat Idea 1.8 Flex",
     "Volkswagen Gol Special 1.0 Mi",
     "Chevrolet Celta LT 1.0",
     "Bajaj Dominar 200",
