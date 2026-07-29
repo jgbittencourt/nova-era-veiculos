@@ -44,15 +44,12 @@
 
   var cars = window.NOVA_ERA_CARS || [];
   var featuredOrder = [
-    "Chevrolet Cobalt LT 1.8",
-    "Volkswagen Crossfox 1.6 Flex",
-    "Fiat Idea 1.8 Flex",
-    "Volkswagen Gol Special 1.0 Mi",
-    "Chevrolet Celta LT 1.0",
-    "Bajaj Dominar 200",
-    "Citroen C3 GLX 1.4",
-    "Fiat Palio 1.0",
-    "BMW R 1200 GS",
+    "Mitsubishi Lancer 2.0",
+    "Honda CB 300",
+    "Honda Civic LX 1.7",
+    "Fiat Siena HLX 1.8",
+    "Volkswagen Fox 1.6",
+    "Ford Fiesta 1.6 Flex",
     "Volkswagen Voyage",
   ];
   var featuredRank = featuredOrder.reduce(function (acc, fullName, idx) {
