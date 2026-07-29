@@ -122,10 +122,13 @@ function result(intent, opts) {
 }
 
 function toPublicVehicle(car, baseUrl) {
-  var link = "#veiculo-" + car.id;
-  if (baseUrl) {
-    link = baseUrl.replace(/\/$/, "") + "/#veiculo-" + car.id;
+  var carId = parseInt(car.id, 10);
+  if (!carId || carId < 1) carId = 0;
+  var link = carId ? "#veiculo-" + carId : "#estoque";
+  if (baseUrl && carId) {
+    link = baseUrl.replace(/\/$/, "") + "/#veiculo-" + carId;
   }
+  var imagem = car.imagem || (Array.isArray(car.imagens) ? car.imagens[0] : "");
   return {
     id: car.id,
     marca: car.marca,
@@ -134,7 +137,7 @@ function toPublicVehicle(car, baseUrl) {
     preco: car.preco,
     precoFormatado: formatMoney(car.preco),
     categoria: car.categoria,
-    imagem: car.imagem || (Array.isArray(car.imagens) ? car.imagens[0] : ""),
+    imagem: imagem,
     emOferta: !!car.emOferta,
     nome: carFullName(car),
     link: link,

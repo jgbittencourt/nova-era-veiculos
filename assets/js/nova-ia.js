@@ -26,6 +26,31 @@
     return div.innerHTML;
   }
 
+  function safeImageSrc(src) {
+    if (typeof src !== "string") return "";
+    var value = src.trim();
+    if (!value || value.indexOf("..") !== -1) return "";
+    if (/^[a-z]+:/i.test(value)) return "";
+    return /^assets\/img\/carros\/[\w.-]+\.(png|jpe?g|webp|gif)$/i.test(value) ? value : "";
+  }
+
+  function safeVehicleLink(href, id) {
+    if (typeof href === "string") {
+      var trimmed = href.trim();
+      if (/^#veiculo-\d+$/.test(trimmed)) return trimmed;
+      try {
+        var parsed = new URL(trimmed, window.location.origin);
+        if (
+          parsed.origin === window.location.origin &&
+          /^#veiculo-\d+$/.test(parsed.hash)
+        ) {
+          return parsed.pathname + parsed.hash;
+        }
+      } catch (_e) { /* ignore */ }
+    }
+    return id != null ? "#veiculo-" + String(id) : "#estoque";
+  }
+
   function getCars() {
     return window.NOVA_ERA_CARS || [];
   }
@@ -49,9 +74,9 @@
   function buildVehicleCardsHtml(vehicles) {
     if (!vehicles || !vehicles.length) return "";
     var items = vehicles.slice(0, 6).map(function (v) {
-      var img = v.imagem
+      var img = safeImageSrc(v.imagem)
         ? '<img class="nova-ia-vehicle-card__img" src="' +
-          escapeHtml(v.imagem) +
+          escapeHtml(safeImageSrc(v.imagem)) +
           '" alt="' +
           escapeHtml(v.nome) +
           '" loading="lazy" width="72" height="54" />'
@@ -61,7 +86,7 @@
         : "";
       return (
         '<a class="nova-ia-vehicle-card" href="' +
-        escapeHtml(v.link || "#veiculo-" + v.id) +
+        escapeHtml(safeVehicleLink(v.link, v.id)) +
         '" data-car-id="' +
         escapeHtml(String(v.id)) +
         '">' +
@@ -230,7 +255,6 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: getApiMessages(),
-          cars: getCars(),
           siteUrl: getSiteUrl(),
           sessionId: sessionStorage.getItem(SESSION_KEY) || Date.now().toString(),
         }),

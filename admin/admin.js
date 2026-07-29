@@ -72,7 +72,7 @@
         headers: { Authorization: "Bearer " + password },
       });
       if (!res.ok) {
-        errEl.textContent = "Senha incorreta";
+        errEl.textContent = "Credenciais inválidas ou acesso indisponível";
         errEl.style.display = "block";
         return;
       }

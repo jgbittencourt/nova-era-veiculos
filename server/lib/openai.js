@@ -26,7 +26,8 @@ async function chatCompletion(systemPrompt, messages) {
 
   if (!response.ok) {
     var errBody = await response.text();
-    throw new Error("OpenAI API error " + response.status + ": " + errBody);
+    console.error("OpenAI API error", response.status, errBody.slice(0, 500));
+    throw new Error("Falha ao consultar a IA");
   }
 
   var data = await response.json();

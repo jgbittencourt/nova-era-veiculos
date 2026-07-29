@@ -126,6 +126,17 @@
     return div.innerHTML;
   }
 
+  function safeImageSrc(src) {
+    if (typeof src !== "string") return "";
+    var value = src.trim();
+    if (!value || value.indexOf("..") !== -1) return "";
+    if (/^[a-z]+:/i.test(value)) return "";
+    if (/^assets\/img\/carros\/[\w.-]+\.(png|jpe?g|webp|gif)$/i.test(value)) {
+      return value;
+    }
+    return "";
+  }
+
   /** Prova social — abaixo do título (nota por veículo em cars.js) */
   function carSocialProof(car) {
     var notaNum =
@@ -264,12 +275,14 @@
     var n = imgs.length;
     var slides = imgs
       .map(function (src, index) {
+        var safeSrc = safeImageSrc(String(src));
+        if (!safeSrc) return "";
         var loadAttr = 'loading="lazy"';
         return (
           '<figure class="car-card__image-wrap">' +
           (index === 0 ? carBadges(car) : "") +
           '<img class="car-card__image" src="' +
-          escapeHtml(String(src)) +
+          escapeHtml(safeSrc) +
           '" alt="' +
           escapeHtml(title + " " + car.ano + " - foto " + (index + 1)) +
           '" ' +
@@ -278,6 +291,7 @@
           "</figure>"
         );
       })
+      .filter(Boolean)
       .join("");
 
     var counterHtml = "";
