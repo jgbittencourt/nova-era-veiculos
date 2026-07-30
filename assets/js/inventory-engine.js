@@ -52,14 +52,24 @@ function parseYear(car) {
   return m ? parseInt(m[1], 10) : 0;
 }
 
+function isAvailable(car) {
+  return !car.vendido && car.status !== "vendido";
+}
+
+function availableCars(cars) {
+  if (!Array.isArray(cars)) return [];
+  return cars.filter(isAvailable);
+}
+
 function getCarPool(cars, n) {
+  var pool = availableCars(cars);
   if (n.indexOf("moto") !== -1 && n.indexOf("carro") === -1) {
-    return cars.filter(function (c) { return c.categoria === "moto"; });
+    return pool.filter(function (c) { return c.categoria === "moto"; });
   }
   if (n.indexOf("carro") !== -1 && n.indexOf("moto") === -1) {
-    return cars.filter(function (c) { return c.categoria !== "moto"; });
+    return pool.filter(function (c) { return c.categoria !== "moto"; });
   }
-  return cars;
+  return pool;
 }
 
 function hasOpcional(car, terms) {
@@ -475,10 +485,11 @@ function isSmartQuery(text) {
 function analyzeQuery(text, cars, config) {
   config = config || {};
   var n = normalize(text);
+  var catalog = availableCars(cars);
 
-  if (!Array.isArray(cars) || cars.length === 0) {
+  if (!Array.isArray(catalog) || catalog.length === 0) {
     return result("empty", {
-      directReply: "No momento não há veículos cadastrados no estoque.",
+      directReply: "No momento não há veículos disponíveis no estoque.",
       useDirectReply: true,
     });
   }
@@ -494,7 +505,7 @@ function analyzeQuery(text, cars, config) {
 
   if (!isSmartQuery(text)) return result(null);
 
-  var pool = getCarPool(cars, n);
+  var pool = getCarPool(catalog, n);
   var maxPrice = parseMaxPrice(text);
   var budget = parseBudget(text);
 
@@ -573,7 +584,7 @@ function analyzeQuery(text, cars, config) {
     n.indexOf("economico") !== -1
   ) {
     if (n.indexOf("moto") !== -1 && n.indexOf("carro") === -1 && n.indexOf("veiculo") === -1) {
-      var ecoMotos = cars.filter(function (c) { return c.categoria === "moto"; })
+      var ecoMotos = catalog.filter(function (c) { return c.categoria === "moto"; })
         .sort(function (a, b) { return a.preco - b.preco; });
       return result("economical_moto", {
         vehicles: ecoMotos,
@@ -607,7 +618,7 @@ function analyzeQuery(text, cars, config) {
     n.indexOf("moto") !== -1 &&
     (n.indexOf("dia a dia") !== -1 || n.indexOf("trabalhar") !== -1 || n.indexOf("procuro") !== -1)
   ) {
-    var motos = cars.filter(function (c) {
+    var motos = catalog.filter(function (c) {
       return c.categoria === "moto";
     });
     return result("recommend_moto", {
@@ -686,7 +697,7 @@ function analyzeQuery(text, cars, config) {
     n.indexOf("moto") !== -1 &&
     (n.indexOf("quais") !== -1 || n.indexOf("tem") !== -1 || n.indexOf("dispon") !== -1 || n.indexOf("estoque") !== -1)
   ) {
-    var allMotos = cars.filter(function (c) {
+    var allMotos = catalog.filter(function (c) {
       return c.categoria === "moto";
     });
     return result("list_motos", {
@@ -821,8 +832,8 @@ function analyzeQuery(text, cars, config) {
   ) {
     var label = n.indexOf("carro") !== -1 && n.indexOf("moto") === -1 ? "carros" : "veículos";
     var listPool = n.indexOf("carro") !== -1 && n.indexOf("moto") === -1
-      ? cars.filter(function (c) { return c.categoria !== "moto"; })
-      : cars;
+      ? catalog.filter(function (c) { return c.categoria !== "moto"; })
+      : catalog;
     return result("list_all", {
       vehicles: sortByPrice(listPool),
       directReply: "Temos " + listPool.length + " " + label + " disponíveis na Nova Era:",
@@ -890,6 +901,8 @@ function buildDetailedInventory(cars) {
 var _exports = {
   normalize: normalize,
   formatMoney: formatMoney,
+  isAvailable: isAvailable,
+  availableCars: availableCars,
   toPublicVehicle: toPublicVehicle,
   analyzeQuery: analyzeQuery,
   buildInventoryContext: buildInventoryContext,

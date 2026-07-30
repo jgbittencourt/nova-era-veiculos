@@ -1,5 +1,7 @@
 "use strict";
 
+var seo = require("./seo");
+
 var ALLOWED_CATEGORIES = {
   sedan: true,
   hatch: true,
@@ -16,7 +18,7 @@ var MAX = {
   longText: 2000,
   faqs: 50,
   cars: 200,
-  imagesPerCar: 20,
+  imagesPerCar: 50,
   chatMessages: 24,
   chatContent: 500,
   leadsPerHourConceptual: 12,
@@ -31,7 +33,7 @@ function isSafeAssetPath(value) {
   if (!value || typeof value !== "string") return false;
   if (value.indexOf("..") !== -1) return false;
   if (/^[a-z]+:/i.test(value)) return false;
-  return /^assets\/img\/carros\/[\w.-]+\.(png|jpe?g|webp|gif)$/i.test(value);
+  return /^assets\/img\/(carros|clientes)\/[\w.-]+\.(png|jpe?g|webp|gif)$/i.test(value);
 }
 
 function sanitizeAssetPath(value) {
@@ -72,8 +74,13 @@ function validateLead(body) {
     value: {
       nome: nome,
       telefone: telefone,
+      whatsapp: sanitizePhone(body.whatsapp || telefone),
+      mensagem: trimString(body.mensagem, MAX.mediumText),
       interesse: interesse,
+      veiculoId: body.veiculoId ? parseInt(body.veiculoId, 10) || null : null,
       origem: origem,
+      status: trimString(body.status, 30) || "novo",
+      observacoes: trimString(body.observacoes, MAX.mediumText),
     },
   };
 }
@@ -144,27 +151,52 @@ function validateCar(car, index) {
 
   if (errors.length) return { ok: false, errors: errors };
 
-  return {
-    ok: true,
-    value: {
-      id: id,
-      marca: marca,
-      modelo: modelo,
-      ano: ano,
-      preco: Math.round(preco),
-      categoria: categoria,
-      combustivel: trimString(car.combustivel, MAX.shortText),
-      cambio: trimString(car.cambio, MAX.shortText),
-      imagem: imagem,
-      imagens: imagens,
-      emOferta: !!car.emOferta,
-      destaque: !!car.destaque,
-      nota: typeof car.nota === "number" ? Math.min(5, Math.max(1, car.nota)) : undefined,
-      opcionais: sanitizeStringArray(car.opcionais, 30, MAX.mediumText),
-      km: typeof car.km === "number" && isFinite(car.km) ? Math.max(0, Math.round(car.km)) : undefined,
-      fipe: typeof car.fipe === "number" && isFinite(car.fipe) ? car.fipe : undefined,
-    },
+  var vendido = !!car.vendido || car.status === "vendido";
+  var status = vendido ? "vendido" : trimString(car.status, 20) || "disponivel";
+  if (status !== "disponivel" && status !== "vendido" && status !== "reservado") {
+    status = vendido ? "vendido" : "disponivel";
+  }
+
+  var kmVal = car.km;
+  if (typeof kmVal === "string" && kmVal.trim()) {
+    var parsedKm = parseInt(kmVal.replace(/\D/g, ""), 10);
+    kmVal = isFinite(parsedKm) ? parsedKm : undefined;
+  }
+
+  var value = {
+    id: id,
+    marca: marca,
+    modelo: modelo,
+    versao: trimString(car.versao, 60),
+    ano: ano,
+    anoModelo: trimString(car.anoModelo, 20),
+    placa: trimString(car.placa, 12).toUpperCase(),
+    cor: trimString(car.cor, 40),
+    motor: trimString(car.motor, 60),
+    combustivel: trimString(car.combustivel, MAX.shortText),
+    cambio: trimString(car.cambio, MAX.shortText),
+    portas: trimString(car.portas, 10),
+    preco: Math.round(preco),
+    descricao: trimString(car.descricao, MAX.longText),
+    categoria: categoria,
+    imagem: imagem,
+    imagens: imagens,
+    video: trimString(car.video, 300),
+    emOferta: !!car.emOferta,
+    destaque: !!car.destaque,
+    vendido: vendido || status === "vendido",
+    status: status,
+    nota: typeof car.nota === "number" ? Math.min(5, Math.max(1, car.nota)) : undefined,
+    opcionais: sanitizeStringArray(car.opcionais, 40, MAX.mediumText),
+    km: typeof kmVal === "number" && isFinite(kmVal) ? Math.max(0, Math.round(kmVal)) : undefined,
+    fipe: typeof car.fipe === "number" && isFinite(car.fipe) ? car.fipe : undefined,
+    dataCadastro: trimString(car.dataCadastro, 30) || new Date().toISOString(),
+    visualizacoes: typeof car.visualizacoes === "number" ? Math.max(0, car.visualizacoes) : 0,
+    slug: trimString(car.slug, 100),
+    metaDescription: trimString(car.metaDescription, 180),
   };
+
+  return { ok: true, value: seo.enrichCarSeo(value) };
 }
 
 function validateCars(cars) {
@@ -195,6 +227,57 @@ function validateCars(cars) {
 
   if (errors.length) return { ok: false, errors: errors };
   return { ok: true, value: sanitized };
+}
+
+function validateLeadUpdate(body) {
+  if (!body || typeof body !== "object") {
+    return { ok: false, errors: ["Dados inválidos"] };
+  }
+  return {
+    ok: true,
+    value: {
+      nome: body.nome != null ? trimString(body.nome, MAX.shortText) : undefined,
+      telefone: body.telefone != null ? sanitizePhone(body.telefone) : undefined,
+      whatsapp: body.whatsapp != null ? sanitizePhone(body.whatsapp) : undefined,
+      mensagem: body.mensagem != null ? trimString(body.mensagem, MAX.mediumText) : undefined,
+      interesse: body.interesse != null ? trimString(body.interesse, MAX.mediumText) : undefined,
+      status: body.status != null ? trimString(body.status, 30) : undefined,
+      observacoes: body.observacoes != null ? trimString(body.observacoes, MAX.mediumText) : undefined,
+    },
+  };
+}
+
+function validateClient(body, isCreate) {
+  var errors = [];
+  var nome = trimString(body.nome, MAX.shortText);
+  var telefone = sanitizePhone(body.telefone);
+  if (isCreate && !nome) errors.push("Nome obrigatório");
+  if (isCreate && !telefone) errors.push("Telefone obrigatório");
+  if (errors.length) return { ok: false, errors: errors };
+  return {
+    ok: true,
+    value: {
+      nome: nome,
+      telefone: telefone,
+      whatsapp: sanitizePhone(body.whatsapp || telefone),
+      email: trimString(body.email, 120),
+      cpf: trimString(body.cpf, 20),
+      rg: trimString(body.rg, 20),
+      cnh: trimString(body.cnh, 20),
+      endereco: trimString(body.endereco, MAX.mediumText),
+      cidade: trimString(body.cidade, 80),
+      estado: trimString(body.estado, 2).toUpperCase(),
+      cep: trimString(body.cep, 12),
+      dataNascimento: trimString(body.dataNascimento, 10),
+      documentos: sanitizeStringArray(body.documentos, 20, MAX.mediumText),
+      fotos: sanitizeStringArray(body.fotos, 20, MAX.mediumText).filter(isSafeAssetPath),
+      observacoes: trimString(body.observacoes, MAX.longText),
+      veiculosComprados: sanitizeStringArray(body.veiculosComprados, 30, MAX.shortText),
+      historicoCompras: Array.isArray(body.historicoCompras)
+        ? body.historicoCompras.slice(0, 50)
+        : undefined,
+    },
+  };
 }
 
 function sanitizeConfigSection(section, fields, maxLen) {
@@ -285,9 +368,12 @@ function validateConfig(body, existing) {
 
 module.exports = {
   validateLead: validateLead,
+  validateLeadUpdate: validateLeadUpdate,
   validateChatMessages: validateChatMessages,
   validateCars: validateCars,
+  validateCar: validateCar,
   validateConfig: validateConfig,
+  validateClient: validateClient,
   isSafeAssetPath: isSafeAssetPath,
   sanitizeAssetPath: sanitizeAssetPath,
 };

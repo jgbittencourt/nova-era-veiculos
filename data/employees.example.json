@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "nome": "Vendedor Exemplo",
+    "username": "vendedor",
+    "role": "vendedor",
+    "email": "",
+    "telefone": "",
+    "ativo": true,
+    "passwordHash": "$2a$10$exemplo.hash.bcrypt.aqui"
+  }
+]

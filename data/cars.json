@@ -3,11 +3,18 @@
     "id": 33,
     "marca": "Honda",
     "modelo": "CB 300",
+    "versao": "",
     "ano": "Sob consulta",
-    "preco": 12900,
-    "categoria": "moto",
+    "anoModelo": "",
+    "placa": "",
+    "cor": "",
+    "motor": "",
     "combustivel": "Gasolina 300cc",
     "cambio": "Manual",
+    "portas": "",
+    "preco": 12900,
+    "descricao": "",
+    "categoria": "moto",
     "imagem": "assets/img/carros/honda-cb300-0.png",
     "imagens": [
       "assets/img/carros/honda-cb300-0.png",
@@ -16,8 +23,11 @@
       "assets/img/carros/honda-cb300-3.png",
       "assets/img/carros/honda-cb300-4.png"
     ],
+    "video": "",
     "emOferta": true,
     "destaque": true,
+    "vendido": false,
+    "status": "disponivel",
     "nota": 4.8,
     "opcionais": [
       "Oportunidade — moto forte, econômica e pronta para rodar",
@@ -32,17 +42,29 @@
       "Avalio troca (trocas considerar FIPE)",
       "Pode trazer seu mecânico de confiança para avaliar",
       "Não reservo sem sinal"
-    ]
+    ],
+    "dataCadastro": "2026-07-30T00:16:21.746Z",
+    "visualizacoes": 0,
+    "slug": "honda-cb-300-sob-consulta-33",
+    "metaDescription": "Honda CB 300 Sob consulta por R$ 12.900 na Nova Era Veículos BM, Barra Mansa - RJ. Seminovo com fotos reais e atendimento WhatsApp.",
+    "ogImage": "assets/img/carros/honda-cb300-0.png"
   },
   {
     "id": 32,
     "marca": "Mitsubishi",
     "modelo": "Lancer 2.0",
+    "versao": "",
     "ano": 2014,
-    "preco": 58000,
-    "categoria": "sedan",
+    "anoModelo": "",
+    "placa": "",
+    "cor": "",
+    "motor": "",
     "combustivel": "Gasolina 2.0",
     "cambio": "Manual",
+    "portas": "",
+    "preco": 58000,
+    "descricao": "",
+    "categoria": "sedan",
     "imagem": "assets/img/carros/mitsubishi-lancer-2014-0.png",
     "imagens": [
       "assets/img/carros/mitsubishi-lancer-2014-0.png",
@@ -52,8 +74,11 @@
       "assets/img/carros/mitsubishi-lancer-2014-4.png",
       "assets/img/carros/mitsubishi-lancer-2014-5.png"
     ],
+    "video": "",
     "emOferta": true,
     "destaque": true,
+    "vendido": false,
+    "status": "disponivel",
     "nota": 4.9,
     "opcionais": [
       "Esportividade, conforto e desempenho",
@@ -70,17 +95,29 @@
       "Excelente custo-benefício",
       "Ideal para quem busca esportividade, conforto e confiabilidade",
       "Não reservo sem sinal"
-    ]
+    ],
+    "dataCadastro": "2026-07-30T00:16:21.771Z",
+    "visualizacoes": 0,
+    "slug": "mitsubishi-lancer-2-0-2014-32",
+    "metaDescription": "Mitsubishi Lancer 2.0 2014 por R$ 58.000 na Nova Era Veículos BM, Barra Mansa - RJ. Seminovo com fotos reais e atendimento WhatsApp.",
+    "ogImage": "assets/img/carros/mitsubishi-lancer-2014-0.png"
   },
   {
     "id": 31,
     "marca": "Honda",
     "modelo": "Civic LX 1.7",
+    "versao": "",
     "ano": 2003,
-    "preco": 23900,
-    "categoria": "sedan",
+    "anoModelo": "",
+    "placa": "",
+    "cor": "",
+    "motor": "",
     "combustivel": "Gasolina 1.7",
     "cambio": "Automático",
+    "portas": "",
+    "preco": 23900,
+    "descricao": "",
+    "categoria": "sedan",
     "imagem": "assets/img/carros/honda-civic-2003-0.png",
     "imagens": [
       "assets/img/carros/honda-civic-2003-0.png",
@@ -97,8 +134,11 @@
       "assets/img/carros/honda-civic-2003-11.png",
       "assets/img/carros/honda-civic-2003-12.png"
     ],
+    "video": "",
     "emOferta": true,
     "destaque": true,
+    "vendido": false,
+    "status": "disponivel",
     "nota": 4.8,
     "opcionais": [
       "Conforto, desempenho e confiabilidade Honda",
@@ -114,17 +154,29 @@
       "Excelente custo-benefício",
       "Qualidade Honda com conforto e confiabilidade",
       "Não reservo sem sinal"
-    ]
+    ],
+    "dataCadastro": "2026-07-30T00:16:21.771Z",
+    "visualizacoes": 0,
+    "slug": "honda-civic-lx-1-7-2003-31",
+    "metaDescription": "Honda Civic LX 1.7 2003 por R$ 23.900 na Nova Era Veículos BM, Barra Mansa - RJ. Seminovo com fotos reais e atendimento WhatsApp.",
+    "ogImage": "assets/img/carros/honda-civic-2003-0.png"
   },
   {
     "id": 30,
     "marca": "Fiat",
     "modelo": "Siena HLX 1.8",
+    "versao": "",
     "ano": 2008,
-    "preco": 22900,
-    "categoria": "sedan",
+    "anoModelo": "",
+    "placa": "",
+    "cor": "",
+    "motor": "",
     "combustivel": "Flex 1.8",
     "cambio": "Manual",
+    "portas": "",
+    "preco": 22900,
+    "descricao": "",
+    "categoria": "sedan",
     "imagem": "assets/img/carros/fiat-siena-2008-0.png",
     "imagens": [
       "assets/img/carros/fiat-siena-2008-0.png",
@@ -135,8 +187,11 @@
       "assets/img/carros/fiat-siena-2008-5.png",
       "assets/img/carros/fiat-siena-2008-6.png"
     ],
+    "video": "",
     "emOferta": true,
     "destaque": true,
+    "vendido": false,
+    "status": "disponivel",
     "nota": 4.8,
     "opcionais": [
       "Sedan completo, espaçoso, confortável e com excelente desempenho",
@@ -155,17 +210,29 @@
       "Excelente custo-benefício",
       "Conforto, potência e economia em um só carro",
       "Não reservo sem sinal"
-    ]
+    ],
+    "dataCadastro": "2026-07-30T00:16:21.771Z",
+    "visualizacoes": 0,
+    "slug": "fiat-siena-hlx-1-8-2008-30",
+    "metaDescription": "Fiat Siena HLX 1.8 2008 por R$ 22.900 na Nova Era Veículos BM, Barra Mansa - RJ. Seminovo com fotos reais e atendimento WhatsApp.",
+    "ogImage": "assets/img/carros/fiat-siena-2008-0.png"
   },
   {
     "id": 29,
     "marca": "Volkswagen",
     "modelo": "Fox 1.6",
+    "versao": "",
     "ano": 2013,
-    "preco": 32500,
-    "categoria": "hatch",
+    "anoModelo": "",
+    "placa": "",
+    "cor": "",
+    "motor": "",
     "combustivel": "Flex 1.6",
     "cambio": "Manual",
+    "portas": "",
+    "preco": 32500,
+    "descricao": "",
+    "categoria": "hatch",
     "imagem": "assets/img/carros/vw-fox-2013-0.png",
     "imagens": [
       "assets/img/carros/vw-fox-2013-0.png",
@@ -179,8 +246,11 @@
       "assets/img/carros/vw-fox-2013-8.png",
       "assets/img/carros/vw-fox-2013-9.png"
     ],
+    "video": "",
     "emOferta": true,
     "destaque": true,
+    "vendido": false,
+    "status": "disponivel",
     "nota": 4.7,
     "opcionais": [
       "Hatch completo, espaçoso e com motor 1.6 de excelente desempenho",
@@ -198,17 +268,29 @@
       "Aceito proposta",
       "Excelente oportunidade — motor 1.6 forte e confortável",
       "Não reservo sem sinal"
-    ]
+    ],
+    "dataCadastro": "2026-07-30T00:16:21.771Z",
+    "visualizacoes": 0,
+    "slug": "volkswagen-fox-1-6-2013-29",
+    "metaDescription": "Volkswagen Fox 1.6 2013 por R$ 32.500 na Nova Era Veículos BM, Barra Mansa - RJ. Seminovo com fotos reais e atendimento WhatsApp.",
+    "ogImage": "assets/img/carros/vw-fox-2013-0.png"
   },
   {
     "id": 28,
     "marca": "Ford",
     "modelo": "Fiesta 1.6 Flex",
+    "versao": "",
     "ano": "2011/2012",
-    "preco": 27000,
-    "categoria": "hatch",
+    "anoModelo": "",
+    "placa": "",
+    "cor": "",
+    "motor": "",
     "combustivel": "Flex 1.6",
     "cambio": "Manual",
+    "portas": "",
+    "preco": 27000,
+    "descricao": "",
+    "categoria": "hatch",
     "imagem": "assets/img/carros/ford-fiesta-2012-0.png",
     "imagens": [
       "assets/img/carros/ford-fiesta-2012-0.png",
@@ -218,8 +300,11 @@
       "assets/img/carros/ford-fiesta-2012-4.png",
       "assets/img/carros/ford-fiesta-2012-5.png"
     ],
+    "video": "",
     "emOferta": true,
     "destaque": true,
+    "vendido": false,
+    "status": "disponivel",
     "nota": 4.8,
     "opcionais": [
       "Hatch completo, confortável e com excelente desempenho",
@@ -237,17 +322,29 @@
       "Excelente custo-benefício",
       "Ideal para quem busca carro completo e confiável no dia a dia",
       "Não reservo sem sinal"
-    ]
+    ],
+    "dataCadastro": "2026-07-30T00:16:21.771Z",
+    "visualizacoes": 0,
+    "slug": "ford-fiesta-1-6-flex-2011-2012-28",
+    "metaDescription": "Ford Fiesta 1.6 Flex 2011/2012 por R$ 27.000 na Nova Era Veículos BM, Barra Mansa - RJ. Seminovo com fotos reais e atendimento WhatsApp.",
+    "ogImage": "assets/img/carros/ford-fiesta-2012-0.png"
   },
   {
     "id": 20,
     "marca": "Volkswagen",
     "modelo": "Voyage",
+    "versao": "",
     "ano": "Sob consulta",
-    "preco": 24900,
-    "categoria": "sedan",
+    "anoModelo": "",
+    "placa": "",
+    "cor": "",
+    "motor": "",
     "combustivel": "Sob consulta",
     "cambio": "Sob consulta",
+    "portas": "",
+    "preco": 24900,
+    "descricao": "",
+    "categoria": "sedan",
     "imagem": "assets/img/carros/vw-voyage-1.png",
     "imagens": [
       "assets/img/carros/vw-voyage-1.png",
@@ -259,8 +356,11 @@
       "assets/img/carros/vw-voyage-7.png",
       "assets/img/carros/vw-voyage-8.png"
     ],
+    "video": "",
     "emOferta": true,
     "destaque": true,
+    "vendido": false,
+    "status": "disponivel",
     "nota": 4.8,
     "opcionais": [
       "Completo",
@@ -274,6 +374,11 @@
       "Pronto pra rodar",
       "Ótimo custo-benefício",
       "Não reservo sem sinal"
-    ]
+    ],
+    "dataCadastro": "2026-07-30T00:16:21.771Z",
+    "visualizacoes": 0,
+    "slug": "volkswagen-voyage-sob-consulta-20",
+    "metaDescription": "Volkswagen Voyage Sob consulta por R$ 24.900 na Nova Era Veículos BM, Barra Mansa - RJ. Seminovo com fotos reais e atendimento WhatsApp.",
+    "ogImage": "assets/img/carros/vw-voyage-1.png"
   }
 ]

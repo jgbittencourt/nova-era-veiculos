@@ -25,6 +25,14 @@ function writeJson(name, data) {
   fs.writeFileSync(filePath(name), JSON.stringify(data, null, 2) + "\n", "utf8");
 }
 
+function readJsonFile(name, fallback) {
+  return readJson(name, fallback);
+}
+
+function writeJsonFile(name, data) {
+  writeJson(name, data);
+}
+
 function readConfig() {
   return readJson("config.json");
 }
@@ -60,19 +68,140 @@ function writeCarsJs(cars) {
   fs.writeFileSync(CARS_JS_PATH, header + body, "utf8");
 }
 
+function defaultAnalytics() {
+  return {
+    totals: { visits: 0 },
+    byDay: {},
+    byMonth: {},
+    origins: {},
+    cars: {},
+    recent: [],
+  };
+}
+
+function readAnalytics() {
+  return readJson("analytics.json", defaultAnalytics());
+}
+
+function writeAnalytics(data) {
+  writeJson("analytics.json", data);
+}
+
+function readClients() {
+  return readJson("clients.json", []);
+}
+
+function writeClients(clients) {
+  writeJson("clients.json", clients);
+}
+
+function readMessages() {
+  return readJson("messages.json", []);
+}
+
+function writeMessages(messages) {
+  writeJson("messages.json", messages);
+}
+
+function readProfile() {
+  return readJson("profile.json", {
+    nome: "Administrador",
+    email: "",
+    telefone: "",
+    cargo: "Gerente",
+  });
+}
+
+function writeProfile(profile) {
+  writeJson("profile.json", profile);
+}
+
 function addLead(lead) {
   var leads = readLeads();
   var entry = {
     id: Date.now(),
     nome: lead.nome || "",
     telefone: lead.telefone || "",
+    whatsapp: lead.whatsapp || lead.telefone || "",
+    mensagem: lead.mensagem || "",
     interesse: lead.interesse || "",
+    veiculoId: lead.veiculoId || null,
     dataContato: new Date().toISOString(),
     origem: lead.origem || "nova-ia",
+    status: lead.status || "novo",
+    observacoes: lead.observacoes || "",
   };
   leads.unshift(entry);
   writeLeads(leads);
+
+  var messages = readMessages();
+  messages.unshift({
+    id: entry.id,
+    tipo: "lead",
+    nome: entry.nome,
+    telefone: entry.telefone,
+    mensagem: entry.mensagem || entry.interesse,
+    origem: entry.origem,
+    data: entry.dataContato,
+    lida: false,
+  });
+  writeMessages(messages.slice(0, 500));
+
   return entry;
+}
+
+function updateLead(id, patch) {
+  var leads = readLeads();
+  var idx = leads.findIndex(function (l) {
+    return l.id === id;
+  });
+  if (idx === -1) return null;
+  leads[idx] = Object.assign({}, leads[idx], patch, { id: id });
+  writeLeads(leads);
+  return leads[idx];
+}
+
+function addClient(client) {
+  var clients = readClients();
+  var entry = Object.assign(
+    {
+      id: Date.now(),
+      dataCadastro: new Date().toISOString(),
+      historicoCompras: [],
+      veiculosComprados: [],
+      observacoes: "",
+    },
+    client
+  );
+  clients.unshift(entry);
+  writeClients(clients);
+  return entry;
+}
+
+function updateClient(id, patch) {
+  var clients = readClients();
+  var idx = clients.findIndex(function (c) {
+    return c.id === id;
+  });
+  if (idx === -1) return null;
+  clients[idx] = Object.assign({}, clients[idx], patch, { id: id });
+  writeClients(clients);
+  return clients[idx];
+}
+
+function deleteClient(id) {
+  var clients = readClients();
+  var next = clients.filter(function (c) {
+    return c.id !== id;
+  });
+  if (next.length === clients.length) return false;
+  writeClients(next);
+  return true;
+}
+
+function saveCarsWithSync(cars) {
+  writeCars(cars);
+  writeCarsJs(cars);
 }
 
 function formatMoney(n) {
@@ -84,10 +213,13 @@ function formatMoney(n) {
 }
 
 function buildInventorySummary(cars) {
-  if (!Array.isArray(cars) || cars.length === 0) {
-    return "Nenhum veículo cadastrado no momento.";
+  var list = Array.isArray(cars) ? cars.filter(function (c) {
+    return !c.vendido && c.status !== "vendido";
+  }) : [];
+  if (list.length === 0) {
+    return "Nenhum veículo disponível no momento.";
   }
-  return cars
+  return list
     .map(function (car) {
       var title = car.marca + " " + car.modelo + " " + car.ano;
       var preco = formatMoney(car.preco);
@@ -160,7 +292,22 @@ module.exports = {
   readCars: readCars,
   writeCars: writeCars,
   writeCarsJs: writeCarsJs,
+  saveCarsWithSync: saveCarsWithSync,
   addLead: addLead,
+  updateLead: updateLead,
+  readClients: readClients,
+  writeClients: writeClients,
+  addClient: addClient,
+  updateClient: updateClient,
+  deleteClient: deleteClient,
+  readAnalytics: readAnalytics,
+  writeAnalytics: writeAnalytics,
+  readMessages: readMessages,
+  writeMessages: writeMessages,
+  readProfile: readProfile,
+  writeProfile: writeProfile,
   buildSystemPrompt: buildSystemPrompt,
   buildInventorySummary: buildInventorySummary,
+  readJsonFile: readJsonFile,
+  writeJsonFile: writeJsonFile,
 };

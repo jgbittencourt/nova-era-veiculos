@@ -1414,6 +1414,53 @@ img {
   box-shadow: 0 4px 16px rgba(201, 169, 98, 0.4);
 }
 
+.car-card__badge--sold {
+  background: linear-gradient(135deg, #6b7280, #374151);
+  color: #f9fafb;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.car-card--sold {
+  opacity: 0.92;
+}
+
+.car-card--sold .car-card__image {
+  filter: grayscale(0.35);
+}
+
+.car-card__sold-note {
+  font-size: 0.8125rem;
+  color: var(--text-muted, #94a3b8);
+  margin: 0 0 0.75rem;
+}
+
+.car-card__cta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.car-card__cta--interest,
+.car-card__cta--share {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.car-card__cta--share {
+  font-family: inherit;
+}
+
 .car-card__badge--sale {
   background: linear-gradient(135deg, #f43f5e 0%, #dc2626 50%, #b91c1c 100%);
   color: #fff;

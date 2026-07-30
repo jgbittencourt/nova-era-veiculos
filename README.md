@@ -1,72 +1,166 @@
+# Nova Era Veículos BM
 
-# 🚗 Nova Era Veículos
+Sistema web para concessionárias e lojas de seminovos: **site público** + **painel ERP administrativo** + **API Node.js**.
 
-Sistema de venda de veículos seminovos com foco total em conversão via WhatsApp.
+## Estrutura de pastas
 
----
+```
+/
+├── index.html              # Site público
+├── robots.txt              # SEO
+├── assets/
+│   ├── css/                # Estilos do site
+│   ├── js/
+│   │   ├── app.js          # UI do site
+│   │   ├── cars.js         # Estoque (sincronizado com API)
+│   │   ├── nova-ia.js      # Chat Nova IA
+│   │   ├── analytics.js    # Tracking de visitas
+│   │   └── inventory-engine.js
+│   ├── img/carros/         # Fotos de veículos (WebP)
+│   └── img/clientes/       # Fotos de clientes
+├── admin/                  # Painel ERP (tema escuro)
+│   ├── index.html
+│   ├── admin.css
+│   └── js/                 # core, pages, erp, app
+├── data/                   # Persistência JSON (sensível — gitignore)
+│   ├── config.json
+│   ├── cars.json
+│   └── backups/            # Backups automáticos e manuais
+└── server/                 # API Express
+    ├── index.js
+    ├── routes/             # admin.js, erp.js
+    └── lib/                # auth, finance, promissories, etc.
+```
 
-## 🔥 Sobre o projeto
+## Requisitos
 
-Este projeto foi desenvolvido para simular (e aplicar na prática) uma loja de veículos moderna, com foco em:
+- Node.js 18+
+- npm
 
-* 📲 Geração de leads via WhatsApp
-* 💰 Aumento de conversão
-* 🚗 Exibição profissional de veículos
-* ⚡ Experiência rápida e responsiva
+## Instalação
 
----
+```bash
+# 1. Clone o repositório
+git clone https://github.com/jgbittencourt/nova-era-veiculos.git
+cd nova-era-veiculos
 
-## 🚀 Funcionalidades
+# 2. Configure variáveis de ambiente
+cp .env.example .env
+# Edite .env com suas chaves
 
-* Catálogo dinâmico de veículos
-* Galeria com múltiplas imagens
-* Integração direta com WhatsApp
-* Cálculo de economia baseado na FIPE
-* Exibição de urgência e escassez (ofertas)
-* Interface moderna e responsiva
-* Filtros por categoria (SUV, Hatch, Moto, etc.)
+# 3. Gere hash da senha admin
+cd server
+npm install
+node scripts/hash-password.js "SuaSenhaForte123!"
+# Copie o ADMIN_PASSWORD_HASH para o .env
 
----
+# 4. Inicie o servidor
+npm start
+```
 
-## 💻 Tecnologias utilizadas
+- **Site:** http://localhost:3001/
+- **Admin:** http://localhost:3001/admin/
 
-* HTML5
-* CSS3
-* JavaScript (Vanilla)
+## Configuração de produção
 
----
+| Variável | Obrigatório | Descrição |
+|----------|-------------|-----------|
+| `ADMIN_PASSWORD_HASH` | Sim | Hash bcrypt da senha admin |
+| `ADMIN_USERNAME` | Sim | Usuário admin |
+| `SESSION_SECRET` | Sim | Segredo para tokens de sessão |
+| `OPENAI_API_KEY` | Para Nova IA | Chave OpenAI |
+| `NODE_ENV` | Sim | `production` |
+| `ALLOWED_ORIGINS` | Sim | Domínios CORS permitidos |
+| `TRUST_PROXY` | Se usar Nginx | `true` |
 
-## 📲 Objetivo
+## Painel administrativo
 
-Criar uma aplicação simples e eficiente para:
+### Módulos
 
-👉 Atrair clientes
-👉 Gerar conversas no WhatsApp
-👉 Facilitar a venda de veículos
+- **Dashboard** — KPIs, leads, financeiro, visitas
+- **Veículos** — CRUD, upload WebP, histórico de preço
+- **Clientes** — Cadastro completo com foto
+- **Financeiro** — Fluxo de caixa, export CSV
+- **Promissórias** — Parcelas, recebimentos, recibos
+- **Contratos** — Geração de documentos
+- **Agenda** — Vencimentos e compromissos
+- **Funcionários** — RBAC (Administrador, Vendedor, Financeiro)
+- **Backup** — Manual + automático diário
+- **Logs** — Auditoria completa
 
----
+### Cadastrar veículo
 
-## 🌐 Acesse o projeto
+1. Admin → **Veículos** → **+ Novo veículo**
+2. Preencha dados e arraste fotos
+3. Salvar — sincroniza `data/cars.json` e `assets/js/cars.js`
 
-**Site publicado (GitHub Pages):**  
-[https://jgbittencourt.github.io/nova-era-veiculos/](https://jgbittencourt.github.io/nova-era-veiculos/)
+### Cadastrar cliente
 
-> No repositório: **Settings → Pages** → Source: branch `main`, pasta `/ (root)`.
+1. Admin → **Clientes** → **+ Novo cliente**
+2. Preencha formulário completo
+3. Opcional: upload de foto
 
----
+## Backup e restauração
 
-## 📸 Preview
+### Automático
 
-(Depois você pode colocar prints aqui)
+- Executado na inicialização do servidor (se último backup > 24h)
+- Repetido a cada 24 horas
+- Retém os últimos **30** backups em `data/backups/`
 
----
+### Manual
 
-## 📍 Status do projeto
+1. Admin → **Backup** → **Backup manual**
 
-🚧 Em desenvolvimento contínuo
+### Restaurar
 
----
+1. Admin → **Backup** → **Restaurar** no backup desejado
+2. Confirme no modal
 
-## 🧠 Autor
+### Via API
 
-Desenvolvido por João Guilherme
+```bash
+# Criar backup (autenticado)
+POST /api/admin/backups
+
+# Restaurar
+POST /api/admin/backups/restore
+{ "name": "backup-2026-07-30T....json" }
+```
+
+## Segurança
+
+- Senhas com **bcrypt** (admin + funcionários)
+- Tokens HMAC com expiração (12h) e revogação no logout
+- Header **X-Nova-Admin** (proteção CSRF preparatória)
+- Helmet, rate limit, CORS, CSP sem `unsafe-inline`
+- Upload validado (tipo, dimensões, Sharp metadata)
+- RBAC por módulo
+- Logs de auditoria
+
+## Testes
+
+```bash
+cd server
+npm run smoke-test   # Testes de módulos
+npm audit            # Vulnerabilidades
+```
+
+## Deploy
+
+- **Site estático:** GitHub Pages (apenas frontend + `cars.js`)
+- **API + Admin:** Servidor Node separado (VPS, Render, etc.)
+- Configure proxy reverso com HTTPS
+
+## Atualizar estoque
+
+O painel admin sincroniza automaticamente. Para sync manual:
+
+```bash
+cd server
+node scripts/sync-cars.js
+```
+
+## Licença
+
+Projeto privado — Nova Era Veículos BM.

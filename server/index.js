@@ -11,6 +11,11 @@ var openai = require("./lib/openai");
 var inventory = require("./lib/inventory");
 var security = require("./lib/security");
 var validate = require("./lib/validate");
+var registerAdminRoutes = require("./routes/admin");
+var registerErpRoutes = require("./routes/erp");
+var compression = require("compression");
+var csrf = require("./lib/csrf");
+var backup = require("./lib/backup");
 
 var app = express();
 var PORT = process.env.PORT || 3001;
@@ -22,17 +27,42 @@ if (process.env.TRUST_PROXY === "true") {
   app.set("trust proxy", 1);
 }
 
+app.use(compression());
 app.use(security.createHelmetMiddleware());
 app.use(security.blockSensitivePaths);
 app.use(cors(security.createCorsOptions()));
 app.use(express.json({ limit: "512kb" }));
 app.use(limits.general);
+app.use(csrf.requireAdminOrigin);
 
 app.use(express.static(ROOT, {
   index: "index.html",
   dotfiles: "deny",
+  etag: true,
+  maxAge: process.env.NODE_ENV === "production" ? "1d" : 0,
+  setHeaders: function (res, filePath) {
+    if (/\.(js|css|webp|png|jpe?g|gif|svg|woff2?)$/i.test(filePath)) {
+      res.setHeader("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800");
+    }
+  },
 }));
-app.use("/admin", express.static(path.join(ROOT, "admin"), { dotfiles: "deny" }));
+app.use("/admin", express.static(path.join(ROOT, "admin"), {
+  dotfiles: "deny",
+  etag: true,
+  maxAge: process.env.NODE_ENV === "production" ? "1h" : 0,
+}));
+
+registerAdminRoutes(app, {
+  limits: limits,
+  resolveCars: resolveCars,
+  ROOT: ROOT,
+});
+
+registerErpRoutes(app, {
+  limits: limits,
+  resolveCars: resolveCars,
+  ROOT: ROOT,
+});
 
 app.get("/api/health", function (_req, res) {
   res.json({ ok: true });
@@ -121,8 +151,7 @@ app.put("/api/cars", limits.adminAuth, auth.checkAdmin, function (req, res) {
     if (!result.ok) {
       return res.status(400).json({ error: result.errors.join("; ") });
     }
-    storage.writeCars(result.value);
-    storage.writeCarsJs(result.value);
+    storage.saveCarsWithSync(result.value);
     res.json({ ok: true, count: result.value.length });
   } catch (err) {
     res.status(500).json({
@@ -267,8 +296,11 @@ function syncCarsFromJsIfNeeded() {
   }
 }
 
-app.use(function (_req, res) {
-  res.status(404).json({ error: "Rota não encontrada" });
+app.use(function (req, res) {
+  if ((req.path || "").indexOf("/api/") === 0) {
+    return res.status(404).json({ error: "Rota não encontrada" });
+  }
+  res.status(404).type("text").send("Página não encontrada");
 });
 
 app.use(function (err, _req, res, _next) {
@@ -284,4 +316,5 @@ app.listen(PORT, function () {
   console.log("Site: http://localhost:" + PORT + "/");
   console.log("Admin: http://localhost:" + PORT + "/admin/");
   syncCarsFromJsIfNeeded();
+  backup.scheduleAutoBackup();
 });

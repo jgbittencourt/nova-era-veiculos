@@ -192,6 +192,9 @@
   }
 
   function carBadges(car) {
+    if (car.vendido || car.status === "vendido") {
+      return '<span class="car-card__badge car-card__badge--sold">Vendido</span>';
+    }
     if (car.emOferta) {
       return '<span class="car-card__badge car-card__badge--sale">Em oferta</span>';
     }
@@ -328,12 +331,19 @@
 
   function carCard(car) {
     var title = car.marca + " " + car.modelo;
+    var sold = car.vendido || car.status === "vendido";
     var wa = waUrl(carMessage(car));
     return (
-      '<article class="car-card" id="veiculo-' +
+      '<article class="car-card' +
+      (sold ? " car-card--sold" : "") +
+      '" id="veiculo-' +
       escapeHtml(String(car.id)) +
+      '" data-slug="' +
+      escapeHtml(car.slug || "") +
       '" data-category="' +
       escapeHtml(car.categoria) +
+      '" data-car-id="' +
+      escapeHtml(String(car.id)) +
       '">' +
       carMediaBlock(car, title) +
       '<div class="car-card__body">' +
@@ -359,12 +369,20 @@
       carOpcionaisBlock(car) +
       '<div class="car-card__footer">' +
       carPriceBlock(car) +
-      '<a class="car-card__cta car-card__cta--entrance" href="' +
-      escapeHtml(wa) +
-      '" target="_blank" rel="noopener noreferrer">' +
-      '<span class="car-card__cta-text">🔥 Quero garantir esse carro</span>' +
-      '<span class="car-card__cta-hint">WhatsApp</span>' +
-      "</a>" +
+      (sold
+        ? '<p class="car-card__sold-note">Este veículo já foi vendido, mas permanece no site para referência.</p>'
+        : '<a class="car-card__cta car-card__cta--entrance" href="' +
+          escapeHtml(wa) +
+          '" target="_blank" rel="noopener noreferrer" data-track="whatsapp">' +
+          '<span class="car-card__cta-text">🔥 Quero garantir esse carro</span>' +
+          '<span class="car-card__cta-hint">WhatsApp</span>' +
+          "</a>" +
+          '<div class="car-card__cta-row">' +
+          '<a class="car-card__cta car-card__cta--interest" href="' +
+          escapeHtml(wa) +
+          '" target="_blank" rel="noopener noreferrer" data-track="interest">Tenho interesse</a>' +
+          '<button type="button" class="car-card__cta car-card__cta--share" data-track="share">Compartilhar</button>' +
+          "</div>") +
       '<p class="car-card__cta-micro">Resposta rápida no WhatsApp</p>' +
       "</div>" +
       "</div>" +
@@ -421,12 +439,13 @@
     if (emptyEl) emptyEl.hidden = true;
     grid.innerHTML = list.map(carCard).join("");
     initCarGalleries(grid);
+    trackVisibleCars(grid);
   }
 
   function renderOfertas() {
     if (!offersGrid) return;
     var list = cars.filter(function (c) {
-      return c.emOferta === true;
+      return c.emOferta === true && !c.vendido && c.status !== "vendido";
     });
     if (list.length === 0) {
       offersGrid.innerHTML = "";
@@ -436,6 +455,7 @@
     if (offersEmptyEl) offersEmptyEl.hidden = true;
     offersGrid.innerHTML = list.map(carCard).join("");
     initCarGalleries(offersGrid);
+    trackVisibleCars(offersGrid);
   }
 
   function setupFilters() {
@@ -506,12 +526,112 @@
     }
   }
 
+  function setupAnalytics() {
+    if (!window.NovaAnalytics) return;
+    document.addEventListener("click", function (e) {
+      var card = e.target.closest(".car-card[data-car-id]");
+      if (!card) return;
+      var id = parseInt(card.getAttribute("data-car-id"), 10);
+      var track = e.target.closest("[data-track]");
+      if (!track) return;
+      var kind = track.getAttribute("data-track");
+      if (kind === "whatsapp") window.NovaAnalytics.whatsappClick(id);
+      if (kind === "interest") window.NovaAnalytics.interestClick(id);
+      if (kind === "share") {
+        window.NovaAnalytics.shareClick(id);
+        var title = card.querySelector(".car-card__title");
+        var text = encodeURIComponent(
+          "Confira " +
+            (title ? title.textContent : "este veículo") +
+            " na Nova Era Veículos BM: " +
+            window.location.href
+        );
+        window.open("https://wa.me/?text=" + text, "_blank", "noopener,noreferrer");
+        e.preventDefault();
+      }
+    });
+  }
+
+  function trackVisibleCars(root) {
+    if (!window.NovaAnalytics || !("IntersectionObserver" in window)) return;
+    if (!trackVisibleCars._seen) trackVisibleCars._seen = {};
+    var observer = trackVisibleCars._observer;
+    if (!observer) {
+      observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var id = entry.target.getAttribute("data-car-id");
+            if (!id || trackVisibleCars._seen[id]) return;
+            trackVisibleCars._seen[id] = true;
+            window.NovaAnalytics.carView(parseInt(id, 10));
+          });
+        },
+        { threshold: 0.4 }
+      );
+      trackVisibleCars._observer = observer;
+    }
+    (root || document).querySelectorAll(".car-card[data-car-id]").forEach(function (el) {
+      observer.observe(el);
+    });
+  }
+
+  function updateSeoForHash() {
+    var hash = window.location.hash || "";
+    var match = hash.match(/^#veiculo-(\d+)/);
+    var bc = document.getElementById("schema-breadcrumb");
+    if (!bc) return;
+    if (!match) {
+      bc.textContent = "";
+      document.title =
+        "Nova Era Veículos — Seminovos Barra Mansa | Financiamento e WhatsApp";
+      return;
+    }
+    var carId = parseInt(match[1], 10);
+    var car = cars.find(function (c) {
+      return c.id === carId;
+    });
+    if (!car) return;
+    var name = car.marca + " " + car.modelo + " " + car.ano;
+    document.title = name + " | Nova Era Veículos BM";
+    var desc = document.querySelector('meta[name="description"]');
+    if (desc && car.metaDescription) desc.setAttribute("content", car.metaDescription);
+    bc.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Início",
+          item: "https://www.novaeraveiculosbm.com.br/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Estoque",
+          item: "https://www.novaeraveiculosbm.com.br/#estoque",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: name,
+          item: "https://www.novaeraveiculosbm.com.br/#veiculo-" + car.id,
+        },
+      ],
+    });
+  }
+
+  window.addEventListener("hashchange", updateSeoForHash);
+  updateSeoForHash();
+
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
   setupFilters();
   setupMenu();
   setupMaps();
   setupWhatsApp();
+  setupAnalytics();
   renderOfertas();
   render();
 })();

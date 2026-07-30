@@ -3,3 +3,15 @@ node_modules/
 *.log
 .DS_Store
 data/leads.json
+data/analytics.json
+data/clients.json
+data/messages.json
+data/profile.json
+data/finance.json
+data/promissories.json
+data/employees.json
+data/agenda.json
+data/audit-logs.json
+data/backups/
+data/admin-credentials.json
+data/session-revoked.json
