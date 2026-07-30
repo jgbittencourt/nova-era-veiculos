@@ -80,5 +80,9 @@
     "mensagemInicial": "Olá! 👋 Sou a Nova IA da Nova Era Veículos. Posso ajudar você a encontrar um carro ou moto, simular financiamento ou falar com um vendedor.",
     "mensagemFallback": "Posso encaminhar você diretamente para nossa equipe no WhatsApp.",
     "nomeAssistente": "Nova IA"
+  },
+  "integracoes": {
+    "erpDonoUrl": "http://localhost:3000/login",
+    "erpDonoNome": "Nova Era ERP (Dono)"
   }
 }

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="admin.css?v=6" />
 </head>
 <body>
   <div id="login-view" class="login">
@@ -62,6 +62,7 @@
         <button class="admin-nav__item" data-page="perfil" type="button">Perfil</button>
         <button class="admin-nav__item" data-page="backup" type="button">Backup</button>
         <button class="admin-nav__item" data-page="logs" type="button">Logs</button>
+        <button class="admin-nav__item admin-nav__item--erp" data-page="erp-dono" type="button">ERP Dono</button>
         <button class="admin-nav__item admin-nav__item--logout" id="logout-btn" type="button">Sair</button>
       </nav>
       <div class="sidebar__user">
@@ -205,6 +206,38 @@
       <section class="admin-page" data-page="backup" hidden><div id="erp-backup-root"></div></section>
       <section class="admin-page" data-page="logs" hidden><div id="erp-logs-root"></div></section>
 
+      <section class="admin-page" data-page="erp-dono" hidden>
+        <div id="erp-dono-alert" class="erp-dono-alert erp-dono-alert--checking" role="status">
+          Verificando conexão com o ERP Dono...
+        </div>
+        <div class="panel erp-dono-panel">
+          <p class="admin-muted">
+            O ERP Dono é um sistema separado (Next.js + PostgreSQL). Por segurança, ele abre em
+            <strong>nova aba</strong> com login próprio — não pode ser embutido neste painel.
+          </p>
+          <ul class="admin-list erp-dono-features">
+            <li>Dashboard, veículos, clientes, CRM, vendas</li>
+            <li>Promissórias, financeiro, documentos, relatórios</li>
+            <li>Usuários, papéis e auditoria</li>
+          </ul>
+          <div class="admin-form-actions">
+            <a id="erp-dono-open" class="admin-btn admin-btn--primary" href="http://localhost:3000/login" target="_blank" rel="noopener noreferrer">Abrir Nova Era ERP (Dono)</a>
+            <button id="erp-dono-check" class="admin-btn admin-btn--ghost" type="button">Verificar conexão</button>
+          </div>
+          <p id="erp-dono-status" class="admin-muted erp-dono-status"></p>
+          <details class="erp-dono-help" id="erp-dono-help" hidden>
+            <summary>Como iniciar o ERP Dono</summary>
+            <ol>
+              <li>Abra um terminal na pasta <code>NOVA ERA DONO</code></li>
+              <li>Execute: <code>npm run dev</code></li>
+              <li>Aguarde aparecer <code>localhost:3000</code></li>
+              <li>Clique em <strong>Abrir Nova Era ERP (Dono)</strong> acima</li>
+            </ol>
+            <p class="admin-muted"><small>Demo: <code>owner@novaera.local</code> / <code>NovaEra@Demo2026</code></small></p>
+          </details>
+        </div>
+      </section>
+
       <section class="admin-page" data-page="configuracoes" hidden>
         <div class="panel admin-form">
           <h3>Dados da loja</h3>
@@ -223,6 +256,11 @@
           <div class="admin-form-actions">
             <button id="save-config" class="admin-btn admin-btn--primary" type="button">Salvar configurações</button>
             <button id="gen-sitemap" class="admin-btn admin-btn--ghost" type="button">Gerar sitemap.xml</button>
+          </div>
+          <h3>Integrações</h3>
+          <div class="admin-form-grid">
+            <div class="admin-field admin-field--wide"><label>URL ERP Dono</label><input id="cfg-erp-url" placeholder="http://localhost:3000/login" /></div>
+            <div class="admin-field"><label>Nome exibido</label><input id="cfg-erp-nome" placeholder="Nova Era ERP (Dono)" /></div>
           </div>
         </div>
       </section>
@@ -288,7 +326,7 @@
     </div>
   </div>
 
-  <div id="confirm-modal" class="modal modal--confirm" hidden>
+  <div id="confirm-modal" class="modal modal--confirm" hidden aria-hidden="true">
     <div class="modal__dialog modal__dialog--sm">
       <header class="modal__header">
         <h3 id="confirm-title">Confirmar</h3>
@@ -305,9 +343,9 @@
 
   <div id="admin-toast" class="admin-toast" role="status"></div>
 
-  <script src="js/core.js"></script>
-  <script src="js/erp.js"></script>
-  <script src="js/pages.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/core.js?v=6"></script>
+  <script src="js/erp.js?v=6"></script>
+  <script src="js/pages.js?v=6"></script>
+  <script src="js/app.js?v=6"></script>
 </body>
 </html>

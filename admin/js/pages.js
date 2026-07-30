@@ -42,6 +42,7 @@ window.NovaAdminPages = (function () {
       perfil: "Perfil",
       backup: "Backup",
       logs: "Logs",
+      "erp-dono": "ERP Dono",
     };
     var titleEl = NA.$("#page-title");
     if (titleEl) titleEl.textContent = titles[name] || "Admin";
@@ -347,12 +348,12 @@ window.NovaAdminPages = (function () {
     state.editingCarId = car ? car.id : null;
     NA.$("#car-modal-title").textContent = car ? "Editar veículo" : "Novo veículo";
     NA.$("#car-modal-body").innerHTML = carFormHtml(car);
-    NA.$("#car-modal").hidden = false;
+    NA.openModal(NA.$("#car-modal"));
     bindCarForm();
   }
 
   function closeCarForm() {
-    NA.$("#car-modal").hidden = true;
+    NA.closeModal(NA.$("#car-modal"));
     state.editingCarId = null;
   }
 
@@ -564,7 +565,7 @@ window.NovaAdminPages = (function () {
   }
 
   function openClientForm(client) {
-    NA.$("#client-modal").hidden = false;
+    NA.openModal(NA.$("#client-modal"));
     NA.$("#client-modal-title").textContent = client ? "Editar cliente" : "Novo cliente";
     NA.$("#client-id").value = client ? client.id : "";
     NA.$("#client-nome").value = client ? client.nome || "" : "";
@@ -591,7 +592,7 @@ window.NovaAdminPages = (function () {
   }
 
   function closeClientForm() {
-    NA.$("#client-modal").hidden = true;
+    NA.closeModal(NA.$("#client-modal"));
   }
 
   async function saveClient() {
@@ -788,6 +789,72 @@ window.NovaAdminPages = (function () {
     }
   }
 
+  function renderErpDono() {
+    var url = "http://localhost:3000/login";
+    var nome = "Nova Era ERP (Dono)";
+    if (state.config && state.config.integracoes) {
+      url = state.config.integracoes.erpDonoUrl || url;
+      nome = state.config.integracoes.erpDonoNome || nome;
+    }
+    var link = NA.$("#erp-dono-open");
+    link.href = url;
+    link.textContent = "Abrir " + nome;
+  }
+
+  async function loadErpDono() {
+    if (!state.config) {
+      var res = await NA.api("/api/config", { headers: NA.authHeaders() });
+      state.config = await res.json();
+    }
+    renderErpDono();
+    await checkErpDono(true);
+  }
+
+  async function checkErpDono(silent) {
+    var url = NA.$("#erp-dono-open").href;
+    var status = NA.$("#erp-dono-status");
+    var alert = NA.$("#erp-dono-alert");
+    var help = NA.$("#erp-dono-help");
+    if (!silent && status) {
+      status.textContent = "Verificando...";
+      status.className = "admin-muted erp-dono-status";
+    }
+    if (alert) {
+      alert.hidden = false;
+      alert.className = "erp-dono-alert erp-dono-alert--checking";
+      alert.textContent = "Verificando conexão com o ERP Dono...";
+    }
+    try {
+      var healthUrl = url.replace(/\/login\/?$/, "") + "/api/health";
+      var res = await fetch(healthUrl, { mode: "cors" });
+      if (res.ok) {
+        if (status) {
+          status.textContent = "ERP Dono online em " + url.replace(/\/login\/?$/, "") + ".";
+          status.className = "admin-muted erp-dono-status erp-dono-status--ok";
+        }
+        if (alert) {
+          alert.className = "erp-dono-alert erp-dono-alert--ok";
+          alert.textContent =
+            "ERP Dono online. Clique em \"Abrir Nova Era ERP (Dono)\" para acessar em nova aba.";
+        }
+        if (help) help.hidden = true;
+      } else {
+        throw new Error("status " + res.status);
+      }
+    } catch (_e) {
+      if (status) {
+        status.textContent = "";
+        status.className = "admin-muted erp-dono-status";
+      }
+      if (alert) {
+        alert.className = "erp-dono-alert erp-dono-alert--err";
+        alert.textContent =
+          "ERP Dono offline. Inicie o servidor na pasta NOVA ERA DONO com: npm run dev";
+      }
+      if (help) help.hidden = false;
+    }
+  }
+
   async function loadConfig() {
     var res = await NA.api("/api/config", { headers: NA.authHeaders() });
     state.config = await res.json();
@@ -808,6 +875,9 @@ window.NovaAdminPages = (function () {
     var chat = c.chat || {};
     NA.$("#cfg-chat-inicial").value = chat.mensagemInicial || "";
     NA.$("#cfg-chat-fallback").value = chat.mensagemFallback || "";
+    var integ = c.integracoes || {};
+    NA.$("#cfg-erp-url").value = integ.erpDonoUrl || "";
+    NA.$("#cfg-erp-nome").value = integ.erpDonoNome || "";
   }
 
   async function saveConfig() {
@@ -826,6 +896,10 @@ window.NovaAdminPages = (function () {
       mensagemInicial: NA.$("#cfg-chat-inicial").value.trim(),
       mensagemFallback: NA.$("#cfg-chat-fallback").value.trim(),
       nomeAssistente: c.chat ? c.chat.nomeAssistente : "Nova IA",
+    };
+    c.integracoes = {
+      erpDonoUrl: NA.$("#cfg-erp-url").value.trim() || "http://localhost:3000/login",
+      erpDonoNome: NA.$("#cfg-erp-nome").value.trim() || "Nova Era ERP (Dono)",
     };
     var res = await NA.api("/api/config", {
       method: "PUT",
@@ -862,16 +936,22 @@ window.NovaAdminPages = (function () {
   }
 
   async function navigate(page) {
+    if (!page) return;
     setPage(page);
-    if (page === "dashboard") await loadDashboard();
-    if (page === "veiculos") await loadCars();
-    if (page === "leads") await loadLeads();
-    if (page === "clientes") await loadClients();
-    if (page === "mensagens") await loadMessages();
-    if (page === "estatisticas") await loadAnalytics();
-    if (page === "configuracoes") await loadConfig();
-    if (page === "perfil") await loadProfile();
-    if (window.NovaAdminErp) await window.NovaAdminErp.navigate(page);
+    try {
+      if (page === "dashboard") await loadDashboard();
+      if (page === "veiculos") await loadCars();
+      if (page === "leads") await loadLeads();
+      if (page === "clientes") await loadClients();
+      if (page === "mensagens") await loadMessages();
+      if (page === "estatisticas") await loadAnalytics();
+      if (page === "configuracoes") await loadConfig();
+      if (page === "erp-dono") await loadErpDono();
+      if (page === "perfil") await loadProfile();
+      if (window.NovaAdminErp) await window.NovaAdminErp.navigate(page);
+    } catch (e) {
+      NA.toast(e.message || "Erro ao carregar página", "error");
+    }
   }
 
   function bindCarsTable() {
@@ -934,5 +1014,7 @@ window.NovaAdminPages = (function () {
     bindClientsTable: bindClientsTable,
     saveConfig: saveConfig,
     saveProfile: saveProfile,
+    loadErpDono: loadErpDono,
+    checkErpDono: checkErpDono,
   };
 })();

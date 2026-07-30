@@ -16,6 +16,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html, body { margin: 0; min-height: 100%; }
 body {
   font-family: Inter, system-ui, sans-serif;
@@ -46,6 +47,10 @@ body {
   width: 44px; height: 44px; border-radius: 10px;
   display: grid; place-items: center; font-weight: 700;
   background: var(--primary); color: var(--primary-fg);
+}
+.shell[hidden],
+.login .login__error[hidden] {
+  display: none !important;
 }
 .login__error { color: var(--danger); font-size: 0.875rem; margin-top: 0.75rem; }
 
@@ -100,15 +105,6 @@ body {
   overflow: auto;
   font-size: 0.85rem;
 }
-  white-space: pre-wrap;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem;
-  max-height: 420px;
-  overflow: auto;
-  font-size: 0.85rem;
-}
 .admin-nav__item {
   border: 0; background: transparent; color: var(--muted);
   text-align: left; padding: 0.7rem 0.85rem; border-radius: 8px;
@@ -116,7 +112,47 @@ body {
 }
 .admin-nav__item:hover { background: #1c1c22; color: var(--text); }
 .admin-nav__item--active { background: var(--primary); color: var(--primary-fg); font-weight: 600; }
+.admin-nav__item--erp { color: #93c5fd; font-weight: 600; }
 .admin-nav__item--logout { color: #fca5a5; margin-top: 0.5rem; }
+.erp-dono-panel { max-width: 640px; }
+.erp-dono-features { margin: 1rem 0; }
+.erp-dono-status { margin-top: 0.75rem; min-height: 1.25rem; }
+.erp-dono-status--ok { color: #86efac; }
+.erp-dono-status--err { color: #fca5a5; }
+.erp-dono-alert {
+  max-width: 640px;
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border: 1px solid #3f3f46;
+  background: #18181b;
+}
+.erp-dono-alert--checking { color: #a1a1aa; }
+.erp-dono-alert--ok {
+  color: #86efac;
+  border-color: #166534;
+  background: #052e16;
+}
+.erp-dono-alert--err {
+  color: #fca5a5;
+  border-color: #991b1b;
+  background: #450a0a;
+}
+.erp-dono-help {
+  margin-top: 1.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px dashed #3f3f46;
+  border-radius: 8px;
+}
+.erp-dono-help summary { cursor: pointer; font-weight: 600; }
+.erp-dono-help ol { margin: 0.75rem 0 0 1.25rem; }
+.erp-dono-help code {
+  background: #27272a;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
 
 .main { flex: 1; min-width: 0; padding: 1rem 1.25rem 2rem; }
 .topbar {
@@ -283,8 +319,15 @@ body {
 
 .modal {
   position: fixed; inset: 0; background: rgba(0,0,0,0.72);
-  display: grid; place-items: center; z-index: 100;
+  display: none;
+  place-items: center; z-index: 100;
   padding: 1rem;
+}
+.modal.is-open {
+  display: grid;
+}
+.modal[hidden] {
+  display: none !important;
 }
 .modal__dialog {
   width: min(920px, 100%);

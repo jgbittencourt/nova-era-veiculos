@@ -44,6 +44,7 @@
 
   var cars = window.NOVA_ERA_CARS || [];
   var featuredOrder = [
+    "PEUGEOT 207",
     "Mitsubishi Lancer 2.0",
     "Honda CB 300",
     "Honda Civic LX 1.7",
@@ -61,6 +62,9 @@
       return { car: car, idx: idx };
     })
     .sort(function (a, b) {
+      var aDest = a.car.destaque ? 0 : 1;
+      var bDest = b.car.destaque ? 0 : 1;
+      if (aDest !== bDest) return aDest - bDest;
       var aName = a.car.marca + " " + a.car.modelo;
       var bName = b.car.marca + " " + b.car.modelo;
       var aNameWithYear = aName + " " + a.car.ano;
@@ -264,9 +268,75 @@
       })
       .join("");
     return (
+      '<div class="car-card__detalhes">' +
+      '<h4 class="car-card__detalhes-title">Detalhes do veículo</h4>' +
       '<ul class="car-card__opcionais" aria-label="Itens do veículo">' +
       items +
-      "</ul>"
+      "</ul></div>"
+    );
+  }
+
+  function carSubtitle(car) {
+    var parts = [];
+    if (car.versao) parts.push(car.versao);
+    if (car.combustivel) parts.push(car.combustivel);
+    if (!parts.length) return "";
+    return (
+      '<p class="car-card__subtitle">' +
+      escapeHtml(parts.join(" · ")) +
+      "</p>"
+    );
+  }
+
+  function carMetaBlock(car) {
+    var fields = [
+      { label: "Ano", value: car.ano },
+      { label: "Quilometragem", value: kmLabel(car) },
+    ];
+    if (car.motor) fields.push({ label: "Motor", value: car.motor });
+    if (car.combustivel) fields.push({ label: "Combustível", value: car.combustivel });
+    if (car.cambio) fields.push({ label: "Câmbio", value: car.cambio });
+    if (car.cor) fields.push({ label: "Cor", value: car.cor });
+    if (car.portas) fields.push({ label: "Portas", value: car.portas + " portas" });
+    var html = fields
+      .filter(function (f) {
+        return f.value != null && String(f.value).trim() !== "";
+      })
+      .map(function (f) {
+        return (
+          '<span class="car-card__meta-item" role="listitem">' +
+          '<span class="car-card__meta-label">' +
+          escapeHtml(f.label) +
+          "</span>" +
+          '<span class="car-card__meta-value">' +
+          escapeHtml(String(f.value)) +
+          "</span></span>"
+        );
+      })
+      .join("");
+    if (!html) return "";
+    return '<div class="car-card__meta" role="list">' + html + "</div>";
+  }
+
+  function carDescricaoBlock(car) {
+    if (!car.descricao || !String(car.descricao).trim()) return "";
+    var lines = String(car.descricao)
+      .split(/\n/)
+      .map(function (line) {
+        return line.trim();
+      })
+      .filter(Boolean);
+    if (!lines.length) return "";
+    var body = lines
+      .map(function (line) {
+        return '<p class="car-card__descricao-line">' + escapeHtml(line) + "</p>";
+      })
+      .join("");
+    return (
+      '<div class="car-card__descricao">' +
+      '<h4 class="car-card__detalhes-title">Informações completas</h4>' +
+      body +
+      "</div>"
     );
   }
 
@@ -350,23 +420,15 @@
       '<h3 class="car-card__title">' +
       escapeHtml(title) +
       "</h3>" +
+      carSubtitle(car) +
       carSocialProof(car) +
       carScarcity(car) +
       carUrgency(car) +
       carOfferLimited(car) +
-      '<div class="car-card__meta" role="list">' +
-      '<span class="car-card__meta-item" role="listitem">' +
-      '<span class="car-card__meta-label">Ano</span>' +
-      '<span class="car-card__meta-value">' +
-      escapeHtml(String(car.ano)) +
-      "</span></span>" +
-      '<span class="car-card__meta-item" role="listitem">' +
-      '<span class="car-card__meta-label">Quilometragem</span>' +
-      '<span class="car-card__meta-value">' +
-      escapeHtml(kmLabel(car)) +
-      "</span></span>" +
-      "</div>" +
-      carOpcionaisBlock(car) +
+      carMetaBlock(car) +
+      (car.descricao && String(car.descricao).trim()
+        ? carDescricaoBlock(car)
+        : carOpcionaisBlock(car)) +
       '<div class="car-card__footer">' +
       carPriceBlock(car) +
       (sold

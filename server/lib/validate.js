@@ -303,6 +303,7 @@ function validateConfig(body, existing) {
   var pagIn = body.pagamento || {};
   var trocasIn = body.trocas || {};
   var chatIn = body.chat || {};
+  var integIn = body.integracoes || {};
 
   var loja = Object.assign(
     {},
@@ -361,6 +362,11 @@ function validateConfig(body, existing) {
         {},
         base.chat || {},
         sanitizeConfigSection(chatIn, ["mensagemInicial", "mensagemFallback", "nomeAssistente"], MAX.longText)
+      ),
+      integracoes: Object.assign(
+        {},
+        base.integracoes || {},
+        sanitizeConfigSection(integIn, ["erpDonoUrl", "erpDonoNome"], MAX.mediumText)
       ),
     },
   };

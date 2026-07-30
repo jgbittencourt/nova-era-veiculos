@@ -42,7 +42,11 @@ app.use(express.static(ROOT, {
   maxAge: process.env.NODE_ENV === "production" ? "1d" : 0,
   setHeaders: function (res, filePath) {
     if (/\.(js|css|webp|png|jpe?g|gif|svg|woff2?)$/i.test(filePath)) {
-      res.setHeader("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800");
+      var cache =
+        process.env.NODE_ENV === "production"
+          ? "public, max-age=86400, stale-while-revalidate=604800"
+          : "no-cache";
+      res.setHeader("Cache-Control", cache);
     }
   },
 }));
