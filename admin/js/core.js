@@ -60,6 +60,13 @@ window.NovaAdmin = (function () {
     return h;
   }
 
+  function authHeadersMultipart() {
+    return {
+      Authorization: "Bearer " + getToken(),
+      "X-Nova-Admin": "1",
+    };
+  }
+
   function toast(msg, type) {
     var el = $("#admin-toast");
     if (!el) return;
@@ -177,6 +184,7 @@ window.NovaAdmin = (function () {
     openModal: openModal,
     closeModal: closeModal,
     authHeaders: authHeaders,
+    authHeadersMultipart: authHeadersMultipart,
     getToken: getToken,
     getUser: getUser,
     showShell: showShell,

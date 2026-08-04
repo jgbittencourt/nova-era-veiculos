@@ -444,10 +444,14 @@ window.NovaAdminPages = (function () {
     zone.addEventListener("drop", function (e) {
       e.preventDefault();
       zone.classList.remove("admin-upload--hover");
-      uploadFiles(e.dataTransfer.files);
+      uploadFiles(e.dataTransfer.files).catch(function (err) {
+        NA.toast(err.message, "error");
+      });
     });
     input.addEventListener("change", function () {
-      uploadFiles(input.files);
+      uploadFiles(input.files).catch(function (err) {
+        NA.toast(err.message, "error");
+      });
       input.value = "";
     });
 
@@ -488,14 +492,19 @@ window.NovaAdminPages = (function () {
     fd.append("prefix", "veiculo");
     var res = await NA.api("/api/admin/upload", {
       method: "POST",
-      headers: { Authorization: "Bearer " + NA.getToken() },
+      headers: NA.authHeadersMultipart(),
       body: fd,
     });
-    if (!res.ok) throw new Error("Falha no upload");
+    if (!res.ok) {
+      var err = await res.json().catch(function () {
+        return {};
+      });
+      throw new Error(err.error || "Falha no upload das fotos");
+    }
     var data = await res.json();
     var gallery = NA.$("#car-gallery");
     data.paths.forEach(function (p) {
-      gallery.insertAdjacentHTML("beforeend", galleryItem(p, false));
+      gallery.insertAdjacentHTML("beforeend", galleryItem(p, !gallery.children.length));
     });
     refreshMainBadge();
     NA.toast("Imagens enviadas e otimizadas!");
@@ -649,10 +658,7 @@ window.NovaAdminPages = (function () {
     fd.append("kind", "client");
     var res = await fetch((window.NOVA_IA_API || "") + "/api/admin/upload", {
       method: "POST",
-      headers: {
-        Authorization: "Bearer " + NA.getToken(),
-        "X-Nova-Admin": "1",
-      },
+      headers: NA.authHeadersMultipart(),
       body: fd,
     });
     if (!res.ok) throw new Error("Falha no upload da foto");
