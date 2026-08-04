@@ -29,7 +29,7 @@ window.NOVA_ERA_CARS = [
       "assets/img/carros/veiculo-1785808304280-p8o3w.webp"
     ],
     "video": "",
-    "emOferta": false,
+    "emOferta": true,
     "destaque": true,
     "vendido": false,
     "status": "disponivel",
@@ -69,7 +69,7 @@ window.NOVA_ERA_CARS = [
       "assets/img/carros/veiculo-1785808041960-y3qfk.webp"
     ],
     "video": "",
-    "emOferta": false,
+    "emOferta": true,
     "destaque": true,
     "vendido": false,
     "status": "disponivel",
