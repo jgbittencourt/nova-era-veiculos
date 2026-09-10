@@ -88,6 +88,6 @@
   },
   "depoimentos": {
     "googleAvaliarUrl": "",
-    "apiPublicaBaseUrl": "https://nova-era-veiculos-api.onrender.com"
+    "apiPublicaBaseUrl": "https://nova-era-veiculos.vercel.app"
   }
 }

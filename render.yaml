@@ -15,7 +15,7 @@ services:
       - key: TRUST_PROXY
         value: "true"
       - key: ALLOWED_ORIGINS
-        sync: false
+        value: https://www.novaeraveiculosbm.com.br,https://novaeraveiculosbm.com.br,https://jgbittencourt.github.io
     disk:
       name: nova-era-data
       mountPath: /opt/render/project/src/data

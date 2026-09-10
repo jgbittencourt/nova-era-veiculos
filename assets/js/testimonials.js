@@ -12,7 +12,11 @@
 
   var reviews = Array.isArray(window.NOVA_ERA_REVIEWS) ? window.NOVA_ERA_REVIEWS : [];
   var siteMeta = window.NOVA_ERA_SITE || {};
-  var apiBase = String(siteMeta.reviewsApiBase || "").replace(/\/$/, "");
+
+  var DEFAULT_API_BASES = [
+    "https://nova-era-veiculos.vercel.app",
+    "https://nova-era-veiculos-api.onrender.com",
+  ];
 
   function escapeHtml(s) {
     return String(s)
@@ -82,20 +86,72 @@
     grid.innerHTML = list.map(renderReview).join("");
   }
 
-  function reviewsEndpoint() {
-    if (apiBase) return apiBase + "/api/reviews";
+  function apiBases() {
+    var bases = [];
+    var primary = String(siteMeta.reviewsApiBase || "").replace(/\/$/, "");
+    if (primary) bases.push(primary);
+    DEFAULT_API_BASES.forEach(function (b) {
+      if (bases.indexOf(b) === -1) bases.push(b);
+    });
+    if (bases.indexOf("") === -1 && !primary) {
+      bases.push("");
+    }
+    return bases;
+  }
+
+  function reviewsUrl(base) {
+    if (base) return base + "/api/reviews";
     return "/api/reviews";
   }
 
+  function fetchWithTimeout(url, options, ms) {
+    return new Promise(function (resolve, reject) {
+      var timer = setTimeout(function () {
+        reject(new Error("timeout"));
+      }, ms || 25000);
+      fetch(url, options)
+        .then(function (res) {
+          clearTimeout(timer);
+          resolve(res);
+        })
+        .catch(function (err) {
+          clearTimeout(timer);
+          reject(err);
+        });
+    });
+  }
+
+  function parseJsonResponse(res) {
+    return res.text().then(function (text) {
+      var body;
+      try {
+        body = text ? JSON.parse(text) : {};
+      } catch (_e) {
+        throw new Error("Serviço de depoimentos indisponível. Tente de novo em instantes.");
+      }
+      if (!res.ok) {
+        throw new Error(body.error || "Não foi possível enviar sua avaliação.");
+      }
+      return body;
+    });
+  }
+
+  function tryGetReviews(base) {
+    var url = reviewsUrl(base);
+    return fetchWithTimeout(url, { credentials: "omit", method: "GET" }, 22000).then(parseJsonResponse);
+  }
+
   function loadFromApi() {
-    var url = reviewsEndpoint();
-    fetch(url, { credentials: "omit" })
-      .then(function (res) {
-        if (!res.ok) throw new Error("offline");
-        return res.json();
-      })
+    var bases = apiBases();
+    var chain = Promise.reject();
+    bases.forEach(function (base) {
+      chain = chain.catch(function () {
+        return tryGetReviews(base);
+      });
+    });
+    chain
       .then(function (data) {
-        if (Array.isArray(data) && data.length) {
+        if (Array.isArray(data)) {
           reviews = data;
           renderList(reviews);
         }
@@ -105,35 +161,37 @@
       });
   }
 
+  function tryPostReview(base, payload) {
+    var url = reviewsUrl(base);
+    return fetchWithTimeout(
+      url,
+      {
+        method: "POST",
+        credentials: "omit",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      },
+      28000
+    ).then(parseJsonResponse);
+  }
+
+  function postReview(payload) {
+    var bases = apiBases();
+    var chain = Promise.reject(new Error("Nenhuma API configurada"));
+    bases.forEach(function (base) {
+      chain = chain.catch(function () {
+        return tryPostReview(base, payload);
+      });
+    });
+    return chain;
+  }
+
   function setFormMessage(text, type) {
     if (!formStatus) return;
     formStatus.textContent = text;
     formStatus.hidden = !text;
     formStatus.className =
       "testimonials__form-status" + (type ? " testimonials__form-status--" + type : "");
-  }
-
-  function waFallbackReview(payload) {
-    var msg =
-      "Olá! Quero deixar meu depoimento no site da Nova Era:\n\n" +
-      "Nome: " +
-      payload.nome +
-      "\nCidade: " +
-      payload.cidade +
-      "\nNota: " +
-      payload.rating +
-      "/5\n\n" +
-      payload.texto;
-    var num = siteMeta.whatsappNumero || "5524992195829";
-    window.open(
-      "https://wa.me/" + num + "?text=" + encodeURIComponent(msg),
-      "_blank",
-      "noopener,noreferrer"
-    );
-    setFormMessage(
-      "Não conseguimos publicar automaticamente daqui. Enviamos sua avaliação pelo WhatsApp para constar no site.",
-      "info"
-    );
   }
 
   function bindForm() {
@@ -165,21 +223,11 @@
         return;
       }
 
-      setFormMessage("Enviando…", "");
+      setFormMessage("Publicando no site…", "");
       var btn = form.querySelector('button[type="submit"]');
       if (btn) btn.disabled = true;
 
-      fetch(reviewsEndpoint(), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      })
-        .then(function (res) {
-          return res.json().then(function (body) {
-            if (!res.ok) throw new Error(body.error || "Não foi possível enviar.");
-            return body;
-          });
-        })
+      postReview(payload)
         .then(function (body) {
           form.reset();
           if (body && body.review) {
@@ -188,14 +236,14 @@
           } else {
             loadFromApi();
           }
-          setFormMessage("Obrigado! Sua avaliação já está publicada.", "success");
+          setFormMessage("Obrigado! Sua avaliação já está publicada no site.", "success");
         })
         .catch(function (err) {
-          if (siteMeta.reviewsAllowWhatsApp !== false) {
-            waFallbackReview(payload);
-          } else {
-            setFormMessage(err.message || "Erro ao enviar. Tente mais tarde.", "error");
-          }
+          setFormMessage(
+            err.message ||
+              "Não foi possível publicar agora. Aguarde 30 segundos e tente de novo (não abrimos WhatsApp).",
+            "error"
+          );
         })
         .finally(function () {
           if (btn) btn.disabled = false;
@@ -211,8 +259,10 @@
   }
 
   function mergePublicConfig() {
-    var url = (apiBase || "") + "/api/config/public";
-    fetch(url, { credentials: "omit" })
+    var bases = apiBases();
+    var base = bases[0] || "";
+    if (!base) return;
+    fetch(base + "/api/config/public", { credentials: "omit" })
       .then(function (res) {
         if (!res.ok) return null;
         return res.json();
@@ -228,25 +278,25 @@
           }
           if (cfg.depoimentos.apiPublicaBaseUrl) {
             siteMeta.reviewsApiBase = String(cfg.depoimentos.apiPublicaBaseUrl).replace(/\/$/, "");
-            apiBase = siteMeta.reviewsApiBase;
-            loadFromApi();
           }
         }
         setupGoogleLink();
+        loadFromApi();
       })
       .catch(function () {});
   }
 
   function loadSiteConfigFile() {
-    fetch("assets/site-config.json?v=1", { credentials: "omit" })
+    fetch("assets/site-config.json?v=2", { credentials: "omit" })
       .then(function (res) {
         if (!res.ok) return null;
         return res.json();
       })
       .then(function (cfg) {
-        if (!cfg || !cfg.reviewsApiBase) return;
-        siteMeta.reviewsApiBase = String(cfg.reviewsApiBase).replace(/\/$/, "");
-        apiBase = siteMeta.reviewsApiBase;
+        if (!cfg) return;
+        if (cfg.reviewsApiBase) {
+          siteMeta.reviewsApiBase = String(cfg.reviewsApiBase).replace(/\/$/, "");
+        }
         loadFromApi();
       })
       .catch(function () {});

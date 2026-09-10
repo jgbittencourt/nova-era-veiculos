@@ -33,13 +33,22 @@ function blockSensitivePaths(req, res, next) {
   next();
 }
 
+var DEFAULT_SITE_ORIGINS = [
+  "https://www.novaeraveiculosbm.com.br",
+  "https://novaeraveiculosbm.com.br",
+  "https://jgbittencourt.github.io",
+];
+
 function getAllowedOrigins() {
-  return (process.env.ALLOWED_ORIGINS || "")
+  var fromEnv = (process.env.ALLOWED_ORIGINS || "")
     .split(",")
     .map(function (o) {
       return o.trim();
     })
     .filter(Boolean);
+  if (fromEnv.length) return fromEnv;
+  if (isProduction()) return DEFAULT_SITE_ORIGINS.slice();
+  return [];
 }
 
 function createCorsOptions() {
