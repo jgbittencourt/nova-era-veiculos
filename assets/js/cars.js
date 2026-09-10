@@ -259,10 +259,10 @@ window.NOVA_ERA_CARS = [
     "preco": 16900,
     "descricao": "🏍️ HONDA BIZ 2024 – ÚNICA DONA 🔥\n\n💥 ENTRADA BAIXA!\n\n✅ Ano 2024\n✅ Única dona\n✅ Econômica\n✅ Baixo consumo\n📄 DOC OK\n🔑 Pronta para transferir\n\n💰 R$ 16.900 À VISTA\n💳 R$ 12.000 DE ENTRADA + PROMISSÓRIAS 🔥\n\n📍 Barra Mansa - RJ\n📲 (24) 99219-5829\n\n🔥 12 MIL DE ENTRADA! CHAMA!\n⚠️ Não reservo sem sinal.",
     "categoria": "moto",
-    "imagem": "assets/img/carros/honda-biz-2024-0.webp",
+    "imagem": "assets/img/carros/honda-biz-2024-1.webp",
     "imagens": [
-      "assets/img/carros/honda-biz-2024-0.webp",
       "assets/img/carros/honda-biz-2024-1.webp",
+      "assets/img/carros/honda-biz-2024-0.webp",
       "assets/img/carros/honda-biz-2024-2.webp",
       "assets/img/carros/honda-biz-2024-3.webp",
       "assets/img/carros/honda-biz-2024-4.webp",
@@ -288,7 +288,7 @@ window.NOVA_ERA_CARS = [
     "visualizacoes": 0,
     "slug": "honda-biz-125-2024-1786150740000",
     "metaDescription": "Honda Biz 125 2024, única dona, ~11.300 km, R$ 16.900 à vista ou R$ 12.000 de entrada + promissórias. Nova Era Veículos BM, Barra Mansa - RJ.",
-    "ogImage": "assets/img/carros/honda-biz-2024-0.webp"
+    "ogImage": "assets/img/carros/honda-biz-2024-1.webp"
   },
   {
     "id": 1786151100000,
@@ -356,10 +356,10 @@ window.NOVA_ERA_CARS = [
     "preco": 12900,
     "descricao": "🏍️ HONDA CG FAN 150 ESI 2012 🏍️\n🔥 OPORTUNIDADE! ENTRADA BAIXA! 🔥\n✅ Motor 150cc\n✅ Ano 2012\n✅ Frente da CG 160\n✅ Montada no estilo 160\n✅ Econômica e confiável\n📄 DOC OK\n🔑 Pronta para transferir\n💰 R$ 12.900 À VISTA\n💳 OU R$ 8.000 DE ENTRADA + PROMISSÓRIAS 🔥\n📍 Barra Mansa - RJ\n📞 (24) 99219-5829\n🔥 ESCOLHA A MELHOR CONDIÇÃO PARA VOCÊ!\n⚠️ Não reservo sem sinal.",
     "categoria": "moto",
-    "imagem": "assets/img/carros/honda-cg-fan-150-2012-0.webp",
+    "imagem": "assets/img/carros/honda-cg-fan-150-2012-1.webp",
     "imagens": [
-      "assets/img/carros/honda-cg-fan-150-2012-0.webp",
       "assets/img/carros/honda-cg-fan-150-2012-1.webp",
+      "assets/img/carros/honda-cg-fan-150-2012-0.webp",
       "assets/img/carros/honda-cg-fan-150-2012-2.webp",
       "assets/img/carros/honda-cg-fan-150-2012-3.webp"
     ],
@@ -381,7 +381,7 @@ window.NOVA_ERA_CARS = [
     "visualizacoes": 0,
     "slug": "honda-cg-fan-150-esi-2012-1786151300000",
     "metaDescription": "Honda CG Fan 150 ESI 2012, frente estilo CG 160. R$ 12.900 à vista ou R$ 8.000 de entrada + promissórias. Nova Era Veículos BM, Barra Mansa - RJ.",
-    "ogImage": "assets/img/carros/honda-cg-fan-150-2012-0.webp"
+    "ogImage": "assets/img/carros/honda-cg-fan-150-2012-1.webp"
   },
   {
     "id": 1786151500000,
@@ -399,16 +399,16 @@ window.NOVA_ERA_CARS = [
     "preco": 19900,
     "descricao": "🏍️ BROS 160 ESDD FLEXONE 2024 🔥\n💥 2024 + ABAIXO DA FIPE!\n✅ Motor 160cc\n✅ FlexOne\n✅ Econômica e confiável\n✅ Ótima para cidade e estrada\n📄 DOC OK\n🔑 Pronta para transferir\n💰 R$ 19.900 🔥\n🔥 ABAIXO DA FIPE!\n📍 Barra Mansa - RJ\n📲 (24) 99219-5829\n⚡ BROS 2024 POR MENOS QUE A FIPE! CHAMA!",
     "categoria": "moto",
-    "imagem": "assets/img/carros/honda-bros-160-2024-0.webp",
+    "imagem": "assets/img/carros/honda-bros-160-2024-1.webp",
     "imagens": [
-      "assets/img/carros/honda-bros-160-2024-0.webp",
       "assets/img/carros/honda-bros-160-2024-1.webp",
+      "assets/img/carros/honda-bros-160-2024-0.webp",
       "assets/img/carros/honda-bros-160-2024-2.webp",
       "assets/img/carros/honda-bros-160-2024-3.webp",
       "assets/img/carros/honda-bros-160-2024-4.webp",
       "assets/img/carros/honda-bros-160-2024-5.webp",
-      "assets/img/carros/honda-bros-160-2024-6.webp",
-      "assets/img/carros/honda-bros-160-2024-7.webp"
+      "assets/img/carros/honda-bros-160-2024-7.webp",
+      "assets/img/carros/honda-bros-160-2024-6.webp"
     ],
     "video": "",
     "emOferta": true,
@@ -430,7 +430,7 @@ window.NOVA_ERA_CARS = [
     "visualizacoes": 0,
     "slug": "honda-bros-160-esdd-flexone-2024-1786151500000",
     "metaDescription": "Honda Bros 160 ESDD FlexOne 2024, ~18.600 km, abaixo da FIPE. R$ 19.900 à vista. Nova Era Veículos BM, Barra Mansa - RJ.",
-    "ogImage": "assets/img/carros/honda-bros-160-2024-0.webp"
+    "ogImage": "assets/img/carros/honda-bros-160-2024-1.webp"
   },
   {
     "id": 1786151700000,
@@ -449,12 +449,12 @@ window.NOVA_ERA_CARS = [
     "fipe": 20000,
     "descricao": "🔥 VOLKSWAGEN GOL 1.0 2007 🔥\n🚗 ECONÔMICO + 4 PORTAS + VIDRO ELÉTRICO!\n✅ Motor 1.0\n✅ 4 portas\n✅ Vidros elétricos ⚡\n✅ Econômico\n📄 DOC 2026 OK\n🔑 Pronto para transferir\n📊 FIPE: R$ 20.000\n💰 R$ 15.900 🔥\n🔥 Aceito proposta\n📍 Barra Mansa - RJ\n📲 (24) 99219-5829\n⚡ OPORTUNIDADE! CHAMA NO WHATSAPP!\n⚠️ NÃO RESERVO SEM SINAL",
     "categoria": "hatch",
-    "imagem": "assets/img/carros/vw-gol-2007-0.webp",
+    "imagem": "assets/img/carros/vw-gol-2007-1.webp",
     "imagens": [
-      "assets/img/carros/vw-gol-2007-0.webp",
       "assets/img/carros/vw-gol-2007-1.webp",
-      "assets/img/carros/vw-gol-2007-2.webp",
       "assets/img/carros/vw-gol-2007-3.webp",
+      "assets/img/carros/vw-gol-2007-2.webp",
+      "assets/img/carros/vw-gol-2007-0.webp",
       "assets/img/carros/vw-gol-2007-4.webp",
       "assets/img/carros/vw-gol-2007-5.webp",
       "assets/img/carros/vw-gol-2007-6.webp"
@@ -478,7 +478,7 @@ window.NOVA_ERA_CARS = [
     "visualizacoes": 0,
     "slug": "volkswagen-gol-1-0-2007-1786151700000",
     "metaDescription": "Volkswagen Gol 1.0 2007 branco, 4 portas, vidros elétricos. R$ 15.900 — abaixo da FIPE. Nova Era Veículos BM, Barra Mansa - RJ.",
-    "ogImage": "assets/img/carros/vw-gol-2007-0.webp"
+    "ogImage": "assets/img/carros/vw-gol-2007-1.webp"
   },
   {
     "id": 1786151900000,
@@ -546,10 +546,10 @@ window.NOVA_ERA_CARS = [
     "imagens": [
       "assets/img/carros/yamaha-factor-2011-0.webp",
       "assets/img/carros/yamaha-factor-2011-1.webp",
-      "assets/img/carros/yamaha-factor-2011-2.webp",
       "assets/img/carros/yamaha-factor-2011-3.webp",
       "assets/img/carros/yamaha-factor-2011-4.webp",
-      "assets/img/carros/yamaha-factor-2011-5.webp"
+      "assets/img/carros/yamaha-factor-2011-5.webp",
+      "assets/img/carros/yamaha-factor-2011-2.webp"
     ],
     "video": "",
     "emOferta": true,
@@ -593,8 +593,8 @@ window.NOVA_ERA_CARS = [
       "assets/img/carros/chevrolet-celta-2008-0.webp",
       "assets/img/carros/chevrolet-celta-2008-1.webp",
       "assets/img/carros/chevrolet-celta-2008-2.webp",
-      "assets/img/carros/chevrolet-celta-2008-3.webp",
-      "assets/img/carros/chevrolet-celta-2008-4.webp"
+      "assets/img/carros/chevrolet-celta-2008-4.webp",
+      "assets/img/carros/chevrolet-celta-2008-3.webp"
     ],
     "video": "",
     "emOferta": true,
