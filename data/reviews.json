@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "id": 1786153000000,
+    "nome": "Yago Viana Esteves",
+    "cidade": "Volta Redonda, RJ",
+    "rating": 5,
+    "texto": "Excelente atendimento e veículo!",
+    "status": "approved",
+    "origem": "whatsapp",
+    "createdAt": "2026-03-10T23:50:00.000Z",
+    "approvedAt": "2026-03-10T23:50:00.000Z"
+  }
+]
