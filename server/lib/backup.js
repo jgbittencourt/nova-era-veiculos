@@ -9,6 +9,7 @@ var BACKUP_FILES = [
   "config.json",
   "cars.json",
   "leads.json",
+  "reviews.json",
   "clients.json",
   "analytics.json",
   "messages.json",

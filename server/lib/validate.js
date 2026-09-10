@@ -55,6 +55,28 @@ function sanitizePhone(value) {
   return digits.slice(0, 24);
 }
 
+function validateReview(body) {
+  var errors = [];
+  if (body && body.website) {
+    errors.push("Spam detectado");
+    return { ok: false, errors: errors };
+  }
+  var nome = trimString(body.nome, MAX.shortText);
+  var cidade = trimString(body.cidade, MAX.shortText);
+  var texto = trimString(body.texto, MAX.mediumText);
+  var rating = parseInt(body.rating, 10);
+  if (!nome || nome.length < 2) errors.push("Nome inválido");
+  if (!cidade || cidade.length < 2) errors.push("Cidade inválida");
+  if (!texto || texto.length < 20) errors.push("Comentário muito curto (mín. 20 caracteres)");
+  if (texto.length > MAX.mediumText) errors.push("Comentário muito longo");
+  if (!(rating >= 1 && rating <= 5)) errors.push("Selecione de 1 a 5 estrelas");
+  if (errors.length) return { ok: false, errors: errors };
+  return {
+    ok: true,
+    value: { nome: nome, cidade: cidade, texto: texto, rating: rating },
+  };
+}
+
 function validateLead(body) {
   var errors = [];
   var nome = trimString(body.nome, MAX.shortText);
@@ -366,13 +388,19 @@ function validateConfig(body, existing) {
       integracoes: Object.assign(
         {},
         base.integracoes || {},
-        sanitizeConfigSection(integIn, ["erpDonoUrl", "erpDonoNome"], MAX.mediumText)
+        sanitizeConfigSection(integIn, ["erpDonoUrl", "erpDonoNome", "apiPublicaBaseUrl"], MAX.mediumText)
+      ),
+      depoimentos: Object.assign(
+        {},
+        base.depoimentos || {},
+        sanitizeConfigSection(body.depoimentos || {}, ["googleAvaliarUrl", "apiPublicaBaseUrl"], MAX.mediumText)
       ),
     },
   };
 }
 
 module.exports = {
+  validateReview: validateReview,
   validateLead: validateLead,
   validateLeadUpdate: validateLeadUpdate,
   validateChatMessages: validateChatMessages,

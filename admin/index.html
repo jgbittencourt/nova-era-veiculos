@@ -54,6 +54,7 @@
         <button class="admin-nav__item" data-page="agenda" type="button">Agenda</button>
         <p class="admin-nav__group">Comercial</p>
         <button class="admin-nav__item" data-page="leads" type="button">Leads</button>
+        <button class="admin-nav__item" data-page="depoimentos" type="button">Depoimentos</button>
         <button class="admin-nav__item" data-page="mensagens" type="button">Mensagens</button>
         <button class="admin-nav__item" data-page="estatisticas" type="button">Analytics</button>
         <p class="admin-nav__group">Sistema</p>
@@ -162,6 +163,19 @@
           <table class="admin-table">
             <thead><tr><th>Nome</th><th>Telefone</th><th>WhatsApp</th><th>Interesse</th><th>Origem</th><th>Status</th><th>Data</th></tr></thead>
             <tbody id="leads-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="admin-page" data-page="depoimentos" hidden>
+        <div class="toolbar">
+          <button id="btn-new-review" class="admin-btn admin-btn--primary" type="button">+ Depoimento (cliente confirmado)</button>
+        </div>
+        <p class="admin-hint">Depoimentos do site entram publicados na hora. Use <strong>Excluir</strong> se precisar remover algum. No GitHub Pages, faça commit/push de <code>assets/js/reviews.js</code> após mudanças.</p>
+        <div class="table-wrap panel">
+          <table class="admin-table">
+            <thead><tr><th>Nome</th><th>Cidade</th><th>Nota</th><th>Comentário</th><th>Status</th><th>Origem</th><th>Ações</th></tr></thead>
+            <tbody id="reviews-table-body"></tbody>
           </table>
         </div>
       </section>

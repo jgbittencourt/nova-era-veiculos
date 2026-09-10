@@ -1279,6 +1279,9 @@ img {
 .car-card__gallery-shell {
   position: relative;
   width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #eef1f6;
 }
 
 .car-card__details-trigger {
@@ -1304,10 +1307,16 @@ img {
   background: rgba(6, 8, 17, 0.88);
 }
 
+.car-card__heading {
+  min-height: 3.75rem;
+  margin: 0 0 0.25rem;
+}
+
 .car-card__year {
-  margin: 0 0 0.75rem;
+  margin: 0;
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   color: var(--ink-soft);
 }
 
@@ -1390,6 +1399,7 @@ body.car-detail-open {
 
 .car-card__gallery {
   display: flex;
+  height: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
@@ -1444,6 +1454,10 @@ body.car-detail-open {
 
 .car-card__gallery-hint {
   margin: 0;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.45rem 0.85rem;
   font-size: 0.7rem;
   font-weight: 700;
@@ -1452,6 +1466,11 @@ body.car-detail-open {
   color: var(--ink-soft);
   background: rgba(14, 22, 40, 0.04);
   border-bottom: 1px solid rgba(14, 22, 40, 0.08);
+  box-sizing: border-box;
+}
+
+.car-card__gallery-hint--muted {
+  visibility: hidden;
 }
 
 /* Fundo padronizado tipo vitrine — fotos com origens diferentes ficam mais uniformes */
@@ -1459,16 +1478,14 @@ body.car-detail-open {
   position: relative;
   width: 100%;
   min-width: 100%;
+  height: 100%;
   flex: 0 0 100%;
   margin: 0;
-  aspect-ratio: 4 / 3;
-  min-height: clamp(240px, 52vw, 380px);
   overflow: hidden;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   background-color: #eef1f6;
   background-image: linear-gradient(180deg, #f8f9fc 0%, #e8ecf4 100%);
-  border-bottom: 1px solid rgba(14, 22, 40, 0.08);
 }
 
 .car-card__image-wrap::after {
@@ -1492,13 +1509,13 @@ body.car-detail-open {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: center center;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: brightness(1.04) contrast(1.05) saturate(1.03);
+  filter: brightness(1.03) contrast(1.04) saturate(1.02);
 }
 
 .car-card:hover .car-card__image {
@@ -1770,30 +1787,36 @@ body.car-detail-open {
   opacity: 0.85;
 }
 
-.car-card__economia {
-  margin: 0.35rem 0 0;
-  font-size: 0.9375rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: #047857;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+.car-card__price-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.5rem;
+  min-height: 2.35rem;
 }
 
-.car-card__fipe-ref {
+.car-card__price-meta {
+  margin: 0.35rem 0 0;
+  min-height: 2.35rem;
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--ink-soft);
-  margin: 0.35rem 0 0;
+  line-height: 1.35;
   letter-spacing: 0.02em;
+  color: #047857;
+}
+
+.car-card__price-meta--placeholder {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .car-card__footer {
   margin-top: auto;
-  padding-top: 1.25rem;
+  padding-top: 1rem;
   border-top: 1px solid rgba(14, 22, 40, 0.09);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .car-card__urgency {
@@ -1902,6 +1925,7 @@ body.car-detail-open {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
+  min-height: 5.75rem;
 }
 
 .car-card__price-label {
@@ -1923,7 +1947,7 @@ body.car-detail-open {
 .car-card__price {
   font-family: var(--font-ui);
   font-weight: 800;
-  font-size: clamp(1.625rem, 3.5vw, 2.125rem);
+  font-size: clamp(1.5rem, 3.2vw, 1.875rem);
   letter-spacing: -0.03em;
   color: #047857;
   margin: 0;
@@ -2414,6 +2438,167 @@ body.car-detail-open {
   color: var(--text-secondary);
 }
 
+.testimonials__honesty {
+  margin: 1rem 0 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--gold-bright);
+}
+
+.testimonials__empty {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 clamp(1.75rem, 4vw, 2.25rem);
+  padding: 1.25rem 1.35rem;
+  border-radius: 14px;
+  border: 1px dashed rgba(201, 169, 98, 0.35);
+  background: rgba(201, 169, 98, 0.06);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.testimonials__empty[hidden] {
+  display: none !important;
+}
+
+.testimonials__form-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: clamp(2rem, 5vw, 2.75rem) auto 0;
+}
+
+.review-form {
+  padding: clamp(1.35rem, 3.5vw, 1.75rem);
+  border-radius: 18px;
+  border: 1px solid var(--border-medium);
+  background: linear-gradient(165deg, var(--surface-raised) 0%, var(--surface-dark) 100%);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.review-form__title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-ui);
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.review-form__hint {
+  margin: 0 0 1.15rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.review-form__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+@media (min-width: 560px) {
+  .review-form__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.review-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.review-form__field--full {
+  grid-column: 1 / -1;
+}
+
+.review-form__field span {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.review-form__field input,
+.review-form__field select,
+.review-form__field textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-medium);
+  background: rgba(6, 8, 17, 0.45);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.review-form__field textarea {
+  resize: vertical;
+  min-height: 6rem;
+}
+
+.review-form__field input:focus,
+.review-form__field select:focus,
+.review-form__field textarea:focus {
+  outline: none;
+  border-color: rgba(201, 169, 98, 0.55);
+  box-shadow: 0 0 0 3px rgba(201, 169, 98, 0.18);
+}
+
+.review-form__hp {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.review-form__submit {
+  margin-top: 1.1rem;
+  width: 100%;
+}
+
+.testimonials__form-status {
+  margin: 0.85rem 0 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.testimonials__form-status--success {
+  color: #6ee7b7;
+}
+
+.testimonials__form-status--error {
+  color: #fca5a5;
+}
+
+.testimonials__form-status--info {
+  color: var(--gold-bright);
+}
+
+.testimonials__google {
+  position: relative;
+  z-index: 1;
+  margin: 1.35rem auto 0;
+  max-width: 640px;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.testimonials__google a {
+  font-weight: 800;
+}
+
 .testimonials__grid {
   position: relative;
   z-index: 1;
@@ -2857,8 +3042,8 @@ button,
     border-radius: 18px;
   }
 
-  .car-card__image-wrap {
-    min-height: clamp(200px, 58vw, 300px);
+  .car-card__gallery-shell {
+    aspect-ratio: 4 / 3;
   }
 
   .car-card__cta {

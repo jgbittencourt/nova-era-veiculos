@@ -83,6 +83,11 @@
   },
   "integracoes": {
     "erpDonoUrl": "http://localhost:3000/login",
-    "erpDonoNome": "Nova Era ERP (Dono)"
+    "erpDonoNome": "Nova Era ERP (Dono)",
+    "apiPublicaBaseUrl": ""
+  },
+  "depoimentos": {
+    "googleAvaliarUrl": "",
+    "apiPublicaBaseUrl": "https://nova-era-veiculos-api.onrender.com"
   }
 }

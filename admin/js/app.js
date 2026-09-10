@@ -39,6 +39,14 @@
     NA.$("#btn-new-client").addEventListener("click", function () {
       P.openClientForm(null);
     });
+    var btnReview = NA.$("#btn-new-review");
+    if (btnReview) {
+      btnReview.addEventListener("click", function () {
+        P.createReviewManual().catch(function (e) {
+          NA.toast(e.message, "error");
+        });
+      });
+    }
     NA.$("#client-modal-close").addEventListener("click", P.closeClientForm);
     NA.$("#client-save").addEventListener("click", function () {
       P.saveClient().catch(function (e) {

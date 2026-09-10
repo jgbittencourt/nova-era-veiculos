@@ -310,6 +310,68 @@ module.exports = function registerAdminRoutes(app, deps) {
     res.json(profile);
   });
 
+  app.get("/api/admin/reviews", limits.adminAuth, auth.checkAdmin, function (_req, res) {
+    try {
+      res.json(storage.readReviews());
+    } catch (err) {
+      res.status(500).json({
+        error: security.publicErrorMessage(err, "Erro ao carregar depoimentos"),
+      });
+    }
+  });
+
+  app.post("/api/admin/reviews", limits.adminAuth, auth.checkAdmin, function (req, res) {
+    try {
+      var result = validate.validateReview(req.body || {});
+      if (!result.ok) {
+        return res.status(400).json({ error: result.errors.join("; ") });
+      }
+      var review = storage.addReview(
+        Object.assign({}, result.value, {
+          status: "approved",
+          origem: "admin",
+        })
+      );
+      logs.logAction(req.adminUser, "review.create", String(review.id));
+      res.status(201).json(review);
+    } catch (err) {
+      res.status(500).json({
+        error: security.publicErrorMessage(err, "Erro ao salvar depoimento"),
+      });
+    }
+  });
+
+  app.put("/api/admin/reviews/:id", limits.adminAuth, auth.checkAdmin, function (req, res) {
+    try {
+      var id = req.params.id;
+      var status = String((req.body && req.body.status) || "").trim();
+      if (status !== "approved" && status !== "rejected" && status !== "pending") {
+        return res.status(400).json({ error: "Status inválido" });
+      }
+      var updated = storage.updateReview(id, { status: status });
+      if (!updated) return res.status(404).json({ error: "Depoimento não encontrado" });
+      logs.logAction(req.adminUser, "review." + status, String(id));
+      res.json(updated);
+    } catch (err) {
+      res.status(500).json({
+        error: security.publicErrorMessage(err, "Erro ao atualizar depoimento"),
+      });
+    }
+  });
+
+  app.delete("/api/admin/reviews/:id", limits.adminAuth, auth.checkAdmin, function (req, res) {
+    try {
+      var ok = storage.deleteReview(req.params.id);
+      if (!ok) return res.status(404).json({ error: "Depoimento não encontrado" });
+      logs.logAction(req.adminUser, "review.delete", String(req.params.id));
+      res.json({ ok: true });
+    } catch (err) {
+      res.status(500).json({
+        error: security.publicErrorMessage(err, "Erro ao excluir depoimento"),
+      });
+    }
+  });
+
   app.post("/api/admin/sitemap/generate", limits.adminAuth, auth.checkAdmin, function (req, res) {
     try {
       var siteUrl =

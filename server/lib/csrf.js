@@ -10,6 +10,7 @@ var CSRF_HEADER = "x-nova-admin";
 var PUBLIC_MUTATIONS = {
   "/api/auth/login": true,
   "/api/leads": true,
+  "/api/reviews": true,
   "/api/chat": true,
   "/api/analytics/track": true,
   "/api/inventory/query": true,

@@ -1,0 +1,22 @@
+# Deploy: conecte este repositório em https://dashboard.render.com → New → Blueprint
+# Depois defina ALLOWED_ORIGINS com o domínio do site (GitHub Pages).
+services:
+  - type: web
+    name: nova-era-veiculos-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "true"
+      - key: ALLOWED_ORIGINS
+        sync: false
+    disk:
+      name: nova-era-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1

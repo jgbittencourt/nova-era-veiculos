@@ -75,9 +75,16 @@ app.get("/api/health", function (_req, res) {
 app.get("/api/config/public", function (_req, res) {
   try {
     var config = storage.readConfig();
+    var dep = config.depoimentos || {};
+    var integ = config.integracoes || {};
     res.json({
       loja: config.loja,
       chat: config.chat,
+      depoimentos: {
+        googleAvaliarUrl: dep.googleAvaliarUrl || "",
+        apiPublicaBaseUrl:
+          dep.apiPublicaBaseUrl || integ.apiPublicaBaseUrl || "",
+      },
     });
   } catch (err) {
     res.status(500).json({
@@ -170,6 +177,37 @@ app.get("/api/leads", limits.adminAuth, auth.checkAdmin, function (_req, res) {
   } catch (err) {
     res.status(500).json({
       error: security.publicErrorMessage(err, "Erro ao carregar leads"),
+    });
+  }
+});
+
+app.get("/api/reviews", function (_req, res) {
+  try {
+    res.json(storage.listApprovedReviews());
+  } catch (err) {
+    res.status(500).json({
+      error: security.publicErrorMessage(err, "Erro ao carregar depoimentos"),
+    });
+  }
+});
+
+app.post("/api/reviews", limits.reviews, function (req, res) {
+  try {
+    var result = validate.validateReview(req.body || {});
+    if (!result.ok) {
+      return res.status(400).json({ error: result.errors.join("; ") });
+    }
+    var review = storage.addReview(
+      Object.assign({}, result.value, { status: "approved", origem: "site" })
+    );
+    res.status(201).json({
+      ok: true,
+      id: review.id,
+      review: storage.publicReviewEntry(review),
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: security.publicErrorMessage(err, "Erro ao enviar avaliação"),
     });
   }
 });

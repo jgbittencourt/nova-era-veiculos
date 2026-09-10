@@ -226,32 +226,29 @@
     var precoNum = typeof car.preco === "number" ? car.preco : 0;
     var precoHtml =
       precoNum > 0
-        ? '<p class="car-card__price">' + formatMoney(car.preco) + "</p>"
-        : '<p class="car-card__price car-card__price--consult">Consulte no WhatsApp</p>';
-    var economiaHtml = "";
+        ? '<span class="car-card__price">' + formatMoney(car.preco) + "</span>"
+        : '<span class="car-card__price car-card__price--consult">Consulte no WhatsApp</span>';
+    var metaParts = [];
     if (precoNum > 0 && fipeNum !== null && fipeNum > precoNum) {
-      var eco = fipeNum - precoNum;
-      economiaHtml =
-        '<p class="car-card__economia">💰 Economize ' +
-        formatMoney(eco) +
-        "</p>";
+      metaParts.push("Economize " + formatMoney(fipeNum - precoNum));
     }
-    var fipeHtml = "";
     if (fipeNum !== null) {
-      fipeHtml =
-        '<p class="car-card__fipe-ref">Referência FIPE ~ ' +
-        formatMoney(fipeNum) +
-        "</p>";
+      metaParts.push("FIPE ~ " + formatMoney(fipeNum));
     }
+    var metaHtml =
+      metaParts.length > 0
+        ? '<p class="car-card__price-meta">' +
+          escapeHtml(metaParts.join(" · ")) +
+          "</p>"
+        : '<p class="car-card__price-meta car-card__price-meta--placeholder" aria-hidden="true">&nbsp;</p>';
     return (
       '<div class="car-card__price-block">' +
-      '<span class="car-card__price-label">' +
-      (hasWas ? "Por apenas" : "Preço") +
-      "</span>" +
+      '<span class="car-card__price-label">Preço</span>' +
+      '<div class="car-card__price-row">' +
       wasHtml +
       precoHtml +
-      economiaHtml +
-      fipeHtml +
+      "</div>" +
+      metaHtml +
       "</div>"
     );
   }
@@ -381,10 +378,13 @@
         "</div>";
     }
 
+    var hintText = n > 1 ? "Deslize para ver mais fotos" : "";
     var hint =
-      n > 1
-        ? '<p class="car-card__gallery-hint">Deslize para ver mais fotos</p>'
-        : "";
+      '<p class="car-card__gallery-hint' +
+      (hintText ? "" : " car-card__gallery-hint--muted") +
+      '">' +
+      (hintText || "\u00a0") +
+      "</p>";
 
     return (
       '<div class="car-card__media" aria-label="Fotos de ' +
@@ -483,12 +483,14 @@
       '">' +
       carMediaBlock(car, title) +
       '<div class="car-card__body">' +
+      '<div class="car-card__heading">' +
       '<h3 class="car-card__title">' +
       escapeHtml(title) +
       "</h3>" +
       '<p class="car-card__year">' +
       escapeHtml(String(car.ano)) +
       "</p>" +
+      "</div>" +
       '<div class="car-card__footer">' +
       carPriceBlock(car) +
       (sold

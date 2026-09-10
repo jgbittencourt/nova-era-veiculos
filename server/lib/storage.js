@@ -5,6 +5,7 @@ var path = require("path");
 
 var DATA_DIR = path.join(__dirname, "..", "..", "data");
 var CARS_JS_PATH = path.join(__dirname, "..", "..", "assets", "js", "cars.js");
+var REVIEWS_JS_PATH = path.join(__dirname, "..", "..", "assets", "js", "reviews.js");
 
 function filePath(name) {
   return path.join(DATA_DIR, name);
@@ -66,6 +67,102 @@ function writeCarsJs(cars) {
   var body = "window.NOVA_ERA_CARS = " + JSON.stringify(cars, null, 2) + ";\n";
   fs.mkdirSync(path.dirname(CARS_JS_PATH), { recursive: true });
   fs.writeFileSync(CARS_JS_PATH, header + body, "utf8");
+}
+
+function readReviews() {
+  return readJson("reviews.json", []);
+}
+
+function writeReviews(reviews) {
+  writeJson("reviews.json", reviews);
+}
+
+function publicReviewEntry(review) {
+  return {
+    id: review.id,
+    nome: review.nome,
+    cidade: review.cidade,
+    rating: review.rating,
+    texto: review.texto,
+    createdAt: review.createdAt,
+  };
+}
+
+function writeReviewsJs(reviews) {
+  var approved = (Array.isArray(reviews) ? reviews : [])
+    .filter(function (r) {
+      return r.status !== "rejected";
+    })
+    .map(publicReviewEntry)
+    .sort(function (a, b) {
+      return String(b.createdAt || "").localeCompare(String(a.createdAt || ""));
+    });
+  var header =
+    "/**\n" +
+    " * Depoimentos publicados — gerado pelo painel (apenas aprovados)\n" +
+    " */\n";
+  var body = "window.NOVA_ERA_REVIEWS = " + JSON.stringify(approved, null, 2) + ";\n";
+  fs.mkdirSync(path.dirname(REVIEWS_JS_PATH), { recursive: true });
+  fs.writeFileSync(REVIEWS_JS_PATH, header + body, "utf8");
+}
+
+function syncReviewsPublic(reviews) {
+  writeReviews(reviews);
+  writeReviewsJs(reviews);
+}
+
+function addReview(input) {
+  var reviews = readReviews();
+  var entry = {
+    id: Date.now(),
+    nome: input.nome || "",
+    cidade: input.cidade || "",
+    rating: input.rating,
+    texto: input.texto || "",
+    status: input.status || "approved",
+    origem: input.origem || "site",
+    createdAt: new Date().toISOString(),
+    approvedAt: input.status === "approved" ? new Date().toISOString() : null,
+  };
+  reviews.unshift(entry);
+  syncReviewsPublic(reviews);
+  return entry;
+}
+
+function updateReview(id, patch) {
+  var reviews = readReviews();
+  var idx = reviews.findIndex(function (r) {
+    return String(r.id) === String(id);
+  });
+  if (idx === -1) return null;
+  var next = Object.assign({}, reviews[idx], patch, { id: reviews[idx].id });
+  if (patch.status === "approved" && !next.approvedAt) {
+    next.approvedAt = new Date().toISOString();
+  }
+  reviews[idx] = next;
+  syncReviewsPublic(reviews);
+  return next;
+}
+
+function deleteReview(id) {
+  var reviews = readReviews();
+  var next = reviews.filter(function (r) {
+    return String(r.id) !== String(id);
+  });
+  if (next.length === reviews.length) return false;
+  syncReviewsPublic(next);
+  return true;
+}
+
+function listApprovedReviews() {
+  return readReviews()
+    .filter(function (r) {
+      return r.status !== "rejected";
+    })
+    .map(publicReviewEntry)
+    .sort(function (a, b) {
+      return String(b.createdAt || "").localeCompare(String(a.createdAt || ""));
+    });
 }
 
 function defaultAnalytics() {
@@ -293,6 +390,14 @@ module.exports = {
   writeCars: writeCars,
   writeCarsJs: writeCarsJs,
   saveCarsWithSync: saveCarsWithSync,
+  readReviews: readReviews,
+  writeReviews: writeReviews,
+  writeReviewsJs: writeReviewsJs,
+  syncReviewsPublic: syncReviewsPublic,
+  addReview: addReview,
+  updateReview: updateReview,
+  deleteReview: deleteReview,
+  listApprovedReviews: listApprovedReviews,
   addLead: addLead,
   updateLead: updateLead,
   readClients: readClients,

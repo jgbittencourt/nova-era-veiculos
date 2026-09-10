@@ -27,8 +27,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://ui-avatars.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="preload" href="assets/css/style.css?v=20260911b" as="style" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20260911b" />
+  <link rel="preload" href="assets/css/style.css?v=20260910n" as="style" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260910n" />
   <link rel="stylesheet" href="assets/css/nova-ia.css" />
 </head>
 <body>
@@ -221,91 +221,50 @@
       <div class="testimonials__intro">
         <p class="section__eyebrow section__eyebrow--dim">Clientes da região</p>
         <h2 id="depoimentos-titulo" class="section__title">Quem comprou, recomenda</h2>
-        <p class="testimonials__lead">Quem já comprou volta a indicar quando o processo é claro. Veja o que clientes da região dizem — e imagine o seu nome na próxima avaliação.</p>
+        <p class="testimonials__lead">Depoimentos enviados por pessoas reais da região. O que você escrever abaixo aparece aqui na hora — ajuda quem ainda está escolhendo.</p>
+        <p class="testimonials__honesty">Comprou conosco? Conte como foi (Volta Redonda, Barra Mansa, Resende e redondezas).</p>
       </div>
-      <ul class="testimonials__grid" role="list">
-        <li class="testimonials__item">
-          <blockquote class="testimonial-card">
-            <div class="testimonial-card__google-head">
-              <img
-                class="testimonial-card__avatar"
-                src="https://ui-avatars.com/api/?name=Ricardo+Mendes&background=1a2540&color=e4cf82&size=128&bold=true"
-                alt=""
-                width="48"
-                height="48"
-                loading="lazy"
-                decoding="async"
-              />
-              <div class="testimonial-card__google-meta">
-                <cite class="testimonial-card__name">Ricardo Mendes</cite>
-                <span class="testimonial-card__city">Volta Redonda, RJ</span>
-                <div class="testimonial-card__rating testimonial-card__rating--google" role="img" aria-label="Avaliação: 5 de 5 estrelas">
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                </div>
-              </div>
-            </div>
-            <p class="testimonial-card__text">“Fui lá só pra dar uma olhada e acabei fechando. Carro tava certinho mesmo, igual falaram, e não teve pressão nenhuma pra comprar.”</p>
-          </blockquote>
-        </li>
-        <li class="testimonials__item">
-          <blockquote class="testimonial-card">
-            <div class="testimonial-card__google-head">
-              <img
-                class="testimonial-card__avatar"
-                src="https://ui-avatars.com/api/?name=Fernanda+Oliveira&background=1a2540&color=e4cf82&size=128&bold=true"
-                alt=""
-                width="48"
-                height="48"
-                loading="lazy"
-                decoding="async"
-              />
-              <div class="testimonial-card__google-meta">
-                <cite class="testimonial-card__name">Fernanda Oliveira</cite>
-                <span class="testimonial-card__city">Barra Mansa, RJ</span>
-                <div class="testimonial-card__rating testimonial-card__rating--google" role="img" aria-label="Avaliação: 5 de 5 estrelas">
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                </div>
-              </div>
-            </div>
-            <p class="testimonial-card__text">“Falei pelo WhatsApp primeiro, depois fui ver o carro e já resolvi tudo na mesma semana. Explicaram o financiamento direitinho, sem enrolação.”</p>
-          </blockquote>
-        </li>
-        <li class="testimonials__item">
-          <blockquote class="testimonial-card">
-            <div class="testimonial-card__google-head">
-              <img
-                class="testimonial-card__avatar"
-                src="https://ui-avatars.com/api/?name=Carlos+Silva&background=1a2540&color=e4cf82&size=128&bold=true"
-                alt=""
-                width="48"
-                height="48"
-                loading="lazy"
-                decoding="async"
-              />
-              <div class="testimonial-card__google-meta">
-                <cite class="testimonial-card__name">Carlos Augusto Silva</cite>
-                <span class="testimonial-card__city">Resende, RJ</span>
-                <div class="testimonial-card__rating testimonial-card__rating--google" role="img" aria-label="Avaliação: 5 de 5 estrelas">
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                  <span class="testimonial-card__star" aria-hidden="true">★</span>
-                </div>
-              </div>
-            </div>
-            <p class="testimonial-card__text">“Dei meu carro na troca e peguei outro com eles. Avaliação foi justa e o negócio foi bem tranquilo. Tudo certo até agora.”</p>
-          </blockquote>
-        </li>
-      </ul>
+      <ul id="testimonials-grid" class="testimonials__grid" role="list"></ul>
+      <p id="testimonials-empty" class="testimonials__empty">Ainda não há depoimentos publicados. Seja o primeiro a avaliar a Nova Era Veículos.</p>
+      <div class="testimonials__form-wrap">
+        <form id="review-form" class="review-form" novalidate>
+          <h3 class="review-form__title">Deixe sua avaliação</h3>
+          <p class="review-form__hint">Use seu nome real e a cidade onde mora. Evite dados sensíveis (CPF, endereço completo).</p>
+          <div class="review-form__grid">
+            <label class="review-form__field">
+              <span>Nome</span>
+              <input type="text" name="nome" autocomplete="name" required minlength="2" maxlength="120" placeholder="Seu nome" />
+            </label>
+            <label class="review-form__field">
+              <span>Cidade</span>
+              <input type="text" name="cidade" autocomplete="address-level2" required minlength="2" maxlength="120" placeholder="Ex.: Volta Redonda, RJ" />
+            </label>
+            <label class="review-form__field review-form__field--full">
+              <span>Nota</span>
+              <select name="rating" required>
+                <option value="">Escolha…</option>
+                <option value="5">★★★★★ — Excelente</option>
+                <option value="4">★★★★☆ — Muito bom</option>
+                <option value="3">★★★☆☆ — Bom</option>
+                <option value="2">★★☆☆☆ — Regular</option>
+                <option value="1">★☆☆☆☆ — Precisa melhorar</option>
+              </select>
+            </label>
+            <label class="review-form__field review-form__field--full">
+              <span>Seu comentário</span>
+              <textarea name="texto" rows="4" required minlength="20" maxlength="500" placeholder="Como foi o atendimento, o carro, a negociação…"></textarea>
+            </label>
+          </div>
+          <label class="review-form__hp" aria-hidden="true">
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
+          </label>
+          <button type="submit" class="btn review-form__submit">Enviar avaliação</button>
+          <p id="review-form-status" class="testimonials__form-status" hidden role="status"></p>
+        </form>
+      </div>
+      <p id="testimonials-google-link" class="testimonials__google" hidden>
+        Também avalie no Google: <a id="testimonials-google-anchor" href="#" target="_blank" rel="noopener noreferrer">Abrir página de avaliações</a>
+      </p>
     </section>
 
     <section class="section conv-strip" aria-labelledby="conv-strip-titulo">
@@ -451,9 +410,19 @@
     </div>
   </div>
 
+  <script>
+    window.NOVA_ERA_SITE = {
+      whatsappNumero: "5524992195829",
+      reviewsApiBase: "https://nova-era-veiculos-api.onrender.com",
+      reviewsAllowWhatsApp: true,
+      googleAvaliarUrl: ""
+    };
+  </script>
   <script src="assets/js/analytics.js?v=1"></script>
   <script src="assets/js/cars.js?v=20260910k"></script>
-  <script src="assets/js/app.js?v=20260911b"></script>
+  <script src="assets/js/reviews.js?v=1"></script>
+  <script src="assets/js/testimonials.js?v=3"></script>
+  <script src="assets/js/app.js?v=20260910m"></script>
   <script src="assets/js/inventory-engine.js?v=2"></script>
   <script src="assets/js/nova-ia.js?v=3"></script>
 </body>

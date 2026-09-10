@@ -9,6 +9,7 @@ window.NovaAdminPages = (function () {
   var state = {
     cars: [],
     leads: [],
+    reviews: [],
     clients: [],
     messages: [],
     config: null,
@@ -35,6 +36,7 @@ window.NovaAdminPages = (function () {
       contratos: "Contratos",
       agenda: "Agenda",
       leads: "Leads",
+      depoimentos: "Depoimentos",
       mensagens: "Mensagens",
       estatisticas: "Analytics",
       funcionarios: "Funcionários",
@@ -516,6 +518,118 @@ window.NovaAdminPages = (function () {
     renderLeads();
   }
 
+  async function loadReviews() {
+    var res = await NA.api("/api/admin/reviews", { headers: NA.authHeaders() });
+    state.reviews = await res.json();
+    renderReviews();
+  }
+
+  function renderReviews() {
+    var el = NA.$("#reviews-table-body");
+    if (!el) return;
+    el.innerHTML = state.reviews.length
+      ? state.reviews
+          .map(function (r) {
+            var snippet = (r.texto || "").slice(0, 80);
+            if ((r.texto || "").length > 80) snippet += "…";
+            return (
+              "<tr>" +
+              "<td>" +
+              NA.esc(r.nome) +
+              "</td><td>" +
+              NA.esc(r.cidade) +
+              "</td><td>" +
+              NA.esc(String(r.rating)) +
+              "/5</td><td>" +
+              NA.esc(snippet) +
+              "</td><td>" +
+              NA.esc(r.status) +
+              "</td><td>" +
+              NA.esc(r.origem || "—") +
+              '</td><td class="admin-table__actions">' +
+              (r.status !== "approved"
+                ? '<button type="button" class="admin-btn admin-btn--sm" data-review-action="approve" data-id="' +
+                  r.id +
+                  '">Aprovar</button> '
+                : "") +
+              (r.status !== "rejected"
+                ? '<button type="button" class="admin-btn admin-btn--sm admin-btn--ghost" data-review-action="reject" data-id="' +
+                  r.id +
+                  '">Recusar</button> '
+                : "") +
+              '<button type="button" class="admin-btn admin-btn--sm admin-btn--danger" data-review-action="delete" data-id="' +
+              r.id +
+              '">Excluir</button>' +
+              "</td></tr>"
+            );
+          })
+          .join("")
+      : '<tr><td colspan="7">Nenhum depoimento ainda</td></tr>';
+  }
+
+  function bindReviewsTable() {
+    var el = NA.$("#reviews-table-body");
+    if (!el) return;
+    el.addEventListener("click", async function (e) {
+      var btn = e.target.closest("[data-review-action]");
+      if (!btn) return;
+      var id = btn.dataset.id;
+      var action = btn.dataset.reviewAction;
+      if (action === "approve" || action === "reject") {
+        var status = action === "approve" ? "approved" : "rejected";
+        await NA.api("/api/admin/reviews/" + id, {
+          method: "PUT",
+          headers: NA.authHeaders(),
+          body: JSON.stringify({ status: status }),
+        });
+        NA.toast(status === "approved" ? "Depoimento publicado no site" : "Depoimento recusado");
+        loadReviews();
+      }
+      if (action === "delete") {
+        var ok = await NA.confirmAction("Excluir depoimento", "Remove do painel e do site.");
+        if (!ok) return;
+        await NA.api("/api/admin/reviews/" + id, {
+          method: "DELETE",
+          headers: NA.authHeaders(),
+        });
+        NA.toast("Depoimento excluído");
+        loadReviews();
+      }
+    });
+  }
+
+  async function createReviewManual() {
+    var nome = window.prompt("Nome do cliente:");
+    if (!nome || nome.trim().length < 2) return;
+    var cidade = window.prompt("Cidade (ex.: Barra Mansa, RJ):");
+    if (!cidade || cidade.trim().length < 2) return;
+    var ratingStr = window.prompt("Nota de 1 a 5:", "5");
+    var rating = parseInt(ratingStr, 10);
+    if (!(rating >= 1 && rating <= 5)) rating = 5;
+    var texto = window.prompt("Comentário (mín. 20 caracteres):");
+    if (!texto || texto.trim().length < 20) {
+      NA.toast("Comentário muito curto", "error");
+      return;
+    }
+    var res = await NA.api("/api/admin/reviews", {
+      method: "POST",
+      headers: NA.authHeaders(),
+      body: JSON.stringify({
+        nome: nome.trim(),
+        cidade: cidade.trim(),
+        rating: rating,
+        texto: texto.trim(),
+      }),
+    });
+    if (!res.ok) {
+      var err = await res.json();
+      NA.toast(err.error || "Erro ao salvar", "error");
+      return;
+    }
+    NA.toast("Depoimento publicado!");
+    loadReviews();
+  }
+
   function renderLeads() {
     var el = NA.$("#leads-table-body");
     el.innerHTML = state.leads.length
@@ -948,6 +1062,7 @@ window.NovaAdminPages = (function () {
       if (page === "dashboard") await loadDashboard();
       if (page === "veiculos") await loadCars();
       if (page === "leads") await loadLeads();
+      if (page === "depoimentos") await loadReviews();
       if (page === "clientes") await loadClients();
       if (page === "mensagens") await loadMessages();
       if (page === "estatisticas") await loadAnalytics();
@@ -993,6 +1108,8 @@ window.NovaAdminPages = (function () {
     });
   }
 
+  bindReviewsTable();
+
   function bindClientsTable() {
     NA.$("#clients-table-body").addEventListener("click", function (e) {
       var btn = e.target.closest("[data-action=edit-client]");
@@ -1022,5 +1139,7 @@ window.NovaAdminPages = (function () {
     saveProfile: saveProfile,
     loadErpDono: loadErpDono,
     checkErpDono: checkErpDono,
+    createReviewManual: createReviewManual,
+    loadReviews: loadReviews,
   };
 })();

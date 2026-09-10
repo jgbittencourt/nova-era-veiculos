@@ -76,7 +76,7 @@ function createHelmetMiddleware() {
         styleSrc: ["'self'", "https://fonts.googleapis.com"],
         fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
         imgSrc: ["'self'", "data:", "https:", "blob:"],
-        connectSrc: ["'self'", "https://api.openai.com"],
+        connectSrc: ["'self'", "https://api.openai.com", "https://*.onrender.com"],
         frameAncestors: ["'none'"],
         baseUri: ["'self'"],
         formAction: ["'self'"],
@@ -114,6 +114,13 @@ function createRateLimiters() {
       standardHeaders: true,
       legacyHeaders: false,
       message: { error: "Limite de envios atingido. Tente novamente mais tarde." },
+    }),
+    reviews: rateLimit({
+      windowMs: 60 * 60 * 1000,
+      max: 8,
+      standardHeaders: true,
+      legacyHeaders: false,
+      message: { error: "Limite de avaliações atingido. Tente novamente mais tarde." },
     }),
     adminAuth: rateLimit({
       windowMs: 15 * 60 * 1000,
