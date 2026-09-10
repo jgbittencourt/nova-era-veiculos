@@ -1281,6 +1281,113 @@ img {
   width: 100%;
 }
 
+.car-card__details-trigger {
+  position: absolute;
+  left: 50%;
+  bottom: 0.75rem;
+  transform: translateX(-50%);
+  z-index: 3;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: rgba(6, 8, 17, 0.72);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.car-card__details-trigger:hover {
+  background: rgba(6, 8, 17, 0.88);
+}
+
+.car-card__year {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+body.car-detail-open {
+  overflow: hidden;
+}
+
+.car-detail-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.car-detail-modal[hidden] {
+  display: none !important;
+}
+
+.car-detail-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 8, 17, 0.72);
+}
+
+.car-detail-modal__dialog {
+  position: relative;
+  width: min(520px, 100%);
+  max-height: min(88vh, 720px);
+  overflow: auto;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+}
+
+.car-detail-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1rem 0.5rem;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.car-detail-modal__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.car-detail-modal__close {
+  border: 0;
+  background: transparent;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  color: var(--ink-soft);
+}
+
+.car-detail-modal__body {
+  padding: 1rem 1rem 1.25rem;
+}
+
+.car-detail-modal__price {
+  margin: 1rem 0 0.75rem;
+}
+
+.car-detail-modal__wa {
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
 .car-card__gallery {
   display: flex;
   overflow-x: auto;

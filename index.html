@@ -27,8 +27,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://ui-avatars.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="preload" href="assets/css/style.css?v=20260730c" as="style" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20260730c" />
+  <link rel="preload" href="assets/css/style.css?v=20260911" as="style" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260911" />
   <link rel="stylesheet" href="assets/css/nova-ia.css" />
 </head>
 <body>
@@ -440,9 +440,20 @@
     </svg>
   </a>
 
+  <div id="car-detail-modal" class="car-detail-modal" hidden aria-hidden="true">
+    <div class="car-detail-modal__backdrop" data-close-car-detail tabindex="-1"></div>
+    <div class="car-detail-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="car-detail-title">
+      <header class="car-detail-modal__header">
+        <h3 id="car-detail-title" class="car-detail-modal__title"></h3>
+        <button type="button" class="car-detail-modal__close" data-close-car-detail aria-label="Fechar">✕</button>
+      </header>
+      <div id="car-detail-body" class="car-detail-modal__body"></div>
+    </div>
+  </div>
+
   <script src="assets/js/analytics.js?v=1"></script>
   <script src="assets/js/cars.js?v=20260910"></script>
-  <script src="assets/js/app.js?v=20260910"></script>
+  <script src="assets/js/app.js?v=20260911"></script>
   <script src="assets/js/inventory-engine.js?v=2"></script>
   <script src="assets/js/nova-ia.js?v=3"></script>
 </body>

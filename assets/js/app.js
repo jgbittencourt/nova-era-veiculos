@@ -393,10 +393,74 @@
       '<div class="car-card__gallery" role="region" aria-label="Galeria de fotos" tabindex="0">' +
       slides +
       "</div>" +
+      '<button type="button" class="car-card__details-trigger" data-open-car-details="' +
+      escapeHtml(String(car.id)) +
+      '" aria-label="Ver detalhes do veículo">Ver detalhes</button>' +
       "</div>" +
       hint +
       "</div>"
     );
+  }
+
+  function carDetailsContent(car) {
+    var title = car.marca + " " + car.modelo;
+    var wa = waUrl(carMessage(car));
+    var descBlock =
+      car.descricao && String(car.descricao).trim()
+        ? carDescricaoBlock(car)
+        : carOpcionaisBlock(car);
+    return (
+      carMetaBlock(car) +
+      descBlock +
+      '<div class="car-detail-modal__price">' +
+      carPriceBlock(car) +
+      "</div>" +
+      '<a class="car-card__cta car-card__cta--entrance car-detail-modal__wa" href="' +
+      escapeHtml(wa) +
+      '" target="_blank" rel="noopener noreferrer" data-track="whatsapp">🔥 Quero garantir esse carro — WhatsApp</a>'
+    );
+  }
+
+  function openCarDetailsModal(carId) {
+    var car = cars.find(function (c) {
+      return String(c.id) === String(carId);
+    });
+    if (!car) return;
+    var modal = document.getElementById("car-detail-modal");
+    var titleEl = document.getElementById("car-detail-title");
+    var bodyEl = document.getElementById("car-detail-body");
+    if (!modal || !titleEl || !bodyEl) return;
+    titleEl.textContent = car.marca + " " + car.modelo + " · " + car.ano;
+    bodyEl.innerHTML = carDetailsContent(car);
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("car-detail-open");
+    if (window.NovaAnalytics) window.NovaAnalytics.interestClick(car.id);
+  }
+
+  function closeCarDetailsModal() {
+    var modal = document.getElementById("car-detail-modal");
+    if (!modal) return;
+    modal.hidden = true;
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("car-detail-open");
+  }
+
+  function setupCarDetailsModal() {
+    document.addEventListener("click", function (e) {
+      var openBtn = e.target.closest("[data-open-car-details]");
+      if (openBtn) {
+        e.preventDefault();
+        openCarDetailsModal(openBtn.getAttribute("data-open-car-details"));
+        return;
+      }
+      if (e.target.closest("[data-close-car-detail]")) {
+        closeCarDetailsModal();
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeCarDetailsModal();
+    });
   }
 
   function carCard(car) {
@@ -420,15 +484,9 @@
       '<h3 class="car-card__title">' +
       escapeHtml(title) +
       "</h3>" +
-      carSubtitle(car) +
-      carSocialProof(car) +
-      carScarcity(car) +
-      carUrgency(car) +
-      carOfferLimited(car) +
-      carMetaBlock(car) +
-      (car.descricao && String(car.descricao).trim()
-        ? carDescricaoBlock(car)
-        : carOpcionaisBlock(car)) +
+      '<p class="car-card__year">' +
+      escapeHtml(String(car.ano)) +
+      "</p>" +
       '<div class="car-card__footer">' +
       carPriceBlock(car) +
       (sold
@@ -694,6 +752,7 @@
   setupMaps();
   setupWhatsApp();
   setupAnalytics();
+  setupCarDetailsModal();
   renderOfertas();
   render();
 })();
