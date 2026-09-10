@@ -224,8 +224,12 @@
       fipeNum = null;
     }
     var precoNum = typeof car.preco === "number" ? car.preco : 0;
+    var precoHtml =
+      precoNum > 0
+        ? '<p class="car-card__price">' + formatMoney(car.preco) + "</p>"
+        : '<p class="car-card__price car-card__price--consult">Consulte no WhatsApp</p>';
     var economiaHtml = "";
-    if (fipeNum !== null && fipeNum > precoNum) {
+    if (precoNum > 0 && fipeNum !== null && fipeNum > precoNum) {
       var eco = fipeNum - precoNum;
       economiaHtml =
         '<p class="car-card__economia">💰 Economize ' +
@@ -245,9 +249,7 @@
       (hasWas ? "Por apenas" : "Preço") +
       "</span>" +
       wasHtml +
-      '<p class="car-card__price">' +
-      formatMoney(car.preco) +
-      "</p>" +
+      precoHtml +
       economiaHtml +
       fipeHtml +
       "</div>"

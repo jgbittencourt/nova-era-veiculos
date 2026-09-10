@@ -1930,6 +1930,12 @@ body.car-detail-open {
   line-height: 1.1;
 }
 
+.car-card__price--consult {
+  font-size: clamp(1.125rem, 2.8vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
 @keyframes cta-pop-in {
   0% {
     opacity: 0;
